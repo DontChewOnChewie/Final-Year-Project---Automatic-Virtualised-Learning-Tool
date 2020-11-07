@@ -1,0 +1,14 @@
+{
+  "name": "electron-test",
+  "version": "1.0.0",
+  "description": "Test for final year project",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "author": "Oliver Bowker",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^10.1.5"
+  }
+}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <script defer src="main.js"></script>
+    <link href="index.css" rel="stylesheet"/>
+</head>
+<body>
+    
+    <div id="action-bar">
+
+        <h1>Program Logo Name</h1>
+
+        <div>
+            <button id="minimize" type="button">-</button>
+            <button id="close" type="button">X</button>
+        </div>
+    </div>
+
+    <main>
+        
+        <h1>{Program Name} requires VirtualBox and Docker to run some of it's environments.</h1>
+        <h3>Feel free to install them yourself, or choose to install below.</h3>
+
+        <div class="dependency-wrapper">
+            <div class="dependency">
+                <div class="status-border">
+                    <img src="../images/vb-logo.png"/>
+                </div>
+            </div>
+
+            <div class="dependency">
+                <div class="status-border">
+                    <img src="../images/docker.svg"/>
+                </div>
+            </div>  
+        </div>
+
+        <button class="skipBtn" type="button">Continue to Sign Up -></button>
+    </main>
+
+</body>
+</html>
