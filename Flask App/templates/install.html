@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet"/>
+</head>
+<body>
+    
+    {% include 'header.html' %}
+
+    <main>
+
+        <div class="alert">
+            <div class="alert-message">
+                <p>Some features of this program require VirtualBox and Docker to run correctlty.</p>
+                <p>These can be installed using the buttons below, or by the user themselves.</p>
+            </div>
+            <div class="alert-icon"><p>!</p></div>
+        </div>
+
+        <div class="dependancy-wrapper">
+            <div class="dependancy">
+                <img src="{{ url_for('static', filename='images/VirtualBox.png') }}" alt="VirtualBox Logo"/>
+                <button class="standard-button" type="button">Install VirtualBox</button>
+            </div>
+
+            <div style="color:white; font-size:60px;">+</div>
+
+            <div class="dependancy">
+                <img src="{{ url_for('static', filename='images/docker_original.png') }}" alt="Docker Logo"/>
+                <button class="standard-button" type="button">Install Docker</button>
+            </div>
+        </div>
+
+        <button class="standard-button" style="width:30%; margin: 20px auto 0 auto;">Install Both Dependancies</button>
+
+    </main>
+
+    <footer>
+        <a href="/login" style="width:100%;">Skip to Sign Up or Sign In >></a>
+    </footer>
+
+    </body>
+
+</body>
+</html>

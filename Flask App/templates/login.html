@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet"/>
+    <script defer src="{{ url_for('static', filename='js/account.js') }}"></script>
+</head>
+<body>
+    
+    {% include 'header.html' %}
+
+    <main>
+        <div class="alert">
+            <div class="alert-message">
+                <p>Without an account some features of the program will not be usable.</p>
+                <p>Sign in or sign up below.</p>
+            </div>
+            <div class="alert-icon"><p>!</p></div>
+        </div>
+
+        <form method="POST">
+            <input type="text" name="username" placeholder="Username...">
+            <input type="email" name="email" placeholder="Email...">
+            <div>
+                <input type="password" name="password" placeholder="Password...">
+                <img src="{{ url_for('static', filename='images/eye-off.svg') }}" 
+                    alt="Toggle Password Show" 
+                    data-enabled='0'
+                    id="toggle-password"/>
+            </div>
+            <button class="standard-button" type="submit">Sign In/Sign Up</button>
+        </form>
+    </main>
+
+    <footer>
+        <a href="/" style="border-right: 3px solid white;"><< Go Back to Installers</a>
+        <a href="/main">Skip Sign Up/Sign in >></a>
+    </footer>
+
+</body>
+</html>
