@@ -10,7 +10,7 @@ const createWindow = () => {
         }
     });
 
-    mainWindow.loadFile(path.join(__dirname, '/pages/index.html')); 
+    mainWindow.loadURL("http://localhost:5000/");
     mainWindow.maximize();
 }
 

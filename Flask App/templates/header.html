@@ -1,13 +1,16 @@
 <header>
 
+
+    {% if show_options %}
     <div class="toolbar-wrapper">
         <ul>
             <li>File</li>
-            <li>About</li>
-            <li>Upgrade/Installs</li>
-            <li>My Account</li>
+            <li><a href="#">About</a></li>
+            <li><a href="/">Upgrade/Installs</a></li>
+            <li><a href="#">My Account</a></li>
         </ul>
     </div>
+    {% endif %}
 
     <div class="control-buttons-wrapper">
         <div class="control-button">X</div>

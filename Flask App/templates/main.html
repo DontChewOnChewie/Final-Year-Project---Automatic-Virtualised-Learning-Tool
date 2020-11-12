@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet"/>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/node_test.js') }}"></script>
+</head>
+<body>
+
+    {% include 'header.html' %}
+
+    <main>
+
+        <div class="search-wrapper">
+            <input type="text" name="search_term" placeholder="Search..."/>
+            <img src="{{ url_for('static', filename='images/search.png') }}" alt="Search Icon"/>
+        </div>
+
+        <h2>Recently Added</h2>
+        <div class="carousel-wrapper" data-scrolled="0">
+
+            {% for item in new_challenges %}
+                <div class="challenge">
+                    <h3>{{ item.name }}</h3>
+                    <img src="{{ url_for('static', filename='images/sample_challenge.jpg') }}" alt="Challenge Icon"/>
+                    <div class="challenge-spec">
+                        <span class="{{ item.difficulty }}">{{ item.difficulty.title() }}</span>
+
+                        {% for tech in item.technoligies %}
+                            {% if tech == 1 %}
+                                <img src="{{ url_for('static', filename='images/docker.png') }}" alt="Docker Logo"/>
+                            {% elif tech == 2 %}
+                                <img src="{{ url_for('static', filename='images/vb.png') }}" alt="VirtualBox Logo">
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endfor %}
+
+            <div class="scroller">
+                <img src="{{ url_for('static', filename='images/right-arrow.svg') }}" alt="Scrool Carousel"/>    
+            </div>
+
+        </div>
+
+        <h2>My List</h2>
+        <div class="carousel-wrapper" data-scrolled="0">
+            {% for item in users_list %}
+                <div class="">
+
+                </div>
+            {% endfor %}
+
+            <div class="scroller">
+                <img src="{{ url_for('static', filename='images/right-arrow.svg') }}" alt="Scrool Carousel"/>    
+            </div>
+        </div>
+
+    </main>
+    
+</body>
+</html>
