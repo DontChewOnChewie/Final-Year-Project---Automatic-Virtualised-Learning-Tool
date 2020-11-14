@@ -20,6 +20,7 @@ function scroll_carousel(carousel_btn) {
 }
 
 window.onload = function () {
+    run_globals();
     scroll_btns = document.querySelectorAll(".scroller img");
 
     for (var i = 0; i < scroll_btns.length; i++) {

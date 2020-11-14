@@ -133,6 +133,15 @@ header div {
     width: 8%
 }
 
+
+.alert-error {
+    background-color: #aa3131;
+}
+
+.alert-error div:nth-child(odd) {
+    border-right-color: white;
+}
+
 /* Potential Global Styles */
 
 .standard-button {
@@ -228,6 +237,10 @@ form div img {
     cursor: pointer;
 }
 
+form .standard-button {
+    width: 300px;
+}
+
 input {
     background-color: rgba(49, 78, 170, 0.2);
     outline: none;
@@ -254,6 +267,17 @@ input::placeholder {
 input::-ms-reveal,
 input::-ms-clear {
   display: none;
+}
+
+input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    margin: 15px;
+}
+
+label {
+    color: white;
+    font-size: 16px;
 }
 
 /* Main Page */

@@ -1,5 +1,5 @@
 const {app, BrowserWindow} = require('electron');
-const path = require('path');
+const fs = require('fs')
 
 const createWindow = () => {
     const mainWindow = new BrowserWindow({
@@ -10,7 +10,14 @@ const createWindow = () => {
         }
     });
 
-    mainWindow.loadURL("http://localhost:5000/");
+    mainWindow.webContents.session.clearCache( function() { /*Clear Cache for debugging.*/ }) ;
+    if (fs.existsSync("auto_creds")) {
+        fs.readFile('auto_creds', 'utf8', function (err, data) {
+            if (err) return console.log(err);
+            mainWindow.loadURL("http://localhost:5000/autologin?data=" + data);
+        });
+    }
+    else mainWindow.loadURL("http://localhost:5000/");
     mainWindow.maximize();
 }
 

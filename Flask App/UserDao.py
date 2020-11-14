@@ -1,0 +1,89 @@
+import hashlib
+import sqlite3
+from datetime import datetime
+from User import User
+from string import ascii_letters
+import random
+from SessionDao import SessionDao
+
+class UserDao:
+
+    def __init__(self, conn=None):
+        self.conn = conn if conn else sqlite3.connect("db.db")
+        self.cursor = self.conn.cursor()
+
+    def hash_password(self, password):
+        return hashlib.sha512(password.encode('utf-8')).hexdigest()
+
+    def check_account_exists(self, credentials):
+        self.cursor.execute("SELECT USERNAME, EMAIL\
+                             FROM Account \
+                             WHERE USERNAME = ? AND EMAIL = ?", (credentials[0], credentials[1]))
+        record = self.cursor.fetchone()
+        return True if record else False
+    
+    def get_user_id_from_name_and_email(self, username, email):
+        self.cursor.execute("SELECT ID FROM Account\
+                             WHERE USERNAME = ? AND EMAIL = ?", (username, email))
+        record = self.cursor.fetchone()
+        return record[0]
+    
+    def get_user_id_from_name_and_session_key(self, username, session_key):
+        self.cursor.execute("SELECT a.ID FROM Account a \
+                             JOIN User_Session u ON a.ID = u.USER_ID \
+                             WHERE a.USERNAME = ? AND u.SESSION_KEY = ?", (username, session_key))
+        record = self.cursor.fetchone()
+        self.cursor.close()
+        self.conn.close()
+        return record[0]
+
+    def signup(self, credentials, ip, auto_login):
+        try:
+            timestamp = datetime.timestamp(datetime.now())
+            self.cursor.execute("INSERT INTO Account (USERNAME, EMAIL, PASSWORD, SIGN_UP_DATE, LAST_SIGN_IN)\
+                                VALUES (?, ?, ?, ?, ?)", (credentials[0], 
+                                                        credentials[1],
+                                                        self.hash_password(credentials[2]),
+                                                        timestamp,
+                                                        timestamp))
+            id = self.get_user_id_from_name_and_email(credentials[0], credentials[1])
+            user = User(id, credentials[0], credentials[1], credentials[2], timestamp, timestamp, 0, 0)
+            sdao = SessionDao(self.cursor)
+            key = sdao.update_session_key(user, ip)
+            if auto_login:
+                sdao.enable_auto_login(user.id, ip)
+            self.conn.commit()
+        except sqlite3.IntegrityError:
+            return f"Username {credentials[0]} is already taken, please try again."
+
+        self.cursor.close()
+        self.conn.close()
+        return [user, key]
+
+    def login(self, credentials, ip, auto_login):
+        self.cursor.execute("SELECT * FROM Account \
+                            WHERE USERNAME = ? AND EMAIL = ? AND PASSWORD = ?", (credentials[0],
+                                                                                 credentials[1],
+                                                                                 self.hash_password(credentials[2])))
+        record = self.cursor.fetchone()
+
+        if record:
+            user = User(*record)
+            sdao = SessionDao(self.cursor)
+            key = sdao.update_session_key(user, ip)
+            if auto_login:
+                sdao.enable_auto_login(user.id, ip)
+            self.conn.commit()
+
+        self.cursor.close()
+        self.conn.close()
+        return [user, key] if record else "Password for account credentials inccorect"
+
+    def auto_login(self, username, key):
+        self.cursor.execute("SELECT a.* FROM Account a \
+                             JOIN User_Session u ON a.ID = u.USER_ID \
+                             WHERE a.USERNAME = ? AND u.SESSION_KEY = ?", (username, key))
+        record = self.cursor.fetchone()
+        self.cursor.close()
+        self.conn.close()
+        return User(*record)
