@@ -9,12 +9,6 @@ class EncryptionService:
     def __init__(self):
         pass
 
-    def padd_b64(self, data):
-        try:
-            return base64.decode(data)
-        except binascii.Error:
-            self.padd_b64(data + "=")
-
     def encrypt(self, data):
         key = urandom(16)
         iv = urandom(16)

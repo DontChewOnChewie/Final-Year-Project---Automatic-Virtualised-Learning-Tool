@@ -217,6 +217,38 @@ footer a:hover {
     background-color: #314eaa;
 }
 
+.status-label {
+    color: white;
+    font-size: 28px;
+    margin: 0 auto;
+}
+
+@keyframes pulsing-icon {
+    0% { background-color: #333d61; }
+    50% {background-color: #314eaa; }
+    100% {background-color: #333d61; }
+}
+
+.install {
+    width: 250px;
+    height: 200px;
+    padding: 20px;
+    border-radius: 100px;
+    transition: all ease-in-out 0.5s;
+}
+
+.pulsing-install {
+    animation: pulsing-icon 4s infinite;
+}
+
+.no-install {
+    background-color: #aa3131;
+}
+
+.finish-install {
+    background-color: #2d9559;
+}
+
 /* Sign In/Up */
 
 form {
@@ -409,4 +441,69 @@ h2 {
 
 .scroller img:hover {
     transform: scale(1.2);
+}
+
+/* Account */
+
+.account-modifcation-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 30vh;
+}
+
+.account-modifcation-wrapper ul {
+    list-style: none;
+    background-color: #333d61;
+    padding: 10px;
+}
+
+.account-modifcation-wrapper li {
+    padding: 10px 60px;
+    cursor: pointer;
+    color: white;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    background-color: #333d61;
+    transition: background-color ease-in-out 0.4s;
+    text-align: center;
+}
+
+.account-modifcation-wrapper li:hover {
+    background-color: #314eaa;
+}
+
+.account-details-modifier {
+    width: 50%;
+    margin-left: 40px;
+    background-color: #333d61;
+    padding: 20px;
+}
+
+.account-details-modifier div {
+    display: block;
+}
+
+.account-details-modifier form {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    width: 100%;
+}
+
+.account-details-modifier input[type="password"] {
+    margin-bottom: 15px;
+    display: block;
+}
+
+.account-details-modifier .standard-button {
+    width: 100px;
+    height: 100px;
+    padding: 0;
+    margin: 0 0 0 45px;
+}
+
+.selected {
+    background-color: #314eaa !important;
 }

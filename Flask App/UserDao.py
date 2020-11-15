@@ -8,9 +8,12 @@ from SessionDao import SessionDao
 
 class UserDao:
 
-    def __init__(self, conn=None):
-        self.conn = conn if conn else sqlite3.connect("db.db")
-        self.cursor = self.conn.cursor()
+    def __init__(self, cursor=None):
+        if not cursor:
+            self.conn = sqlite3.connect("db.db")
+            self.cursor = self.conn.cursor()
+        else:
+            self.cursor = cursor
 
     def hash_password(self, password):
         return hashlib.sha512(password.encode('utf-8')).hexdigest()
@@ -36,6 +39,13 @@ class UserDao:
         self.cursor.close()
         self.conn.close()
         return record[0]
+    
+    def get_user_from_username(self, username):
+        self.cursor.execute("SELECT * FROM Account \
+                             WHERE USERNAME = ?", (username,))
+        record = self.cursor.fetchone()
+        return User(*record) if record else None
+
 
     def signup(self, credentials, ip, auto_login):
         try:
@@ -87,3 +97,12 @@ class UserDao:
         self.cursor.close()
         self.conn.close()
         return User(*record)
+
+    def check_session_key(self, user, session_key):
+        self.cursor.execute("SELECT a.ID FROM Account a \
+                             JOIN User_Session u ON a.ID = u.USER_ID \
+                             WHERE a.USERNAME = ? AND u.SESSION_KEY = ?", (user, session_key))
+        record = self.cursor.fetchone()
+        self.cursor.close()
+        self.conn.close()
+        return True if record else False

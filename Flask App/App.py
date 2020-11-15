@@ -108,8 +108,19 @@ def main():
 @app.route("/account/<user>", methods=['GET'])
 def account(user):
     if request.method == 'GET':
-        print(user)
-        return render_template("account.html")
+        logged_user = request.cookies.get("user")
+        sk = request.cookies.get("sk")
+        udao = UserDao()
+        users_page = udao.get_user_from_username(user)
+
+        valid_key = False
+        if logged_user == user:
+            valid_key = udao.check_session_key(logged_user, sk)
+            
+        return render_template("account.html",
+                                show_options = True,
+                                page_owner = user,
+                                owns_page = valid_key)
 
 
 if __name__ == "__main__":

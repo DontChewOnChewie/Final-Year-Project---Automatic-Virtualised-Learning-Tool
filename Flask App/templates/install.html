@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet"/>
+    <script src="{{ url_for('static', filename='js/node_scripts/installs.js') }}"></script>
 </head>
 <body>
     
@@ -21,19 +22,23 @@
 
         <div class="dependancy-wrapper">
             <div class="dependancy">
-                <img src="{{ url_for('static', filename='images/VirtualBox.png') }}" alt="VirtualBox Logo"/>
-                <button class="standard-button" type="button">Install VirtualBox</button>
+                <div>
+                    <img src="{{ url_for('static', filename='images/VirtualBox.png') }}" alt="VirtualBox Logo"/>
+                </div>
+                <button id="btn-vbox" class="standard-button" type="button">Install VirtualBox</button>
             </div>
 
             <div style="color:white; font-size:60px;">+</div>
 
             <div class="dependancy">
-                <img src="{{ url_for('static', filename='images/docker_original.png') }}" alt="Docker Logo"/>
-                <button class="standard-button" type="button">Install Docker</button>
+                <div>
+                    <img src="{{ url_for('static', filename='images/docker_original.png') }}" alt="Docker Logo"/>
+                </div>
+                <button id="btn-docker" class="standard-button" type="button">Install Docker</button>
             </div>
         </div>
 
-        <button class="standard-button" style="width:30%; margin: 20px auto 0 auto;">Install Both Dependancies</button>
+        <button id="btn-both" class="standard-button" style="width:30%; margin: 20px auto 0 auto;">Install Both Dependancies</button>
 
     </main>
 
