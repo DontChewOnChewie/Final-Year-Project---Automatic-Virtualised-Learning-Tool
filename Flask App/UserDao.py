@@ -36,8 +36,6 @@ class UserDao:
                              JOIN User_Session u ON a.ID = u.USER_ID \
                              WHERE a.USERNAME = ? AND u.SESSION_KEY = ?", (username, session_key))
         record = self.cursor.fetchone()
-        self.cursor.close()
-        self.conn.close()
         return record[0]
     
     def get_user_from_username(self, username):
@@ -60,14 +58,14 @@ class UserDao:
             user = User(id, credentials[0], credentials[1], credentials[2], timestamp, timestamp, 0, 0)
             sdao = SessionDao(self.cursor)
             key = sdao.update_session_key(user, ip)
+
             if auto_login:
                 sdao.enable_auto_login(user.id, ip)
             self.conn.commit()
+            sdao.close()
         except sqlite3.IntegrityError:
             return f"Username {credentials[0]} is already taken, please try again."
 
-        self.cursor.close()
-        self.conn.close()
         return [user, key]
 
     def login(self, credentials, ip, auto_login):
@@ -85,8 +83,7 @@ class UserDao:
                 sdao.enable_auto_login(user.id, ip)
             self.conn.commit()
 
-        self.cursor.close()
-        self.conn.close()
+        sdao.close()
         return [user, key] if record else "Password for account credentials inccorect"
 
     def auto_login(self, username, key):
@@ -94,8 +91,6 @@ class UserDao:
                              JOIN User_Session u ON a.ID = u.USER_ID \
                              WHERE a.USERNAME = ? AND u.SESSION_KEY = ?", (username, key))
         record = self.cursor.fetchone()
-        self.cursor.close()
-        self.conn.close()
         return User(*record)
 
     def check_session_key(self, user, session_key):
@@ -103,6 +98,15 @@ class UserDao:
                              JOIN User_Session u ON a.ID = u.USER_ID \
                              WHERE a.USERNAME = ? AND u.SESSION_KEY = ?", (user, session_key))
         record = self.cursor.fetchone()
-        self.cursor.close()
-        self.conn.close()
         return True if record else False
+    
+    def close(self):
+        try:
+            self.cursor.close()
+        except Exception:
+            pass
+
+        try:
+            self.conn.close()
+        except Exception:
+            pass

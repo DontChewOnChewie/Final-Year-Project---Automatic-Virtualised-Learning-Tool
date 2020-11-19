@@ -1,0 +1,87 @@
+/* Install */
+
+main {
+    display: flex;
+    flex-direction: column;
+}
+
+.dependancy-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.dependancy {
+    width: 33%;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    height: 40vh;
+    flex-direction: column;
+}
+
+.dependancy img {
+    width: 250px;
+    height: 200px;
+}
+
+footer {
+    width: 100%;
+    height: 5vh;
+    background-color: #333d61;
+    border-top: 3px solid white;
+    position: absolute;
+    bottom: 0;
+    cursor: pointer;
+    display: flex;
+    font-size: 18px;
+}
+
+footer a {
+    color: white;
+    text-decoration: none;
+    width: 49.75%;
+    display: inline-flex;
+    text-align: center;
+    background-color: #333d61;
+    transition: background-color ease-in-out 0.3s;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+footer a:hover {
+    background-color: #314eaa;
+}
+
+.status-label {
+    color: white;
+    font-size: 28px;
+    margin: 0 auto;
+}
+
+@keyframes pulsing-icon {
+    0% { background-color: #333d61; }
+    50% {background-color: #314eaa; }
+    100% {background-color: #333d61; }
+}
+
+.install {
+    width: 250px;
+    height: 200px;
+    padding: 20px;
+    border-radius: 100px;
+    transition: all ease-in-out 0.5s;
+}
+
+.pulsing-install {
+    animation: pulsing-icon 4s infinite;
+}
+
+.no-install {
+    background-color: #aa3131;
+}
+
+.finish-install {
+    background-color: #2d9559;
+}

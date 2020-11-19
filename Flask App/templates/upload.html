@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename='css/global.css') }}" rel="stylesheet"/>
+    <link href="{{ url_for('static', filename='css/upload.css') }}" rel="stylesheet"/>
+    <script src="{{ url_for('static', filename='js/global.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/upload.js') }}"></script>
+</head>
+<body>
+    
+    {% include 'header.html' %}
+
+    <main>
+        {% if signed_in %}
+
+            <form method="POST" enctype="multipart/form-data">
+
+                <input type="text" name="name" placeholder="Challenge Name..."/>
+                <textarea type="text" name="desc" placeholder="Challenge Description..."></textarea>
+                <select name="difficulty">
+                    <option value="1">Begginer</option>
+                    <option value="2">Intermediate</option>
+                    <option value="3">Advanced</option>
+                </select>
+                <input type="file" name="thumb"/>
+                
+                <button class="standard-button" type="submit">Upload Challenge</button>
+            </form>
+
+        {% else %}
+            <h1>Unable to Upload a Challenge!</h1>
+            <h3>Sign up or Sign in to upload challenges.</h3>
+            <a href="/login" class="standard-button">Sign Up/Sign In</a>
+        {% endif %}
+
+    </main>
+
+</body>
+</html>

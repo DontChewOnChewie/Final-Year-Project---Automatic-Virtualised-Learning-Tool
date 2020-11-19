@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet"/>
+    <link href="{{ url_for('static', filename='css/global.css') }}" rel="stylesheet"/>
+    <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet"/>
     <script src="{{ url_for('static', filename='js/global.js') }}"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </head>
@@ -26,7 +27,7 @@
                     <h3>{{ item.name }}</h3>
                     <img src="{{ url_for('static', filename='images/sample_challenge.jpg') }}" alt="Challenge Icon"/>
                     <div class="challenge-spec">
-                        <span class="{{ item.difficulty }}">{{ item.difficulty.title() }}</span>
+                        <span class="{{ item.difficulty.lower() }}">{{ item.difficulty }}</span>
 
                         {% for tech in item.technoligies %}
                             {% if tech == 1 %}

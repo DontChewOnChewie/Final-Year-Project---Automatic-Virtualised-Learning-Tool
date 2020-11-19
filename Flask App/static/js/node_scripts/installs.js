@@ -4,7 +4,7 @@ let main, btn_skip, status_label;
 let dependancies;
 
 function start_installs(args) {
-    let final_args = [".\\test.ps1"];
+    let final_args = [".\\installs.ps1"];
     for (var i = 0; i < args.length; i++) {
         final_args.push(args[i]);
     } 

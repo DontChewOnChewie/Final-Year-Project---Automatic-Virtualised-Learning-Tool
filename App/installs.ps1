@@ -46,7 +46,6 @@ if ($args[1] -eq "1") {
     #echo "Installation of WSL (Docker dependancy) complete."
 }
 
-echo "Installations Complete"
+echo "Installations Complete - We Reccommend a Re-Start of your System."
 
-cd ../
 Remove-Item -Recurse -Force installers

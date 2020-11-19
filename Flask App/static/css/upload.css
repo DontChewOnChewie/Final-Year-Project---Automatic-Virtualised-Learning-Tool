@@ -1,0 +1,87 @@
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 90vh;
+    color: white;
+}
+
+h1 {
+    font-size: 42px;
+}
+
+h3 {
+    font-size: 25px;
+}
+
+.standard-button {
+    text-decoration: none;
+}
+
+form {
+    width: 500px;
+}
+
+input[type="text"] {
+    width: 500px;
+}
+
+textarea {
+    width: 500px;
+    height: 200px;
+    padding: 15px 30px;
+    box-sizing: border-box;
+    background-color: rgba(49, 78, 170, 0.2);
+    border: white solid 2px;
+    border-radius: 10px;
+    color: white;
+    outline: none;
+}
+
+textarea::placeholder {
+    color: white;
+    font-size: 16px;
+}
+
+select {
+    width: 500px;
+    padding: 15px 30px;
+    box-sizing: border-box;
+    background-color: rgba(49, 78, 170, 0.2);
+    color: white;
+    border: 2px solid white;
+    margin: 10px 0;
+    border-radius: 10px;
+    outline: none;
+}
+
+select option {
+    background-color: #333d61;
+}
+
+input[type="file"] {
+    background-color: transparent;
+    border: none;
+    width: 500px;
+}
+
+input[type="file"]::-webkit-file-upload-button {
+    visibility: hidden;
+}
+
+input[type="file"]::before {
+    content: 'Select banner image.';
+    background-color: #333d61;
+    color: white;
+    padding: 5px 8px;
+    box-sizing: border-box;
+    border: 2px solid white;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color ease-in-out 0.3s;
+}
+
+input[type="file"]:hover::before {
+    background-color: #314eaa;
+}

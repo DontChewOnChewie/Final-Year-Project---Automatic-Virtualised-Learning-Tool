@@ -50,8 +50,6 @@ class SessionDao:
                              SET ENCRYPTED_AUTOLOGIN_KEY = ?, ENCRYPT_KEY = ?, IV_KEY = ? \
                              WHERE USER_ID = ? AND IP = ?", (key, secret_key, iv, user_id, ip))
         self.conn.commit()
-        self.cursor.close()
-        self.conn.close()
     
     def get_auto_login_key(self, data, ip):
         self.cursor.execute(f"SELECT * FROM User_Session \
@@ -60,6 +58,15 @@ class SessionDao:
         if not record:
             return "Something went wrong with your auto login credentials."
 
-        self.cursor.close()
-        self.conn.close()
         return record if record[3] == ip else "Something went wrong with your auto login credentials."
+    
+    def close(self):
+        try:
+            self.cursor.close()
+        except Exception:
+            pass
+
+        try:
+            self.conn.close()
+        except Exception:
+            pass

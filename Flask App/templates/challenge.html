@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename='css/global.css') }}" rel="stylesheet"/>
+</head>
+<body>
+
+    {% include 'header.html' %}
+
+    {% if error %}
+    <div class="alert alert-error">
+        <div class="alert-message">
+            <p>Upload Error</p>
+            <p>{{ error }}</p>
+        </div>
+        <div class="alert-icon"><p>!</p></div>
+    </div>
+    {% endif %}
+
+    {{ challenge.name }}
+
+    {{ challenge.description }}
+
+    {{ challenge.difficulty }}
+    
+</body>
+</html>
