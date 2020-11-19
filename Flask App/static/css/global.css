@@ -142,6 +142,18 @@ header div {
     border-right-color: white;
 }
 
+.alert-wrapper-solo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
+
+.alert-wrapper-solo a {
+    text-decoration: none;
+}
+
 /* Potential Global Styles */
 
 .standard-button {

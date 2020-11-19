@@ -35,6 +35,16 @@
             <a href="/login" class="standard-button">Sign Up/Sign In</a>
         {% endif %}
 
+        {% if error %}
+        <div class="alert alert-error">
+            <div class="alert-message">
+                <p>Upload Error</p>
+                <p>{{ error }}</p>
+            </div>
+            <div class="alert-icon"><p>!</p></div>
+        </div>
+        {% endif %}
+
     </main>
 
 </body>

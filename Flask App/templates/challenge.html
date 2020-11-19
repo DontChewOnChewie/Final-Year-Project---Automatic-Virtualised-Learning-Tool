@@ -4,26 +4,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{{ url_for('static', filename='css/global.css') }}" rel="stylesheet"/>
+    <link href="{{ url_for('static', filename='css/challenge.css') }}" rel="stylesheet"/>
+    <script src="{{ url_for('static', filename='js/global.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/challenge.js') }}"></script>
 </head>
 <body>
 
     {% include 'header.html' %}
 
-    {% if error %}
-    <div class="alert alert-error">
-        <div class="alert-message">
-            <p>Upload Error</p>
-            <p>{{ error }}</p>
+    {% if challenge == None %}
+    <div class="alert-wrapper-solo">
+        <div class="alert alert-error">
+            <div class="alert-message">
+                <p>Challenge does not Exist.</p>
+                <p>Go back to home page.</p>
+            </div>
+            <div class="alert-icon"><p>!</p></div>
         </div>
-        <div class="alert-icon"><p>!</p></div>
+
+        <a class="standard-button" href="/main">Home</a>
     </div>
+    {% else %}
+
+    <main>
+        <h1>{{ challenge.name }} <span class="{{ challenge.difficulty.lower() }}">{{ challenge.difficulty}}</span> </h1>
+
+        <div>
+            <img src="{{ banner_path }}" alt="Challenge Banner"/>
+            <div class="tag-wrapper">
+
+            </div>
+        </div>
+
+        <h3>Challenge Description</h3>
+        <span>{{ challenge.description }}</span>
+
+        <span>Author -:- <a href="/account/{{ author }}">{{ author }}</a></span>
+
+        {% if error %}
+        <div class="alert alert-error">
+            <div class="alert-message">
+                <p>Upload Error</p>
+                <p>{{ error }}</p>
+            </div>
+            <div class="alert-icon"><p>!</p></div>
+        </div>
+        {% endif %}
+
+    </main>
+
+    <footer>
+        <a href="/login" style="width:100%;">Download Now >></a>
+    </footer>
+
     {% endif %}
-
-    {{ challenge.name }}
-
-    {{ challenge.description }}
-
-    {{ challenge.difficulty }}
     
 </body>
 </html>

@@ -4,7 +4,7 @@ from UserDao import UserDao
 from User import User
 from EncryptionService import EncryptionService
 from SessionDao import SessionDao
-from FileUploadSanitiser import FileUploadSanitiser
+from UploadHandler import UploadHandler
 from ChallengeDAO import ChallengeDAO
 import os
 
@@ -25,7 +25,7 @@ def login():
                                 show_options = False,
                                 error = error)
     elif request.method == "POST":
-        credentials = [request.form['username'], request.form['email'], request.form['password']]
+        credentials = [request.form['username'].lower(), request.form['email'], request.form['password']]
         ip = request.environ.get('HTTP_X_REAL_IP', request.remote_addr) 
 
         try:
@@ -104,15 +104,15 @@ def main():
     if request.method == "GET":
         return render_template("main.html",
                                 show_options = True,
-                                new_challenges = [Challenege(None, "Challenege 1", None, 1, [Challenege.Technology.VB]),
-                                                  Challenege(None, "Challenege 2", None, 2, [Challenege.Technology.DOCKER]),
-                                                  Challenege(None, "Challenege 3", None, 3, [Challenege.Technology.DOCKER, Challenege.Technology.VB]),
-                                                  Challenege(None, "Challenege 4", None, 2, [Challenege.Technology.DOCKER]),
+                                new_challenges = [Challenege(1, None, "Challenege 1", None, 1, [Challenege.Technology.VB]),
+                                                  Challenege(1, None, "Challenege 2", None, 2, [Challenege.Technology.DOCKER]),
+                                                  Challenege(1, None, "Challenege 3", None, 3, [Challenege.Technology.DOCKER, Challenege.Technology.VB]),
+                                                  Challenege(1, None, "Challenege 4", None, 2, [Challenege.Technology.DOCKER]),
                                                 ], 
-                                users_list = [Challenege(None, "Challenege 1", None, 1, [Challenege.Technology.VB]),
-                                                  Challenege(None, "Challenege 2", None, 2, [Challenege.Technology.DOCKER]),
-                                                  Challenege(None, "Challenege 3", None, 3, [Challenege.Technology.DOCKER, Challenege.Technology.VB]),
-                                                  Challenege(None, "Challenege 4", None, 2, [Challenege.Technology.DOCKER]),
+                                users_list = [Challenege(1, None, "Challenege 1", None, 1, [Challenege.Technology.VB]),
+                                                  Challenege(1, None, "Challenege 2", None, 2, [Challenege.Technology.DOCKER]),
+                                                  Challenege(1, None, "Challenege 3", None, 3, [Challenege.Technology.DOCKER, Challenege.Technology.VB]),
+                                                  Challenege(1, None, "Challenege 4", None, 2, [Challenege.Technology.DOCKER]),
                                                 ])
 
 @app.route("/account/<user>", methods=['GET'])
@@ -121,6 +121,7 @@ def account(user):
         logged_user = request.cookies.get("user")
         sk = request.cookies.get("sk")
         udao = UserDao()
+        print(user)
         users_page = udao.get_user_from_username(user)
 
         valid_key = False
@@ -130,7 +131,7 @@ def account(user):
         udao.close()
         return render_template("account.html",
                                 show_options = True,
-                                page_owner = user,
+                                page_owner = users_page,
                                 owns_page = valid_key)
 
 @app.route("/upload", methods=['GET', 'POST'])
@@ -163,15 +164,21 @@ def upload():
 
             cdao = ChallengeDAO(conn=udao.conn)
             challenge = cdao.add_challenge(int(user.id), name, desc, int(difficulty))
+
+            if (isinstance(challenge, str)):
+                resp = make_response(redirect("/upload"))
+                resp.set_cookie("error", challenge)
+                return resp
+                
             challenge_id = cdao.get_challenge_from_user_and_name(challenge.user_id, challenge.name)
             udao.close()
 
             if challenge:
-                fup = FileUploadSanitiser()
-                result = fup.save_challenege_banner(challenge_id, thumb)
+                uh = UploadHandler()
+                result = uh.save_challenege_banner(challenge_id, thumb)
                 resp = make_response(redirect(f"/challenge/{challenge_id}"))
-                if not result:
-                    resp.set_cookie("error", "File could not be uploaded, file type must be png, jpg, jpeg or svg.")
+                if isinstance(result, str):
+                    resp.set_cookie("error", result)
                 return resp
 
         #print(f"Name : {name}\nDescription : {desc}\nDifficulty : {difficulty}\nDocker : {docker}\nVB : {vb}")
@@ -181,15 +188,26 @@ def upload():
 def challenge(id):
     if request.method == 'GET':
         error = request.cookies.get("error")
+        author = None
+        banner_path = None
         cdao = ChallengeDAO()
-        challenge = cdao.get_challenge_by_id(int(id))
+        challenge = cdao.get_challenge_by_id(id)
+
+        if challenge:
+            author = cdao.get_author_of_challenge(id)
+            cdao.close()
+            uh = UploadHandler()
+            banner_path = uh.get_upload_banner_path(str(challenge.id))
+
         return render_template("challenge.html",
                                 show_options = True,
                                 challenge = challenge,
+                                author = author,
+                                banner_path = banner_path,
                                 error = error)
 
 if __name__ == "__main__":
-    if not os.path.isdir("Challenges"):
-        os.mkdir("Challenges")
+    if not os.path.isdir("static/images/Challenges"):
+        os.mkdir("static/images/Challenges")
         
     app.run(debug=True)

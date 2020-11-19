@@ -49,7 +49,7 @@ class UserDao:
         try:
             timestamp = datetime.timestamp(datetime.now())
             self.cursor.execute("INSERT INTO Account (USERNAME, EMAIL, PASSWORD, SIGN_UP_DATE, LAST_SIGN_IN)\
-                                VALUES (?, ?, ?, ?, ?)", (credentials[0], 
+                                VALUES (?, ?, ?, ?, ?)", (credentials[0].lower(), 
                                                         credentials[1],
                                                         self.hash_password(credentials[2]),
                                                         timestamp,
@@ -82,8 +82,8 @@ class UserDao:
             if auto_login:
                 sdao.enable_auto_login(user.id, ip)
             self.conn.commit()
+            sdao.close()
 
-        sdao.close()
         return [user, key] if record else "Password for account credentials inccorect"
 
     def auto_login(self, username, key):

@@ -9,9 +9,13 @@ function get_cookie(cookie_name) {
 }
 
 function setup_links() {
-    console.log(get_cookie("user"));
-    account_link_value = `account/${get_cookie("user")}`;
-    account_link.href = account_link_value != null ? account_link_value : "login";
+    var username = get_cookie("user");
+    if (username === undefined) {
+        account_link.href = "/login";
+        account_link.innerText = "Login/Sign Up";
+    } else {
+        account_link.href = `/account/${username}`;
+    }
 }
 
 function run_globals() {

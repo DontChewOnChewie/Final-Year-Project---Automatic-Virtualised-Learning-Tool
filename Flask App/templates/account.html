@@ -15,40 +15,56 @@
 
     <main>
 
-        {% if owns_page %}
+        {% if page_owner == None %}
+        <div class="alert-wrapper-solo">
+            <div class="alert alert-error">
+                <div class="alert-message">
+                    <p>Account {{ page_owner.username }} does not Exist.</p>
+                    <p>Go back to home page.</p>
+                </div>
+                <div class="alert-icon"><p>!</p></div>
+            </div>
+    
+            <a class="standard-button" href="/main">Home</a>
+        </div>
+        {% else %}
 
-        <div class="account-modifcation-wrapper">
+            {% if owns_page %}
 
-            <ul>
-                <li class="selected" id="username-edit-btn">Username</li>
-                <li id="email-edit-btn">Email</li>
-                <li id="password-edit-btn">Password</li>
-            </ul>
+            <div class="account-modifcation-wrapper">
 
-            <div class="account-details-modifier">
-                <form>
-                    <div>
-                        <input id="new-detail" type="text" name="username" placeholder="New Username..."/>
-                        <input id="conf-new-detail" type="text" name="conf_username" placeholder="Confirm New Username..."/>
-                    </div>
-                    <button class="standard-button" type="button">Submit</button>
-                </form>
+                <ul>
+                    <li class="selected" id="username-edit-btn">Username</li>
+                    <li id="email-edit-btn">Email</li>
+                    <li id="password-edit-btn">Password</li>
+                </ul>
+
+                <div class="account-details-modifier">
+                    <form>
+                        <div>
+                            <input id="new-detail" type="text" name="username" placeholder="New Username..."/>
+                            <input id="conf-new-detail" type="text" name="conf_username" placeholder="Confirm New Username..."/>
+                        </div>
+                        <button class="standard-button" type="button">Submit</button>
+                    </form>
+                </div>
+
             </div>
 
-        </div>
+            <h2>My List</h2>
+            <div class="carousel-wrapper" data-scrolled="0"></div>
 
-        <h2>My List</h2>
-        <div class="carousel-wrapper" data-scrolled="0"></div>
+            {% endif %}
+
+            {% if owns_page %}
+                <h2>My Uploads</h2>
+            {% else %}
+                <h2>{{ page_owner.username }}'s Uploads</h2>
+            {% endif %}
+
+            <div class="carousel-wrapper" data-scrolled="0"></div>
 
         {% endif %}
-
-        {% if owns_page %}
-        <h2>My Uploads</h2>
-        {% else %}
-        <h2>{{ page_owner }}'s Uploads</h2>
-        {% endif %}
-
-        <div class="carousel-wrapper" data-scrolled="0"></div>
 
     </main>
     

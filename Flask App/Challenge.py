@@ -6,8 +6,8 @@ class Challenege:
 
     DIFFICULTY_LEVELS = { 1:"Begginer", 2:"Intermediate", 3:"Advanced" }
 
-    def __init__(self, user_id, name, description, difficulty, technoligies):
-        print(difficulty)
+    def __init__(self, id, user_id, name, description, difficulty, technoligies):
+        self.id = id
         self.user_id = user_id
         self.name = name
         self.description = description
