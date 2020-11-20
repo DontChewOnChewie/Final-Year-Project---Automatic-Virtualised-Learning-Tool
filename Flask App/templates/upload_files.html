@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename='css/global.css') }}" rel="stylesheet"/>
+    <link href="{{ url_for('static', filename='css/upload_files.css') }}" rel="stylesheet"/>
+    <script src="{{ url_for('static', filename='js/global.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/upload_files.js') }}"></script>
+</head>
+<body>
+
+    {% include 'header.html' %}
+
+    <main>
+        {% if allowed_edit %}
+            <div class="alert">
+                <div class="alert-message">
+                    <p>Add files for challenge.</p>
+                    <p>Select technology and drag and drop files into sections.</p>
+                </div>
+                <div class="alert-icon"><p>!</p></div>
+            </div>
+
+            <div class="upload-wrapper">
+                <div class="file-upload-wrapper">
+                    <div class="technoliges-chooser">
+                        <img src="{{ url_for('static', filename='images/docker.png') }}" alt="Docker Logo" data-selected="0">
+                        <img src="{{ url_for('static', filename='images/vb.png') }}" alt="VirtualBox Logo" data-selected="0">
+                        <img src="{{ url_for('static', filename='images/unknown.svg')}}" alt="Other Logo" data-selected="0">
+                    </div>
+                    
+                    <div class="dropzone empty">+</div>
+                </div>
+
+                <div class="file-upload-wrapper">
+                    <div class="technoliges-chooser">
+                        <img src="{{ url_for('static', filename='images/docker.png') }}" alt="Docker Logo" data-selected="0">
+                        <img src="{{ url_for('static', filename='images/vb.png') }}" alt="VirtualBox Logo" data-selected="0">
+                        <img src="{{ url_for('static', filename='images/unknown.svg')}}" alt="Other Logo" data-selected="0">
+                    </div>
+                    
+                    <div class="dropzone empty">+</div>
+                </div>
+
+                <div class="file-upload-wrapper">
+                    <div class="technoliges-chooser">
+                        <img src="{{ url_for('static', filename='images/docker.png') }}" alt="Docker Logo" data-selected="0">
+                        <img src="{{ url_for('static', filename='images/vb.png') }}" alt="VirtualBox Logo" data-selected="0">
+                        <img src="{{ url_for('static', filename='images/unknown.svg')}}" alt="Other Logo" data-selected="0">
+                    </div>
+                    
+                    <div class="dropzone empty">+</div>
+                </div>
+            </div>
+
+            <button class="standard-button" type="button">Upload Files</button>
+
+        {% else %}
+            <h1>Access Denied!</h1>
+        {% endif %}
+    </main>
+    
+</body>
+</html>

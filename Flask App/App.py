@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, make_response, redirect, url_for
-from Challenge import Challenege
+from Challenge import Challenge
 from UserDao import UserDao
 from User import User
 from EncryptionService import EncryptionService
@@ -102,18 +102,13 @@ def auto_login():
 @app.route("/main", methods=['GET'])
 def main():
     if request.method == "GET":
+        cdao = ChallengeDAO()
+        new_challenges = cdao.get_recent_challenges()
+        cdao.close()
+
         return render_template("main.html",
                                 show_options = True,
-                                new_challenges = [Challenege(1, None, "Challenege 1", None, 1, [Challenege.Technology.VB]),
-                                                  Challenege(1, None, "Challenege 2", None, 2, [Challenege.Technology.DOCKER]),
-                                                  Challenege(1, None, "Challenege 3", None, 3, [Challenege.Technology.DOCKER, Challenege.Technology.VB]),
-                                                  Challenege(1, None, "Challenege 4", None, 2, [Challenege.Technology.DOCKER]),
-                                                ], 
-                                users_list = [Challenege(1, None, "Challenege 1", None, 1, [Challenege.Technology.VB]),
-                                                  Challenege(1, None, "Challenege 2", None, 2, [Challenege.Technology.DOCKER]),
-                                                  Challenege(1, None, "Challenege 3", None, 3, [Challenege.Technology.DOCKER, Challenege.Technology.VB]),
-                                                  Challenege(1, None, "Challenege 4", None, 2, [Challenege.Technology.DOCKER]),
-                                                ])
+                                new_challenges = new_challenges)
 
 @app.route("/account/<user>", methods=['GET'])
 def account(user):
@@ -121,8 +116,12 @@ def account(user):
         logged_user = request.cookies.get("user")
         sk = request.cookies.get("sk")
         udao = UserDao()
-        print(user)
         users_page = udao.get_user_from_username(user)
+
+        users_challenges = []
+        if users_page:
+            cdao = ChallengeDAO(conn=udao.conn)
+            users_challenges = cdao.get_users_uploaded_challenges(users_page.id)
 
         valid_key = False
         if logged_user == user:
@@ -132,7 +131,8 @@ def account(user):
         return render_template("account.html",
                                 show_options = True,
                                 page_owner = users_page,
-                                owns_page = valid_key)
+                                owns_page = valid_key,
+                                users_challenges = users_challenges)
 
 @app.route("/upload", methods=['GET', 'POST'])
 def upload():
@@ -170,13 +170,13 @@ def upload():
                 resp.set_cookie("error", challenge)
                 return resp
                 
-            challenge_id = cdao.get_challenge_from_user_and_name(challenge.user_id, challenge.name)
+            challenge_id = cdao.get_challenge_id_from_user_and_name(challenge.user_id, challenge.name)
             udao.close()
 
             if challenge:
                 uh = UploadHandler()
                 result = uh.save_challenege_banner(challenge_id, thumb)
-                resp = make_response(redirect(f"/challenge/{challenge_id}"))
+                resp = make_response(redirect(f"/upload/{challenge_id}/files"))
                 if isinstance(result, str):
                     resp.set_cookie("error", result)
                 return resp
@@ -184,12 +184,61 @@ def upload():
         #print(f"Name : {name}\nDescription : {desc}\nDifficulty : {difficulty}\nDocker : {docker}\nVB : {vb}")
         return redirect("/main")
 
+@app.route("/upload/<id>/files", methods=['GET', 'POST'])
+def upload_files(id):
+    if request.method == "GET":
+        user = request.cookies.get("user")
+        sk = request.cookies.get("sk")
+
+        udao = UserDao()
+        valid_key = udao.check_session_key(user, sk)
+        user = udao.get_user_from_username(user)
+        cdao = ChallengeDAO(conn=udao.conn)
+        challenge = cdao.get_challenge_by_id(id)
+
+        allowed_edit = True
+        if challenge:
+            if challenge.user_id != user.id or not valid_key:
+                allowed_edit = False
+        else:
+            redirect("/main") # Redirect to  custom 404 eventually.
+
+        return render_template("upload_files.html",
+                                show_options = True,
+                                allowed_edit = allowed_edit, 
+                                challenge = challenge)
+    elif request.method == "POST":
+        user = request.cookies.get("user")
+        sk = request.cookies.get("sk")
+
+        udao = UserDao()
+        valid_key = udao.check_session_key(user, sk)
+        user = udao.get_user_from_username(user)
+        cdao = ChallengeDAO(conn=udao.conn)
+        challenge = cdao.get_challenge_by_id(id)
+
+        if challenge:
+            if challenge.user_id != user.id or not valid_key:
+                return "0"
+        else:
+            return "0"
+
+        files_uploads = {}
+        for key in request.form.keys():
+            files_uploads[key] = [request.form[key], request.files[key]]
+
+        uh = UploadHandler()
+        uh.save_challenge_files(files_uploads, challenge.id)
+        
+        return "1"
+
 @app.route("/challenge/<id>", methods=['GET'])
 def challenge(id):
     if request.method == 'GET':
         error = request.cookies.get("error")
         author = None
         banner_path = None
+        download_path = None
         cdao = ChallengeDAO()
         challenge = cdao.get_challenge_by_id(id)
 
@@ -199,15 +248,20 @@ def challenge(id):
             uh = UploadHandler()
             banner_path = uh.get_upload_banner_path(str(challenge.id))
 
+            if os.path.isfile(f"static/Challenges/{id}/build.zip"):
+                print("Found")
+                download_path = f"/static/Challenges/{id}/build.zip"
+
         return render_template("challenge.html",
                                 show_options = True,
                                 challenge = challenge,
                                 author = author,
                                 banner_path = banner_path,
+                                download_path = download_path,
                                 error = error)
 
 if __name__ == "__main__":
-    if not os.path.isdir("static/images/Challenges"):
-        os.mkdir("static/images/Challenges")
+    if not os.path.isdir("static/Challenges"):
+        os.mkdir("static/Challenges")
         
     app.run(debug=True)

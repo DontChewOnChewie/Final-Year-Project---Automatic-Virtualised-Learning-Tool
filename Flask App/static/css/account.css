@@ -62,3 +62,15 @@
 .selected {
     background-color: #314eaa !important;
 }
+
+.no-uploads {
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.carousel-wrapper h2 {
+    text-decoration: none;
+}

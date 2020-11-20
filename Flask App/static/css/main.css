@@ -104,6 +104,12 @@ h2 {
     margin-left: 10px;
 }
 
+.challenge h2 {
+    text-align: center;
+    font-size: 26px;
+    text-decoration: none;
+}
+
 .scroller {
     position: absolute;
     top: 0;

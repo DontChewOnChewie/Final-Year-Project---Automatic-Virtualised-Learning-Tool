@@ -52,17 +52,33 @@
             </div>
 
             <h2>My List</h2>
-            <div class="carousel-wrapper" data-scrolled="0"></div>
+            <div class="carousel-wrapper" data-scrolled="0">
+            </div>
 
             {% endif %}
 
             {% if owns_page %}
                 <h2>My Uploads</h2>
             {% else %}
-                <h2>{{ page_owner.username }}'s Uploads</h2>
+                <h2>{{ page_owner.username.title() }}'s Uploads</h2>
             {% endif %}
 
-            <div class="carousel-wrapper" data-scrolled="0"></div>
+            <div class="carousel-wrapper" data-scrolled="0">
+                {% if users_challenges|length != 0 %}
+                    {% for item in users_challenges %}
+                        {% include 'challenge_item.html' %}
+                    {% endfor %}
+                {% else %}
+                    <div class="no-uploads">
+                        {% if owns_page %}
+                            <h2>You have no Uploads</h2>
+                            <a class="standard-button" href="/upload">Upload</a>
+                        {% else %}
+                            <h2>User has no uploads yet.</h2>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
 
         {% endif %}
 

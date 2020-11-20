@@ -39,7 +39,7 @@
         <h3>Challenge Description</h3>
         <span>{{ challenge.description }}</span>
 
-        <span>Author -:- <a href="/account/{{ author }}">{{ author }}</a></span>
+        <span>Author -:- <a href="/account/{{ author }}">{{ author.title() }}</a></span>
 
         {% if error %}
         <div class="alert alert-error">
@@ -54,7 +54,7 @@
     </main>
 
     <footer>
-        <a href="/login" style="width:100%;">Download Now >></a>
+        <a href="{{ download_path }}" style="width:100%;">Download Now >></a>
     </footer>
 
     {% endif %}

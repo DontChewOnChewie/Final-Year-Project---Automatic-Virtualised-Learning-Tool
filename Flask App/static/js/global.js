@@ -18,6 +18,10 @@ function setup_links() {
     }
 }
 
+function navigate_to_challenge(id) {
+    window.location.href = `/challenge/${id}`;
+}
+
 function run_globals() {
     account_link = document.getElementById("account-link");
     setup_links();

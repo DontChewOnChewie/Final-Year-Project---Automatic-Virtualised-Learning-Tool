@@ -23,21 +23,7 @@
         <div class="carousel-wrapper" data-scrolled="0">
 
             {% for item in new_challenges %}
-                <div class="challenge">
-                    <h3>{{ item.name }}</h3>
-                    <img src="{{ url_for('static', filename='images/sample_challenge.jpg') }}" alt="Challenge Icon"/>
-                    <div class="challenge-spec">
-                        <span class="{{ item.difficulty.lower() }}">{{ item.difficulty }}</span>
-
-                        {% for tech in item.technoligies %}
-                            {% if tech == 1 %}
-                                <img src="{{ url_for('static', filename='images/docker.png') }}" alt="Docker Logo"/>
-                            {% elif tech == 2 %}
-                                <img src="{{ url_for('static', filename='images/vb.png') }}" alt="VirtualBox Logo">
-                            {% endif %}
-                        {% endfor %}
-                    </div>
-                </div>
+                {% include 'challenge_item.html' %}
             {% endfor %}
 
             <div class="scroller">
