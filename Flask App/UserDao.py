@@ -91,7 +91,7 @@ class UserDao:
                              JOIN User_Session u ON a.ID = u.USER_ID \
                              WHERE a.USERNAME = ? AND u.SESSION_KEY = ?", (username, key))
         record = self.cursor.fetchone()
-        return User(*record)
+        return User(*record) if record else None
 
     def check_session_key(self, user, session_key):
         self.cursor.execute("SELECT a.ID FROM Account a \

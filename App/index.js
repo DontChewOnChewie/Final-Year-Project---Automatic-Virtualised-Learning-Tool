@@ -10,6 +10,18 @@ const createWindow = () => {
         }
     });
 
+    if (!fs.existsSync("./Downloads")) {
+        fs.mkdir("./Downloads", (err) => {
+            if (err) throw err;
+        });
+    }
+
+    if (!fs.existsSync("config.json")) {
+        fs.writeFile('config.json', '{\n\t"users":{\n\t\t"":[]\n\t},\n\t"challenges":[]\n}', function (err) {
+            if (err) throw err;
+        }); 
+    }
+
     mainWindow.webContents.session.clearCache( function() { /*Clear Cache for debugging.*/ }) ;
     if (fs.existsSync("auto_creds")) {
         fs.readFile('auto_creds', 'utf8', function (err, data) {

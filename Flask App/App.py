@@ -40,7 +40,12 @@ def login():
             udao.close()
             
         if isinstance(result[0], User):
-            resp = make_response(redirect("/main")) if not enable_auto_login else make_response(redirect("/autologinsetup"))
+            if not enable_auto_login:
+                resp = make_response(render_template("loginsetup.html", 
+                                                    redirect = "/main"))
+            else:
+                resp = make_response(redirect("/autologinsetup"))
+
             resp.set_cookie("sk", result[1])
             resp.set_cookie("user", result[0].username)
         else:
@@ -90,10 +95,15 @@ def auto_login():
     decrypted_creds = es.decrypt(session[6], session[7], session[8]).split(":")
 
     udao = UserDao()
-    udao.auto_login(decrypted_creds[0], decrypted_creds[1])
+    user = udao.auto_login(decrypted_creds[0], decrypted_creds[1])
     udao.close()
 
-    resp = make_response(redirect("/main"))
+    if not user:
+        resp = make_response(redirect("/login"))
+        return resp
+
+    resp = make_response(render_template("loginsetup.html",
+                                            redirect = "/main"))
     resp.set_cookie("user", decrypted_creds[0])
     resp.set_cookie("sk", decrypted_creds[1])
 
@@ -102,19 +112,34 @@ def auto_login():
 @app.route("/main", methods=['GET'])
 def main():
     if request.method == "GET":
+        get_args = request.args.get("list")
+        print(get_args)
         cdao = ChallengeDAO()
         new_challenges = cdao.get_recent_challenges()
+
+        my_challenges = None
+        challenges = ""
+        if get_args:
+            get_args = get_args.split(",")
+            for c in get_args:
+                challenges += c + "|"
+            my_challenges = cdao.get_downloaded_challenges(challenges)
+
         cdao.close()
 
-        return render_template("main.html",
-                                show_options = True,
-                                new_challenges = new_challenges)
+        resp = make_response(render_template("main.html",
+                                            show_options = True,
+                                            new_challenges = new_challenges,
+                                            my_challenges = my_challenges))
+        resp.set_cookie("challenges", challenges[:-1])
+        return resp
 
 @app.route("/account/<user>", methods=['GET'])
 def account(user):
     if request.method == 'GET':
         logged_user = request.cookies.get("user")
         sk = request.cookies.get("sk")
+        challenges = request.cookies.get("challenges")
         udao = UserDao()
         users_page = udao.get_user_from_username(user)
 
@@ -124,15 +149,19 @@ def account(user):
             users_challenges = cdao.get_users_uploaded_challenges(users_page.id)
 
         valid_key = False
+        my_challenges = None
         if logged_user == user:
             valid_key = udao.check_session_key(logged_user, sk)
+            if challenges and valid_key:
+                my_challenges = cdao.get_downloaded_challenges(challenges)
             
         udao.close()
         return render_template("account.html",
                                 show_options = True,
                                 page_owner = users_page,
                                 owns_page = valid_key,
-                                users_challenges = users_challenges)
+                                users_challenges = users_challenges,
+                                my_challenges = my_challenges)
 
 @app.route("/upload", methods=['GET', 'POST'])
 def upload():

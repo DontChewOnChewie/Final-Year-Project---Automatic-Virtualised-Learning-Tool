@@ -69,6 +69,18 @@ class ChallengeDAO:
         for x in range(len(records)):
             challenges[x] = Challenge(*records[x])
         return challenges if len(records) > 0 else []
+    
+    def get_downloaded_challenges(self, challenge_ids):
+        records = []
+        for c in challenge_ids:
+            self.cursor.execute("SELECT * FROM Challenge \
+                                WHERE ID = ?", (c,))
+            record = self.cursor.fetchone()
+            if record:
+                records.append(Challenge(*record))
+        
+        return records
+
 
     
     def close(self):

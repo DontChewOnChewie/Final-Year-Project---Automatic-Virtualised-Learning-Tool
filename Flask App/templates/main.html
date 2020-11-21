@@ -34,11 +34,11 @@
 
         <h2>My List</h2>
         <div class="carousel-wrapper" data-scrolled="0">
-            {% for item in users_list %}
-                <div class="">
-
-                </div>
-            {% endfor %}
+            {% if my_challenges != None %}
+                {% for item in my_challenges %}
+                    {% include 'challenge_item.html' %}
+                {% endfor %}
+            {% endif %}
 
             <div class="scroller">
                 <img src="{{ url_for('static', filename='images/right-arrow.svg') }}" alt="Scrool Carousel"/>    

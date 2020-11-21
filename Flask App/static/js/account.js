@@ -1,5 +1,25 @@
 let username_btn, email_btn, password_btn, btn_container;
 let new_detail_inp, conf_detail_inp;
+let scroll_btns;
+
+function scroll_carousel(carousel_btn) {
+    let p = carousel_btn.parentElement;
+    let pp = carousel_btn.parentElement.parentElement;
+    let scrolled = pp.getAttribute("data-scrolled");
+    
+    if (scrolled == "0") {
+        p.style.left = "98%";
+        pp.style.left = "-100%";
+        pp.setAttribute("data-scrolled", "1");    
+        carousel_btn.style.transform = "rotate(180deg)";
+    } else {
+        p.style.left = "48%";
+        pp.style.left = "0%";
+        pp.setAttribute("data-scrolled", "0");
+        carousel_btn.style.transform = "rotate(0deg)";
+    }
+
+}
 
 function change_input_info(tag) {
     new_detail_inp.placeholder = `New ${tag}...`;
@@ -42,6 +62,7 @@ window.onload = function() {
     username_btn = document.getElementById("username-edit-btn")
     email_btn = document.getElementById("email-edit-btn");
     password_btn = document.getElementById("password-edit-btn");
+    scroll_btns = document.querySelectorAll(".scroller img");
     btn_container = username_btn.parentElement;
 
     for (var i = 0; i < btn_container.children.length; i++) {
@@ -50,4 +71,10 @@ window.onload = function() {
 
     new_detail_inp = document.getElementById("new-detail");
     conf_detail_inp = document.getElementById("conf-new-detail");
+
+    for (var i = 0; i < scroll_btns.length; i++) {
+        scroll_btns[i].addEventListener("click", function () {
+                scroll_carousel(this);
+        });
+    }
 }
