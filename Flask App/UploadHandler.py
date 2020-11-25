@@ -6,7 +6,7 @@ class UploadHandler:
 
     CHALLENGE_BANNER_DIR = "static/Challenges/"
 
-    ALLOWED_EXTENSIONS = { "Docker":["zip"], "VirtualBox":["vdi", "vmdk"]}
+    ALLOWED_EXTENSIONS = { "Docker":["zip"], "VirtualBox":["vdi", "vmdk", "iso"]}
 
     def __init__(self):
         pass

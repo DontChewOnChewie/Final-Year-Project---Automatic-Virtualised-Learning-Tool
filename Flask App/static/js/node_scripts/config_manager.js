@@ -55,7 +55,8 @@ function add_challenge_to_user() {
         for (var i = 0; i < _user.length; i++) {
             if (_user[i] == parseInt(challenge_id)) return false;
         }
-        return write_challenge_to_user(json_data, parseInt(challenge_id));
+
+        write_challenge_to_user(json_data, challenge_id);
     });  
 }
 
