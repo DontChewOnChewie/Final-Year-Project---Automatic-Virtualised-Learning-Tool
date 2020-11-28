@@ -255,6 +255,8 @@ def upload_files(id):
         files_uploads = {}
         for key in request.form.keys():
             files_uploads[key] = [request.form[key], request.files[key]]
+        
+        print(files_uploads)
 
         uh = UploadHandler()
         uh.save_challenge_files(files_uploads, challenge.id)

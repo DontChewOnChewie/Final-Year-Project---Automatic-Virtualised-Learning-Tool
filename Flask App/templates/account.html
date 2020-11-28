@@ -53,18 +53,20 @@
 
             <h2>My List</h2>
             <div class="carousel-wrapper" data-scrolled="0">
-                {% if my_challenges|length != 0 %}
-                    {% for item in my_challenges %}
-                        {% include 'challenge_item.html' %}
-                    {% endfor %}
-                    <div class="scroller">
-                        <img src="{{ url_for('static', filename='images/right-arrow.svg') }}" alt="Scrool Carousel"/>    
-                    </div>
-                {% else %}
-                    <div class="no-uploads">
-                        <h2>You have no Saved Challenges</h2>
-                        <a class="standard-button" href="/upload">Upload</a>
-                    </div>
+                {% if my_challenges != None %}
+                    {% if my_challenges|length != 0 %}
+                        {% for item in my_challenges %}
+                            {% include 'challenge_item.html' %}
+                        {% endfor %}
+                        <div class="scroller">
+                            <img src="{{ url_for('static', filename='images/right-arrow.svg') }}" alt="Scrool Carousel"/>    
+                        </div>
+                    {% else %}
+                        <div class="no-uploads">
+                            <h2>You have no Saved Challenges</h2>
+                            <a class="standard-button" href="/upload">Upload</a>
+                        </div>
+                    {% endif %}
                 {% endif %}
             </div>
 
