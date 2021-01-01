@@ -47,6 +47,8 @@ function setup_installing_view(args) {
 }
 
 window.onload = function () {
+    run_globals();
+
     btn_vbox = document.getElementById("btn-vbox");
     btn_docker = document.getElementById("btn-docker");
     btn_both = document.getElementById("btn-both");

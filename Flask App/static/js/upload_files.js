@@ -2,6 +2,8 @@
  let files = [null, null, null];
  let types = [null, null, null];
 
+ let footer_a;
+
 function toggle_tech(btn) {
     if (btn.getAttribute("data-selected") == "1") return;
     let parent = btn.parentElement;
@@ -47,7 +49,24 @@ function upload() {
             formData.append(`${i}`, types[i]);
         }
     }
+
+    let footer = document.createElement("footer");
+    footer.style.width = "100%";
+    footer_a = document.createElement("a");
+    footer_a.innerText = "Uploading Files...";
+    footer.appendChild(footer_a);
+    document.querySelector("body").appendChild(footer);
+
     let xhr = new XMLHttpRequest();
+
+    xhr.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200 && this.responseText == "Y") {
+            let footer_link = document.location.href.substring(0, document.location.href.length - 5);
+            footer_a.setAttribute("href", `${footer_link}lesson`);
+            footer_a.innerText = "Upload Lesson for Challenge >>";
+            footer_a.className = "populated";
+        }
+    };
 
     xhr.open("post", document.location.href);
     xhr.send(formData);

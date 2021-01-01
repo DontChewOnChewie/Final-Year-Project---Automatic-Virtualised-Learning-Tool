@@ -261,7 +261,26 @@ def upload_files(id):
         uh = UploadHandler()
         uh.save_challenge_files(files_uploads, challenge.id)
         
-        return "1"
+        return "Y"
+
+@app.route("/upload/<id>/lesson", methods=['GET', 'POST'])
+def upload_lesson(id):
+    if request.method == "GET":
+        user = request.cookies.get("user")
+        sk = request.cookies.get("sk")
+        udao = UserDao()
+        valid_key = udao.check_session_key(user, sk)
+        if valid_key:
+            cdao = ChallengeDAO(conn=udao.conn)
+            challenge = cdao.get_challenge_by_id(id)
+            udao.close()
+            return render_template("upload_lesson.html",
+                                    show_options = True,
+                                    challenge = challenge)
+        
+        return "N"
+    elif request.method == "POST":
+        return "Y"
 
 @app.route("/challenge/<id>", methods=['GET'])
 def challenge(id):

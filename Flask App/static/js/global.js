@@ -1,3 +1,5 @@
+const remote = require("electron").remote
+let btn_close, btn_minimise;
 let account_link;
 
 function get_cookie(cookie_name) {
@@ -24,5 +26,10 @@ function navigate_to_challenge(id) {
 
 function run_globals() {
     account_link = document.getElementById("account-link");
+    btn_close = document.getElementById("btn_close");
+    btn_minimise = document.getElementById("btn_minimise");
+    
+    btn_close.addEventListener("click", function() { remote.getCurrentWindow().close(); });
+    btn_minimise.addEventListener("click", function() { remote.getCurrentWindow().minimize(); });
     setup_links();
 }

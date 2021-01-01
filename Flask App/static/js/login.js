@@ -14,6 +14,7 @@ function toggle_password_button() {
 }
 
 window.onload = function () {
+    run_globals();
     toggle_pass_button = document.getElementById("toggle-password");
     password_field = document.querySelector("input[type='password']");
     toggle_pass_button.addEventListener("click", function () { toggle_password_button(); });

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename='css/global.css') }}" rel="stylesheet"/>
+    <link href="{{ url_for('static', filename='css/upload_lesson.css') }}" rel="stylesheet"/>
+    <script src="{{ url_for('static', filename='js/global.js')}}"></script>
+    <script src="{{ url_for('static', filename='js/upload_lesson.js') }}"></script>
+</head>
+<body>
+    
+    {% include 'header.html' %}
+
+    <main>
+        <div class="builder">
+        </div>
+
+        <div class="builder-output">
+            {{ challenge.name }}
+        </div>
+    </main>
+
+</body>
+</html>
