@@ -6,6 +6,7 @@
     <link href="{{ url_for('static', filename='css/global.css') }}" rel="stylesheet"/>
     <link href="{{ url_for('static', filename='css/upload_lesson.css') }}" rel="stylesheet"/>
     <script src="{{ url_for('static', filename='js/global.js')}}"></script>
+    <script>let challenge_name = "{{ challenge.name }}";</script>
     <script src="{{ url_for('static', filename='js/upload_lesson.js') }}"></script>
 </head>
 <body>
@@ -14,12 +15,20 @@
 
     <main>
         <div class="builder">
+            <div id="add-task-btn">+</div>
         </div>
 
         <div class="builder-output">
-            {{ challenge.name }}
+            <div class="lesson-minimise"><p>{</p></div>
+            <div class="lesson-obj">
+                <h2>{{ challenge.name }}</h2>
+            </div>
         </div>
     </main>
+
+    <footer>
+        <a id="upload-btn">Upload Lesson...</a>
+    </footer>
 
 </body>
 </html>

@@ -38,12 +38,12 @@ def login():
             udao = UserDao()
             result = udao.login(credentials, ip, auto_login) if udao.check_account_exists(credentials) else udao.signup(credentials, ip, auto_login) 
             udao.close()
+        
+        print(result)
             
         if isinstance(result[0], User):
-            if not enable_auto_login:
-                resp = make_response(render_template("loginsetup.html", 
-                                                    redirect = "/main"))
-            else:
+            resp = make_response(redirect("/main"))
+            if enable_auto_login:
                 resp = make_response(redirect("/autologinsetup"))
 
             resp.set_cookie("sk", result[1])
@@ -245,6 +245,7 @@ def upload_files(id):
         user = udao.get_user_from_username(user)
         cdao = ChallengeDAO(conn=udao.conn)
         challenge = cdao.get_challenge_by_id(id)
+        udao.close()
 
         if challenge:
             if challenge.user_id != user.id or not valid_key:
@@ -256,7 +257,6 @@ def upload_files(id):
         for key in request.form.keys():
             files_uploads[key] = [request.form[key], request.files[key]]
         
-        print(files_uploads)
 
         uh = UploadHandler()
         uh.save_challenge_files(files_uploads, challenge.id)
@@ -268,8 +268,19 @@ def upload_lesson(id):
     if request.method == "GET":
         user = request.cookies.get("user")
         sk = request.cookies.get("sk")
+
         udao = UserDao()
         valid_key = udao.check_session_key(user, sk)
+        user = udao.get_user_from_username(user)
+        cdao = ChallengeDAO(conn=udao.conn)
+        challenge = cdao.get_challenge_by_id(id)
+
+        if challenge:
+            if challenge.user_id != user.id or not valid_key:
+                return "0"
+        else:
+            return "0"
+
         if valid_key:
             cdao = ChallengeDAO(conn=udao.conn)
             challenge = cdao.get_challenge_by_id(id)
@@ -280,7 +291,26 @@ def upload_lesson(id):
         
         return "N"
     elif request.method == "POST":
-        return "Y"
+        user = request.cookies.get("user")
+        sk = request.cookies.get("sk")
+        json = request.form['json']
+
+        udao = UserDao()
+        valid_key = udao.check_session_key(user, sk)
+        user = udao.get_user_from_username(user)
+        cdao = ChallengeDAO(conn=udao.conn)
+        challenge = cdao.get_challenge_by_id(id)
+        udao.close()
+
+        if challenge:
+            if challenge.user_id != user.id or not valid_key:
+                return "0"
+            
+            uh = UploadHandler()
+            result = uh.save_lesson_file(json, id)
+            return "Y"
+
+        return "0"
 
 @app.route("/challenge/<id>", methods=['GET'])
 def challenge(id):

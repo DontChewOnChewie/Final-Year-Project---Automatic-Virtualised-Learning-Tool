@@ -70,6 +70,20 @@ class UploadHandler:
         
         shutil.rmtree(f"{self.CHALLENGE_BANNER_DIR}{challenge_id}/build", ignore_errors=True)
         return False
+    
+    def save_lesson_file(self, json, challenge_id):
+        if not os.path.isfile(f"{self.CHALLENGE_BANNER_DIR}{challenge_id}/build.zip"):
+            return False
+        
+        with open(f"{self.CHALLENGE_BANNER_DIR}{challenge_id}/lesson.json", "w") as json_file:
+            json_file.write(json)
+                
+        zipf = zipfile.ZipFile(f"{self.CHALLENGE_BANNER_DIR}{challenge_id}/build.zip", "a")
+        zipf.write(f"{self.CHALLENGE_BANNER_DIR}{challenge_id}/lesson.json")
+        zipf.close()
+
+        os.remove(f"{self.CHALLENGE_BANNER_DIR}{challenge_id}/lesson.json")
+        return True
 
         
 

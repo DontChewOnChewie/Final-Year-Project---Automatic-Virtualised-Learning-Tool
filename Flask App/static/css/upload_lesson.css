@@ -3,16 +3,88 @@ main {
     justify-content: space-around;
     align-items: center;
     flex-direction: row;
+    height: 85vh;
 }
 
 .builder {
-    background-color: red;
     width: 30%;
-    height: 60vh;
+    height: 100%;
+    margin-top: 20px;
 }
 
 .builder-output {
     background-color: green;
     width: 30%;
-    height: 60vh;
+    height: 100%;
+    margin-top: 20px;
+    display: flex;
+}
+
+.lesson-minimise {
+    height: 100%;
+    width: 10%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+}
+
+.lesson-obj {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 90%;
+    height: 100%;
+}
+
+#add-task-btn {
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-size: 36px;
+    cursor: pointer;
+    border-top: 2px solid white;
+    border-bottom: 2px solid white;
+}
+
+.task-div {
+    background-color: pink;
+}
+
+.task-div input {
+    width: 80%;
+    display: inline-block;
+    border: none;
+}
+
+.task-div div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+}
+
+.task-div div img {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: 90%;
+    top: 20%;
+    cursor: pointer;
+}
+
+.task-div textarea {
+    height: 100px;
+    width: 80%;
+}
+
+.task-div select {
+    width: 80%;
+    padding: 5px;
+}
+
+footer a {
+    width: 100%;
 }
