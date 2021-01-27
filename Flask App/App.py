@@ -340,6 +340,12 @@ def challenge(id):
                                 download_path = download_path,
                                 error = error)
 
+@app.route("/settings", methods=["GET"])
+def settings():
+    if request.method == "GET":
+        return render_template("settings.html",
+                                show_options = True)
+
 if __name__ == "__main__":
     if not os.path.isdir("static/Challenges"):
         os.mkdir("static/Challenges")

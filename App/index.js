@@ -1,6 +1,12 @@
 const {app, BrowserWindow} = require('electron');
 const fs = require('fs')
 
+const config_defaults = {
+    "installed":0,
+    "default_machine":"Project_Kali",
+    "selected_machine":"Project_Kali"
+}
+
 const createWindow = () => {
     const mainWindow = new BrowserWindow({
         frame: false,
@@ -12,6 +18,12 @@ const createWindow = () => {
 
     if (!fs.existsSync("./Downloads")) {
         fs.mkdir("./Downloads", (err) => {
+            if (err) throw err;
+        });
+    }
+
+    if (!fs.existsSync("config.json")) {
+        fs.writeFile("config.json", JSON.stringify(config_defaults, null, 4), function (err) {
             if (err) throw err;
         });
     }

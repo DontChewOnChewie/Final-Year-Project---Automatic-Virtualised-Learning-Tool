@@ -58,10 +58,30 @@ header div {
     border-radius: 0 0 0 10px;
 }
 
+.toolbar-icon {
+    width: 30px !important;
+}
+
+#home-link {
+    display: block;
+    background: url("../images/home.svg") no-repeat;
+    background-size: 100% 100%;
+}
+
+#upload-link {
+    display: block;
+    background: url("../images/upload.svg") no-repeat;
+    background-size: 100% 100%;
+}
+
+#settings-link {
+    display: block;
+    background: url("../images/settings.svg") no-repeat;
+    background-size: 100% 100%;
+}
+
 .toolbar-wrapper li:last-child {
     border-radius: 0 0 10px 0;
-    width: 30px;
-    background: url("../images/upload.svg") no-repeat;
 }
 
 .toolbar-wrapper li:hover {
@@ -74,7 +94,6 @@ header div {
 }
 
 .toolbar-wrapper li a:last-child {
-    display: block;
     width: 100%;
     height: 100%;
 }
