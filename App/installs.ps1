@@ -27,7 +27,6 @@ if ($args[0] -eq "1") {
     echo "Installing VirtualBox..."
     .\installers\vbox-install.exe --silent --ignore-reboot
     echo "Installation of VirtualBox complete."
-    
 }
 
 if ($args[1] -eq "1") {

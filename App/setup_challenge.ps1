@@ -26,6 +26,15 @@ function Setup-Docker($docker_zip, $challenge_id, $filename) {
     echo "docker stop '$challenge_id-$filename'" >> ".\Downloads\$challenge_id\stop.ps1"
 }
 
+function Setup-Attackers-Machine() {
+    # Get users selected machine, can be same as default.
+    $selected_machine = $($(cat config.json) | ConvertFrom-Json).selected_machine
+    echo "VBoxManage startvm '$selected_machine'" >> ".\Downloads\$challenge_id\start.ps1"
+    echo "Start-Sleep -Seconds 5" >> ".\Downloads\$challenge_id\start.ps1"
+    echo "VBoxManage sharedfolder add '$selected_machine' --name 'Program_Shared' --hostpath './VM_Shared' --transient --automount"
+    echo "VBoxManage controlvm '$selected_machine' poweroff" >> ".\Downloads\$challenge_id\stop.ps1"
+}
+
 if ($args.Length -eq 2) {
     $download_link = $args[0]
     $challenge_id = $args[1]
@@ -54,6 +63,8 @@ if ($args.Length -eq 2) {
             Setup-Docker $files[$i] $challenge_id $files[$i].Split(".")[0]
         }
     }
+
+    Setup-Attackers-Machine
 
     # Check this is working
     if ($has_docker_files -eq 1) {

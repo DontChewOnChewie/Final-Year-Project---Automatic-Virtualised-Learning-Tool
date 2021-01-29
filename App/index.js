@@ -22,6 +22,12 @@ const createWindow = () => {
         });
     }
 
+    if (!fs.existsSync("./VM_Shared")) {
+        fs.mkdir("./VM_Shared", (err) => {
+            if (err) throw err;
+        })
+    }
+
     if (!fs.existsSync("config.json")) {
         fs.writeFile("config.json", JSON.stringify(config_defaults, null, 4), function (err) {
             if (err) throw err;

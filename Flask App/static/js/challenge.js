@@ -18,6 +18,7 @@ window.onload = function () {
         e.preventDefault();
 
         if (download_btn.innerText == "Run...") {
+            download_btn.innerText = "Starting...";
             let start_process = cp.exec(`powershell .\\Downloads\\${challenge_id}\\start.ps1`);
 
             start_process.stderr.on("data", function (data) {
@@ -34,6 +35,7 @@ window.onload = function () {
             });
 
         } else if (download_btn.innerText == "Stop") {
+            download_btn.innerText = "Stopping...";
             let stop_process = cp.exec(`powershell .\\Downloads\\${challenge_id}\\stop.ps1`);
 
             stop_process.stderr.on("data", function (data) {
