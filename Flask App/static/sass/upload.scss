@@ -1,0 +1,28 @@
+@import './global';
+
+main {
+
+    @include width-and-height(100%, 90vh);
+    @include flex(center, center, column);
+
+    h2 { margin-bottom: 20px; color: $colour_text; font-weight: bold; font-size: 36px; }
+
+    form {
+        width: 300px;
+        padding: 20px;
+        border-radius: 15px;
+        @include item-with-shadow();
+        @include flex(center, flex-start, column);
+
+        input { width: 290px; }
+
+        textarea { @include width-and-height(290px, 350px); }
+
+        select { width: 290px; padding: 10px; box-sizing: border-box; border-radius: 5px; }
+
+        button { margin: 0 auto; padding: 5px 12px; border-radius: 10px; }
+    }
+
+    footer { bottom: 30%; border-radius: 10px; }
+
+}

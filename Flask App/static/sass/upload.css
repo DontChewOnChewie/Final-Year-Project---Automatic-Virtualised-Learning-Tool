@@ -1,0 +1,474 @@
+@font-face {
+  font-family: "myriad-pro";
+  src: url("Myriad Pro Regular.ttf");
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  font-family: myriad-pro;
+}
+
+body {
+  overflow: hidden;
+  background: radial-gradient(#93a5cf 50%, #e4efe9);
+  width: 100%;
+  height: 100vh;
+}
+
+header {
+  width: 100%;
+  height: 6vh;
+  position: relative;
+  padding: 0px 10px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.7);
+  -webkit-box-shadow: 0px 5px 10px 0px rgba(249, 141, 88, 0.4);
+          box-shadow: 0px 5px 10px 0px rgba(249, 141, 88, 0.4);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+header .toolbar-wrapper {
+  width: 40%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+header .toolbar-wrapper ul {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+header .toolbar-wrapper ul li {
+  display: inline-block;
+  position: relative;
+  padding: 5px 10px;
+  -webkit-transition: all ease-in-out 0.4s;
+  transition: all ease-in-out 0.4s;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+header .toolbar-wrapper ul li:hover {
+  background-color: #f98d58;
+}
+
+header .toolbar-wrapper ul li:hover a {
+  color: white;
+  text-decoration: underline;
+}
+
+header .toolbar-wrapper ul li a {
+  height: 100%;
+  text-decoration: none;
+  font-weight: bold;
+  color: #4f4e59;
+}
+
+header .toolbar-wrapper ul .toolbar-icon {
+  width: 30px;
+  height: 30px;
+}
+
+header .toolbar-wrapper ul .toolbar-icon:hover {
+  background-color: white;
+}
+
+header .toolbar-wrapper ul .toolbar-icon:hover img {
+  -webkit-filter: brightness(4) hue-rotate(55deg) saturate(35);
+          filter: brightness(4) hue-rotate(55deg) saturate(35);
+}
+
+header .toolbar-wrapper ul .toolbar-icon img {
+  width: 100%;
+  height: 100%;
+}
+
+header .toolbar-wrapper ul .toolbar-icon a {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+header .control-buttons-wrapper {
+  color: white;
+  font-weight: bold;
+  position: absolute;
+  left: 90%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+header .control-buttons-wrapper .control-button {
+  display: inline-block;
+  margin-right: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 40px;
+  height: 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+header .control-buttons-wrapper .control-button:hover {
+  -webkit-filter: saturate(0.7);
+          filter: saturate(0.7);
+}
+
+header .control-buttons-wrapper #btn_close {
+  background-color: #d14848;
+}
+
+header .control-buttons-wrapper #btn_minimise {
+  background-color: #0054DC;
+}
+
+.alert {
+  width: 40%;
+  background-color: #0054DC;
+  color: white;
+  padding: 20px;
+  border-radius: 20px;
+  text-align: center;
+  margin-top: 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.alert .alert-message {
+  margin-right: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.alert .alert-message p:nth-child(odd) {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.alert .alert-message p:nth-child(even) {
+  font-size: 14px;
+}
+
+.alert .alert-icon {
+  font-size: 60px;
+  border-left: 1px solid white;
+  padding-left: 20px;
+}
+
+input {
+  background-color: transparent;
+  padding: 5px 12px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border: none;
+  border-bottom: 2px solid #f98d58;
+  margin-bottom: 10px;
+}
+
+input::-webkit-input-placeholder {
+  color: #4f4e59;
+  font-weight: bold;
+}
+
+input:-ms-input-placeholder {
+  color: #4f4e59;
+  font-weight: bold;
+}
+
+input::-ms-input-placeholder {
+  color: #4f4e59;
+  font-weight: bold;
+}
+
+input::placeholder {
+  color: #4f4e59;
+  font-weight: bold;
+}
+
+input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+}
+
+input[type="file"] {
+  border: none;
+}
+
+input[type="file"]::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+input[type="file"]::before {
+  content: 'Select Image';
+  background-color: #f98d58;
+  color: white;
+  padding: 5px 8px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border-radius: 20px;
+  margin-right: -80px;
+  cursor: pointer;
+  -webkit-transition: background-color ease-in-out 0.3s;
+  transition: background-color ease-in-out 0.3s;
+}
+
+input[type="file"]::before:hover {
+  -webkit-filter: saturate(0.7);
+          filter: saturate(0.7);
+}
+
+button {
+  background-color: #f98d58;
+  border: none;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  cursor: pointer;
+  -webkit-transition: all ease-in-out 0.5s;
+  transition: all ease-in-out 0.5s;
+}
+
+button:hover {
+  -webkit-filter: saturate(1.5);
+          filter: saturate(1.5);
+}
+
+select {
+  border: 2px solid #f98d58;
+  outline: none;
+  color: #4f4e59;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+select option {
+  background-color: white;
+  color: #4f4e59;
+  font-weight: bold;
+}
+
+textarea {
+  border: 2px solid #f98d58;
+  border-radius: 5px;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+textarea::-webkit-input-placeholder {
+  color: #4f4e59;
+  font-weight: bold;
+}
+
+textarea:-ms-input-placeholder {
+  color: #4f4e59;
+  font-weight: bold;
+}
+
+textarea::-ms-input-placeholder {
+  color: #4f4e59;
+  font-weight: bold;
+}
+
+textarea::placeholder {
+  color: #4f4e59;
+  font-weight: bold;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  padding: 10px;
+  background: #f98d58;
+  border-radius: 10px 10px 0 0;
+  cursor: pointer;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+footer:hover {
+  -webkit-filter: saturate(0.7);
+          filter: saturate(0.7);
+}
+
+footer a {
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+}
+
+footer img {
+  width: 20px;
+  height: 20px;
+  margin-left: 10px;
+}
+
+main {
+  width: 100%;
+  height: 90vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+main h2 {
+  margin-bottom: 20px;
+  color: #4f4e59;
+  font-weight: bold;
+  font-size: 36px;
+}
+
+main form {
+  width: 300px;
+  padding: 20px;
+  border-radius: 15px;
+  background-color: rgba(255, 255, 255, 0.7);
+  -webkit-box-shadow: 0px 5px 10px 0px rgba(249, 141, 88, 0.4);
+          box-shadow: 0px 5px 10px 0px rgba(249, 141, 88, 0.4);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+main form input {
+  width: 290px;
+}
+
+main form textarea {
+  width: 290px;
+  height: 350px;
+}
+
+main form select {
+  width: 290px;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  border-radius: 5px;
+}
+
+main form button {
+  margin: 0 auto;
+  padding: 5px 12px;
+  border-radius: 10px;
+}
+
+main footer {
+  bottom: 30%;
+  border-radius: 10px;
+}
+/*# sourceMappingURL=upload.css.map */

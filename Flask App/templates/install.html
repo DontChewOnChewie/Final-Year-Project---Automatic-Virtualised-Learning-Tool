@@ -3,8 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="{{ url_for('static', filename='sass/install.css') }}" rel="stylesheet"/>
+    
+    <!-- Old Style.
     <link href="{{ url_for('static', filename='css/global.css') }}" rel="stylesheet"/>
     <link href="{{ url_for('static', filename='css/install.css') }}" rel="stylesheet"/>
+    -->
+
     <script src="{{ url_for('static', filename='js/global.js') }}"></script>
     <script src="{{ url_for('static', filename='js/node_scripts/installs.js') }}"></script>
 </head>
@@ -19,34 +25,22 @@
                 <p>Some features of this program require VirtualBox and Docker to run correctlty.</p>
                 <p>These can be installed using the buttons below, or by the user themselves.</p>
             </div>
-            <div class="alert-icon"><p>!</p></div>
+            <div class="alert-icon">!</div>
         </div>
 
         <div class="dependancy-wrapper">
-            <div class="dependancy">
-                <div>
-                    <img src="{{ url_for('static', filename='images/VirtualBox.png') }}" alt="VirtualBox Logo"/>
-                </div>
-                <button id="btn-vbox" class="standard-button" type="button">Install VirtualBox</button>
-            </div>
-
-            <div style="color:white; font-size:60px;">+</div>
-
-            <div class="dependancy">
-                <div>
-                    <img src="{{ url_for('static', filename='images/docker_original.png') }}" alt="Docker Logo"/>
-                </div>
-                <button id="btn-docker" class="standard-button" type="button">Install Docker</button>
-            </div>
+            <img class="complete" src="{{ url_for('static', filename='images/VirtualBox.png') }}" alt="VirtualBox Logo"/>
+            <span>+</span>
+            <img class="running" src="{{ url_for('static', filename='images/docker_original.png') }}" alt="Docker Logo"/>
+            <span>+</span>
+            <img src="{{ url_for('static', filename='images/kali.png') }}" alt="Docker Logo"/>
         </div>
 
-        <button id="btn-both" class="standard-button" style="width:30%; margin: 20px auto 0 auto;">Install Both Dependancies</button>
+        <button id="btn-both" class="standard-button">Install 'Program Name'</button>
+
+        <div class="ball"></div>
 
     </main>
-
-    <footer>
-        <a href="/login" style="width:100%;">Skip to Sign Up or Sign In >></a>
-    </footer>
 
     </body>
 

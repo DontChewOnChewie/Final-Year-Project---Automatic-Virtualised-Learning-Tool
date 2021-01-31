@@ -4,8 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Settings</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/global.css') }}"/>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/settings.css') }}"/>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='sass/settings.css') }}"/>
     <script src="{{ url_for('static', filename='js/global.js') }}"></script>
     <script src="{{ url_for('static', filename='js/settings.js') }}"></script>
 </head>
@@ -14,12 +14,22 @@
     {% include 'header.html' %}
 
     <main>
-        <select>
 
-        </select>
+        <div>
+
+            <h2>Settings</h2>
+
+            <select>
+                <option value="" disabled selected>Choose VirtualBox Machine as Preference</option>
+            </select>
+        </div>
+
+        <footer>
+            <a href="/main">Save and Exit Settings</a>
+            <img src="{{ url_for('static', filename='images/exit.svg') }}"/>
+        </footer>
+
     </main>
-
-    <footer><a href="/main">Save and Exit Settings...</a></footer>
 
 </body>
 </html>

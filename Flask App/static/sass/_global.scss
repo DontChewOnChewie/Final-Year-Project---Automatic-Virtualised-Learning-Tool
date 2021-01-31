@@ -1,0 +1,242 @@
+$colour_primary : #0054DC;
+$colour_secondary : #f98d58;
+$colour_close : #d14848;
+$colour_standby: #dacf7f;
+$colour_complete: #6cb85d;
+$colour_text: #4f4e59;
+
+@mixin flex($jc, $ai, $dir) {
+    display: flex;
+    justify-content: $jc;
+    align-items: $ai;
+    flex-direction: $dir;
+}
+
+@mixin width-and-height($width, $height) {
+    width: $width;
+    height: $height;
+}
+
+@mixin item-with-shadow() {
+    background-color: rgba(255,255,255, 0.7);
+    box-shadow: 0px 5px 10px 0px rgba(249, 141, 88, 0.4);
+}
+
+@font-face {
+    font-family: "myriad-pro";
+    src: url("Myriad Pro Regular.ttf");
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: myriad-pro;
+}
+
+body {
+    overflow: hidden;
+    background: radial-gradient(#93a5cf 50%, #e4efe9);
+    @include width-and-height(100%, 100vh);
+}
+
+// Header //
+
+header {
+
+    @include width-and-height(100%, 6vh);
+    position: relative;
+    padding: 0px 10px;
+    box-sizing: border-box;
+    @include item-with-shadow();
+    @include flex(space-between, center, row);
+
+    .toolbar-wrapper {
+
+        width: 40%;
+        @include flex(center, center, row);
+
+        ul {
+            width: 100%;
+            @include flex(space-around, center, row);
+            li {
+                display: inline-block;
+                position: relative;
+                padding: 5px 10px;
+                transition: all ease-in-out 0.4s;
+                border-radius: 10px;
+                cursor: pointer;
+
+                &:hover { background-color: $colour_secondary }
+                &:hover a { color: white; text-decoration: underline; }
+
+                a {
+                    height: 100%;
+                    text-decoration: none;
+                    font-weight: bold;
+                    color: $colour_text;
+                }
+
+            }
+
+            .toolbar-icon {
+                @include width-and-height(30px, 30px);
+                &:hover { background-color: white; }
+                &:hover img {filter: brightness(4) hue-rotate(55deg) saturate(35);}
+
+                img { @include width-and-height(100%, 100%); }
+
+                a {
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    @include width-and-height(100%, 100%);
+                }
+
+            }
+        }
+
+    }
+
+    .control-buttons-wrapper {
+        color: white;
+        font-weight: bold;
+        position: absolute;
+        left: 90%;
+        @include flex(center, center, row);
+
+        .control-button {
+            display: inline-block;
+            margin-right: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            @include width-and-height(40px, 30px);
+            @include flex(center, center, row);
+            &:hover { filter: saturate(0.7); }
+        }
+
+        #btn_close { background-color: $colour_close; }
+        #btn_minimise { background-color: $colour_primary; }
+
+    }
+
+} 
+
+// Alerts //
+
+.alert {
+
+    width: 40%;
+    background-color: $colour_primary;
+    color: white;
+    padding: 20px;
+    border-radius: 20px;
+    text-align: center;
+    margin-top: 30px;
+    @include flex(center, center, row);
+
+    .alert-message {
+
+        margin-right: 10px;
+        @include flex(center, center, column);
+
+        p:nth-child(odd) { font-size: 20px; margin-bottom: 10px; }
+
+        p:nth-child(even) { font-size: 14px; }
+
+    }
+
+    .alert-icon {
+        font-size: 60px;
+        border-left: 1px solid white;
+        padding-left: 20px;
+    }
+
+}
+
+// Form Stuff //
+
+input {
+    background-color: transparent;
+    padding: 5px 12px;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 2px solid $colour_secondary;
+    margin-bottom: 10px;
+    &::placeholder { color: $colour_text; font-weight: bold; }
+}
+
+input[type="checkbox"] { @include width-and-height(20px, 20px); }
+
+input[type="file"] { border: none; }
+
+input[type="file"]::-webkit-file-upload-button {
+    visibility: hidden;
+}
+
+input[type="file"]::before {
+    content: 'Select Image';
+    background-color: $colour_secondary;
+    color: white;
+    padding: 5px 8px;
+    box-sizing: border-box;
+    border-radius: 20px;
+    margin-right: -80px;
+    cursor: pointer;
+    transition: background-color ease-in-out 0.3s;
+    &:hover { filter: saturate(0.7); }
+}
+
+button {
+    background-color: $colour_secondary;
+    border: none;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all ease-in-out 0.5s;
+    &:hover { filter: saturate(1.5); }
+}
+
+select {
+
+    border: 2px solid $colour_secondary;
+    outline: none;
+    color: $colour_text;
+    margin-bottom: 10px;
+    font-weight: bold;
+
+    option { background-color: white; color:$colour_text; font-weight: bold; }
+
+}
+
+textarea {
+    border: 2px solid $colour_secondary;
+    border-radius: 5px;
+    padding: 10px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    &::placeholder { color: $colour_text; font-weight: bold; }
+}
+
+// Footer //
+
+footer {
+
+    position: absolute;
+    bottom: 0;
+    padding: 10px;
+    background: #f98d58;
+    border-radius: 10px 10px 0 0;
+    cursor: pointer;
+    @include flex(center, center, row);
+    &:hover { filter: saturate(0.7); }
+
+    a {
+        color: white;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    img { @include width-and-height(20px, 20px);  margin-left: 10px; }
+
+}

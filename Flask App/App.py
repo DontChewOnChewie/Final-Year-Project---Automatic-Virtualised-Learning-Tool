@@ -205,7 +205,7 @@ def upload():
             if challenge:
                 uh = UploadHandler()
                 result = uh.save_challenege_banner(challenge_id, thumb)
-                resp = make_response(redirect(f"/upload/{challenge_id}/files"))
+                resp = make_response(redirect("/upload/{id}/files".format(id = challenge_id)))
                 if isinstance(result, str):
                     resp.set_cookie("error", result)
                 return resp
@@ -328,9 +328,8 @@ def challenge(id):
             uh = UploadHandler()
             banner_path = uh.get_upload_banner_path(str(challenge.id))
 
-            if os.path.isfile(f"static/Challenges/{id}/build.zip"):
-                print("Found")
-                download_path = f"/static/Challenges/{id}/build.zip"
+            if os.path.isfile("static/Challenges/{id}/build.zip".format(id = id)):
+                download_path = "/static/Challenges/{id}/build.zip".format(id = id)
 
         return render_template("challenge.html",
                                 show_options = True,
@@ -346,8 +345,14 @@ def settings():
         return render_template("settings.html",
                                 show_options = True)
 
+@app.route("/testpage", methods=["GET"])
+def testPage():
+    if request.method == "GET":
+        return render_template("upload.html",
+                                show_options = True)
+
 if __name__ == "__main__":
     if not os.path.isdir("static/Challenges"):
         os.mkdir("static/Challenges")
         
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0")

@@ -1,22 +1,21 @@
 <header>
 
-
     {% if show_options %}
     <div class="toolbar-wrapper">
         <ul>
-            <li class="toolbar-icon"><a href="/main" id="home-link"></a></li>
+            <li class="toolbar-icon"><img src="../static/images/home.svg"><a href="/main" id="home-link"></a></li>
             <li><a href="#">About</a></li>
             <li><a href="/">Upgrade/Installs</a></li>
             <li><a href="#" id="account-link">My Account</a></li>
-            <li class="toolbar-icon"><a href="/upload" id="upload-link"></a></li>
-            <li class="toolbar-icon"><a href="/settings" id="settings-link"></a></li>
+            <li class="toolbar-icon"><img src="../static/images/upload.svg"><a href="/upload" id="upload-link"></a></li>
+            <li class="toolbar-icon"><img src="../static/images/settings.svg"><a href="/settings" id="settings-link"></a></li>
         </ul>
     </div>
     {% endif %}
 
     <div class="control-buttons-wrapper">
-        <div id="btn_close" class="control-button">X</div>
         <div id="btn_minimise" class="control-button">-</div>
+        <div id="btn_close" class="control-button">X</div>
     </div>
     
 </header>

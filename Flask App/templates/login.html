@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{{ url_for('static', filename='css/global.css') }}" rel="stylesheet"/>
-    <link href="{{ url_for('static', filename='css/install.css') }}" rel="stylesheet"/>
+    <link href="{{ url_for('static', filename='sass/login.css') }}" rel="stylesheet"/>
     <script src="{{ url_for('static', filename='js/global.js')}}"></script>
     <script defer src="{{ url_for('static', filename='js/login.js') }}"></script>
 </head>
@@ -51,11 +50,6 @@
         {% endif %}
 
     </main>
-
-    <footer>
-        <a href="/" style="border-right: 3px solid white;"><< Go Back to Installers</a>
-        <a href="/main">Skip Sign Up/Sign in >></a>
-    </footer>
 
 </body>
 </html>

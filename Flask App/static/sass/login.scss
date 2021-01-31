@@ -1,0 +1,37 @@
+@import './global';
+
+main {
+
+    @include width-and-height(100%, 90vh);
+    @include flex(center, center, column);
+
+    form {
+
+        margin-top: 30px;
+        padding: 20px;
+        border-radius: 15px;
+        width: 270px;
+        @include item-with-shadow();
+        @include flex(center, flex-start, column);
+
+        input { width: 250px; }
+
+        div { @include flex(center, center, row); width: 100%; }
+
+        label { 
+            font-size: 14px; 
+            color: $colour_text; 
+            margin-right: 10px;
+            position: relative;
+            bottom: 5px;
+            font-weight: bold;
+        }
+
+        button {
+            margin: 0 auto;
+            padding: 5px 35px;
+            border-radius: 8px;
+        }
+    }
+
+}

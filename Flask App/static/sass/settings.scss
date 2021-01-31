@@ -1,0 +1,27 @@
+@import './global';
+
+main {
+
+    @include flex(center, center, column);
+
+    div { 
+        margin-top: 20px;
+        width: 30%;
+        padding: 30px;
+        border-radius: 12px;
+        @include item-with-shadow();
+        @include flex(flex-start, center, column);
+
+        h2 { margin-bottom: 20px; color: $colour_text; font-weight: bold; font-size: 36px; }
+
+        select {
+            width: 300px;
+            padding: 10px;
+            border-radius: 15px;
+        }
+
+     }
+
+    footer { width: 30%; }
+
+}
