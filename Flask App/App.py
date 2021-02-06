@@ -327,6 +327,8 @@ def challenge(id):
             cdao.close()
             uh = UploadHandler()
             banner_path = uh.get_upload_banner_path(str(challenge.id))
+            banner_path = banner_path if banner_path != None else "/static/images/placeholder.jpg"
+            print(banner_path)
 
             if os.path.isfile("static/Challenges/{id}/build.zip".format(id = id)):
                 download_path = "/static/Challenges/{id}/build.zip".format(id = id)
@@ -348,7 +350,7 @@ def settings():
 @app.route("/testpage", methods=["GET"])
 def testPage():
     if request.method == "GET":
-        return render_template("upload.html",
+        return render_template("challenge.html",
                                 show_options = True)
 
 if __name__ == "__main__":

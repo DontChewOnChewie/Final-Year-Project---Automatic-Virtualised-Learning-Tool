@@ -5,11 +5,14 @@ onclick="navigate_to_challenge({{ item.id }})"
 {% endif %}
 >
     {% if item != 0 %}
-        <h3>{{ item.name }}</h3>
-        <img src="{{ url_for('static', filename='images/sample_challenge.jpg') }}" alt="Challenge Icon"/>
-        <div class="challenge-spec">
-            <span class="{{ item.difficulty.lower() }}">{{ item.difficulty }}</span>
-        </div>
+        <h3>{{ item.name }} <span class="{{ item.difficulty.lower() }}">{{ item.difficulty }}</span></h3>
+
+        {% if not item.banner_path %}
+            <img src="{{ url_for('static', filename='images/placeholder.jpg') }}" alt="Challenge Icon"/>
+        {% else %}
+            <img src="{{ item.banner_path }}" alt="Challenge Icon"/>
+        {% endif %}
+
     {% else %}
         <h2>More Uploads Coming Soon!</h2>
     {% endif %}

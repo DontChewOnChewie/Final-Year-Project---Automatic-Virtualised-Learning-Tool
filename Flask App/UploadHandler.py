@@ -1,6 +1,7 @@
 import os
 import zipfile
 import shutil
+from ChallengeDAO import ChallengeDAO
 
 class UploadHandler:
 
@@ -26,14 +27,19 @@ class UploadHandler:
             os.mkdir(f"{self.CHALLENGE_BANNER_DIR}{challenge_id}")
         
         file.save(f"{self.CHALLENGE_BANNER_DIR}{challenge_id}/banner{file_extesion}")
+        cdao = ChallengeDAO()
+        cdao.add_banner_path_to_challenge_item(challenge_id, f"/{self.CHALLENGE_BANNER_DIR}{challenge_id}/banner{file_extesion}")
+        cdao.close()
         return True
     
     def get_upload_banner_path(self, challenge_id):
-        files = os.listdir(f"{self.CHALLENGE_BANNER_DIR}{challenge_id}/")
-        for file in files:
-            if file.split(".")[0] == "banner":
-                return f"/{self.CHALLENGE_BANNER_DIR}{challenge_id}/{file}" 
-        return None
+        try:
+            files = os.listdir(f"{self.CHALLENGE_BANNER_DIR}{challenge_id}/")
+            for file in files:
+                if file.split(".")[0] == "banner":
+                    return f"/{self.CHALLENGE_BANNER_DIR}{challenge_id}/{file}"
+        except:
+            return None
 
     def check_challenge_extensions(self, values):
         for key in values.keys():

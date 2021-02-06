@@ -1,0 +1,45 @@
+@import './global';
+
+main {
+    @include flex(center, center, column);
+    @include width-and-height(100%, 90vh);
+
+    .upload-wrapper {
+        @include flex(center, center, row);
+        @include width-and-height(100%, 50vh);
+
+        .file-upload-wrapper {
+            @include flex(center, center, column);
+
+            .technoliges-chooser {
+
+                img { @include width-and-height(40px, 40px); filter: grayscale(); }
+
+                .selected { filter: none !important; }
+
+            }
+
+            .dropzone {
+                @include flex(center, center, column);
+                @include width-and-height(250px, 250px);
+                transition: all ease-in-out 0.4s;
+                border-radius: 30px;
+                color: white;
+                opacity: 0.7;
+                font-size: 40px;
+                font-weight: bold;
+                margin-right: 20px;
+            }
+
+            .empty { background-color: $colour_primary; }
+            .populated { background-color: $colour_complete; }
+
+        }
+
+    }
+
+    button {
+        padding: 10px 22px;
+        border-radius: 10px;
+    }
+}

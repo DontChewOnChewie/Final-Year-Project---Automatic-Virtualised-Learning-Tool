@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{{ url_for('static', filename='css/global.css') }}" rel="stylesheet"/>
-    <link href="{{ url_for('static', filename='css/account.css') }}" rel="stylesheet"/>
-    <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet"/>
+    <link href="{{ url_for('static', filename='sass/account.css') }}" rel="stylesheet"/>
     <script src="{{ url_for('static', filename='js/global.js') }}"></script>
     <script src="{{ url_for('static', filename='js/account.js') }}"></script>
 </head>
@@ -16,51 +14,25 @@
     <main>
 
         {% if page_owner == None %}
-        <div class="alert-wrapper-solo">
-            <div class="alert alert-error">
-                <div class="alert-message">
-                    <p>Account {{ page_owner.username }} does not Exist.</p>
-                    <p>Go back to home page.</p>
-                </div>
-                <div class="alert-icon"><p>!</p></div>
+        <div class="alert alert-error">
+            <div class="alert-message">
+                <p>Account {{ page_owner.username }} does not Exist.</p>
+                <p>Go back to home page.</p>
             </div>
-    
-            <a class="standard-button" href="/main">Home</a>
+            <div class="alert-icon"><p>!</p></div>
         </div>
+
         {% else %}
 
             {% if owns_page %}
 
-            <div class="account-modifcation-wrapper">
-
-                <ul>
-                    <li class="selected" id="username-edit-btn">Username</li>
-                    <li id="email-edit-btn">Email</li>
-                    <li id="password-edit-btn">Password</li>
-                </ul>
-
-                <div class="account-details-modifier">
-                    <form>
-                        <div>
-                            <input id="new-detail" type="text" name="username" placeholder="New Username..."/>
-                            <input id="conf-new-detail" type="text" name="conf_username" placeholder="Confirm New Username..."/>
-                        </div>
-                        <button class="standard-button" type="button">Submit</button>
-                    </form>
-                </div>
-
-            </div>
-
-            <h2>My List</h2>
-            <div class="carousel-wrapper" data-scrolled="0">
+            <div class="carousel-wrapper">
+                <h2>My List</h2>
                 {% if my_challenges != None %}
                     {% if my_challenges|length != 0 %}
                         {% for item in my_challenges %}
                             {% include 'challenge_item.html' %}
                         {% endfor %}
-                        <div class="scroller">
-                            <img src="{{ url_for('static', filename='images/right-arrow.svg') }}" alt="Scrool Carousel"/>    
-                        </div>
                     {% else %}
                         <div class="no-uploads">
                             <h2>You have no Saved Challenges</h2>
@@ -71,21 +43,18 @@
 
             {% endif %}
 
-            {% if owns_page %}
-                <h2>My Uploads</h2>
-            {% else %}
-                <h2>{{ page_owner.username.title() }}'s Uploads</h2>
-            {% endif %}
+            <div class="carousel-wrapper">
 
-            <div class="carousel-wrapper" data-scrolled="0">
+                {% if owns_page %}
+                    <h2>My Uploads</h2>
+                {% else %}
+                    <h2>{{ page_owner.username.title() }}'s Uploads</h2>
+                {% endif %}
+
                 {% if users_challenges|length != 0 %}
                     {% for item in users_challenges %}
                         {% include 'challenge_item.html' %}
                     {% endfor %}
-
-                    <div class="scroller">
-                        <img src="{{ url_for('static', filename='images/right-arrow.svg') }}" alt="Scrool Carousel"/>    
-                    </div>
                 {% else %}
                     <div class="no-uploads">
                         {% if owns_page %}
@@ -100,6 +69,15 @@
         {% endif %}
 
     </main>
+
+    {% if page_owner == None %}
+    <div class="footer-center">
+        <footer>
+            <a class="standard-button" href="/main">Home</a>
+            <img src="{{ url_for('static', filename='images/exit.svg') }}"/>
+        </footer>
+    </div>
+    {% endif %}
     
 </body>
 </html>

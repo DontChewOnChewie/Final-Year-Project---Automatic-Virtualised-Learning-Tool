@@ -13,6 +13,12 @@ class ChallengeDAO:
             self.conn = conn
             self.cursor = self.conn.cursor()
     
+    def add_banner_path_to_challenge_item(self, challenge_id, banner_path):
+        self.cursor.execute("UPDATE Challenge \
+                            SET BANNER_PATH = ? \
+                            WHERE ID = ?", (banner_path, challenge_id))
+        self.conn.commit()
+    
     def check_challenge_for_user_exists(self, user_id, name):
         self.cursor.execute("SELECT ID FROM Challenge \
                              WHERE USER_ID = ? AND NAME = ?", (user_id, name))
@@ -25,7 +31,7 @@ class ChallengeDAO:
             self.cursor.execute("INSERT INTO Challenge (USER_ID, NAME, DESCRIPTION, DIFFICULTY, UPLOAD_DATE) \
                                 VALUES (?, ?, ?, ?, ?)", (user_id, name, desc, difficulty, timestamp))
             self.conn.commit()
-            return Challenge(None, user_id, name, desc, difficulty, None, timestamp)
+            return Challenge(None, user_id, name, desc, difficulty, None, timestamp, None)
         else:
             return "You already have a challenege with the same name uploaded."
     
@@ -80,8 +86,6 @@ class ChallengeDAO:
                 records.append(Challenge(*record))
         
         return records
-
-
     
     def close(self):
         try:

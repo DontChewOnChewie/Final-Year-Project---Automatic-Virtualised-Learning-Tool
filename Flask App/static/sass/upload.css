@@ -237,6 +237,10 @@ header .control-buttons-wrapper #btn_minimise {
   padding-left: 20px;
 }
 
+.alert-error {
+  background-color: #d14848;
+}
+
 input {
   background-color: transparent;
   padding: 5px 12px;
@@ -395,6 +399,18 @@ footer img {
   width: 20px;
   height: 20px;
   margin-left: 10px;
+}
+
+.begginer {
+  color: #6cb85d;
+}
+
+.intermediate {
+  color: #dacf7f;
+}
+
+.advanced {
+  color: #d14848;
 }
 
 main {

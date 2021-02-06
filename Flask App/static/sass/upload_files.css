@@ -413,31 +413,43 @@ footer img {
   color: #d14848;
 }
 
-@-webkit-keyframes pulsing-icon {
-  0% {
-    border-color: #333d61;
-  }
-  50% {
-    border-color: #314eaa;
-  }
-  100% {
-    border-color: #333d61;
-  }
-}
-
-@keyframes pulsing-icon {
-  0% {
-    border-color: #333d61;
-  }
-  50% {
-    border-color: #314eaa;
-  }
-  100% {
-    border-color: #333d61;
-  }
-}
-
 main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  width: 100%;
+  height: 90vh;
+}
+
+main .upload-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  width: 100%;
+  height: 50vh;
+}
+
+main .upload-wrapper .file-upload-wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -453,9 +465,12 @@ main {
           flex-direction: column;
 }
 
-main .dependancy-wrapper {
-  width: 90%;
-  height: 60vh;
+main .upload-wrapper .file-upload-wrapper .technoliges-chooser img {
+  width: 40px;
+  height: 40px;
+}
+
+main .upload-wrapper .file-upload-wrapper .dropzone {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -465,56 +480,32 @@ main .dependancy-wrapper {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-box-orient: horizontal;
+  -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
-      -ms-flex-direction: row;
-          flex-direction: row;
-}
-
-main .dependancy-wrapper img {
+      -ms-flex-direction: column;
+          flex-direction: column;
   width: 250px;
   height: 250px;
-  padding-bottom: 20px;
-  border-bottom: 6px solid #dacf7f;
-  border-radius: 20px;
-}
-
-main .dependancy-wrapper .running {
-  -webkit-animation: pulsing-icon 4s infinite;
-          animation: pulsing-icon 4s infinite;
-}
-
-main .dependancy-wrapper .complete {
-  border-color: #6cb85d;
-}
-
-main .dependancy-wrapper span {
+  -webkit-transition: all ease-in-out 0.4s;
+  transition: all ease-in-out 0.4s;
+  border-radius: 30px;
   color: white;
-  background-color: #0054DC;
-  font-size: 60px;
-  text-align: center;
-  font-weight: bold;
-  margin: 0 30px;
   opacity: 0.7;
-  display: block;
-  border-radius: 40px;
-  width: 80px;
-  height: 80px;
+  font-size: 40px;
+  font-weight: bold;
+  margin-right: 20px;
+}
+
+main .upload-wrapper .file-upload-wrapper .empty {
+  background-color: #0054DC;
+}
+
+main .upload-wrapper .file-upload-wrapper .populated {
+  background-color: #6cb85d;
 }
 
 main button {
-  padding: 10px 80px;
+  padding: 10px 22px;
   border-radius: 10px;
 }
-
-main .ball {
-  width: 10px;
-  height: 10px;
-  background-color: #f98d58;
-  margin-top: 5px;
-  border-radius: 5px;
-  position: relative;
-  -webkit-transition: all cubic-bezier(0.28, -0.29, 0, 0.68) 0.5s;
-  transition: all cubic-bezier(0.28, -0.29, 0, 0.68) 0.5s;
-}
-/*# sourceMappingURL=install.css.map */
+/*# sourceMappingURL=upload_files.css.map */

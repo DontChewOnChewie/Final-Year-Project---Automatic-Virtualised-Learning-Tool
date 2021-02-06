@@ -153,6 +153,8 @@ header {
 
 }
 
+.alert-error { background-color: $colour_close; }
+
 // Form Stuff //
 
 input {
@@ -240,3 +242,9 @@ footer {
     img { @include width-and-height(20px, 20px);  margin-left: 10px; }
 
 }
+
+// Difficulty 
+
+.begginer { color: $colour_complete; }
+.intermediate { color: $colour_standby; }
+.advanced { color: $colour_close; }

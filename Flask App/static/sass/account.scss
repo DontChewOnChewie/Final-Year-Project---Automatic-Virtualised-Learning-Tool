@@ -1,0 +1,50 @@
+@import './global';
+
+main {
+    color: $colour_text;
+    @include flex(space-around, center, row);
+    @include width-and-height(100%, 90vh);
+
+
+    h2 { margin-bottom: 10px; font-size: 32px; text-align: center; }
+
+
+    .carousel-wrapper {
+        @include width-and-height(35%, 75vh);
+        @include item-with-shadow();
+        overflow: hidden scroll;
+        border-radius: 30px;
+        padding: 30px;
+        box-sizing: border-box;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        .challenge {
+            @include flex(center, center, column);
+            @include width-and-height(100%, 200px);
+            border-bottom: 2px rgba(0, 84, 220, 0.5) solid;
+            margin-top: 10px;
+            cursor: pointer;
+
+            h3 {
+                width: 100%;
+                margin-bottom: 10px;
+                font-size: 22px;
+                span { margin-left: 20px; font-size: 16px; }
+            }
+
+            img {
+                @include width-and-height(100%, 60%);
+                border-radius: 10px;
+            }
+        }
+    }
+}
+
+.footer-center {
+    width: 100%;
+    @include flex(center, center, row);
+    footer { bottom: 30%; border-radius: 10px; padding: 10px 20px; }
+}
