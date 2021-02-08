@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{{ url_for('static', filename='css/global.css') }}" rel="stylesheet"/>
-    <link href="{{ url_for('static', filename='css/main.css') }}" rel="stylesheet"/>
+    <link href="{{ url_for('static', filename='sass/main.css') }}" rel="stylesheet"/>
     <script src="{{ url_for('static', filename='js/global.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/node_scripts/get_user_downloaded_challenges.js') }}"></script>
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </head>
 <body>
@@ -13,36 +13,16 @@
     {% include 'header.html' %}
 
     <main>
-
-        <div class="search-wrapper">
-            <input type="text" name="search_term" placeholder="Search..."/>
-            <img src="{{ url_for('static', filename='images/search.png') }}" alt="Search Icon"/>
-        </div>
-
-        <h2>Recently Added</h2>
-        <div class="carousel-wrapper" data-scrolled="0">
+        <div class="carousel-wrapper">
+            <h2>Recently Added</h2>
 
             {% for item in new_challenges %}
                 {% include 'challenge_item.html' %}
             {% endfor %}
-
-            <div class="scroller">
-                <img src="{{ url_for('static', filename='images/right-arrow.svg') }}" alt="Scrool Carousel"/>    
-            </div>
-
         </div>
 
-        <h2>My List</h2>
-        <div class="carousel-wrapper" data-scrolled="0">
-            {% if my_challenges != None %}
-                {% for item in my_challenges %}
-                    {% include 'challenge_item.html' %}
-                {% endfor %}
-            {% endif %}
-
-            <div class="scroller">
-                <img src="{{ url_for('static', filename='images/right-arrow.svg') }}" alt="Scrool Carousel"/>    
-            </div>
+        <div class="carousel-wrapper" id="my-list">
+            <h2>My List</h2>
         </div>
 
     </main>

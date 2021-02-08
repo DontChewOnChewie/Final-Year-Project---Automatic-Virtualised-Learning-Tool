@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{{ url_for('static', filename='sass/account.css') }}" rel="stylesheet"/>
     <script src="{{ url_for('static', filename='js/global.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/node_scripts/get_user_downloaded_challenges.js') }}"></script>
     <script src="{{ url_for('static', filename='js/account.js') }}"></script>
 </head>
 <body>
@@ -26,19 +27,8 @@
 
             {% if owns_page %}
 
-            <div class="carousel-wrapper">
+            <div class="carousel-wrapper" id="my-list">
                 <h2>My List</h2>
-                {% if my_challenges != None %}
-                    {% if my_challenges|length != 0 %}
-                        {% for item in my_challenges %}
-                            {% include 'challenge_item.html' %}
-                        {% endfor %}
-                    {% else %}
-                        <div class="no-uploads">
-                            <h2>You have no Saved Challenges</h2>
-                        </div>
-                    {% endif %}
-                {% endif %}
             </div>
 
             {% endif %}

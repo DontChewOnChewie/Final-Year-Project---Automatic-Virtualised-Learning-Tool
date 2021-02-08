@@ -21,6 +21,8 @@ function scroll_carousel(carousel_btn) {
 
 window.onload = function () {
     run_globals();
+    get_user_downloaded_challenges(document.getElementById("my-list"));
+    
     scroll_btns = document.querySelectorAll(".scroller img");
 
     for (var i = 0; i < scroll_btns.length; i++) {

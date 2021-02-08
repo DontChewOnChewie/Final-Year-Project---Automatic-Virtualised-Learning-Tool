@@ -1,0 +1,7 @@
+@import './global';
+@import './carousel_wraper';
+
+main {
+    @include flex(space-around, center, row);
+    @include width-and-height(100%, 90vh);
+}

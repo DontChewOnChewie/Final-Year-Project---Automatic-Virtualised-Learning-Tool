@@ -7,6 +7,7 @@ from SessionDao import SessionDao
 from UploadHandler import UploadHandler
 from ChallengeDAO import ChallengeDAO
 import os
+import json
 
 app = Flask(__name__)
 
@@ -113,7 +114,6 @@ def auto_login():
 def main():
     if request.method == "GET":
         get_args = request.args.get("list")
-        print(get_args)
         cdao = ChallengeDAO()
         new_challenges = cdao.get_recent_challenges()
 
@@ -340,6 +340,20 @@ def challenge(id):
                                 banner_path = banner_path,
                                 download_path = download_path,
                                 error = error)
+
+@app.route("/challenge/getuserchallengedata", methods=["GET"])
+def get_user_challenge_data():
+    if request.method == "GET":
+        challenge_ids = request.args.get("obj").split(",")
+        challenge_data = {}
+        cdoa = ChallengeDAO()
+        for i in range(len(challenge_ids)):
+            challenge = cdoa.get_challenge_by_id(challenge_ids[i])
+            if challenge:
+                challenge_data[str(i)] = json.dumps(challenge.__dict__)
+        print(challenge_data)
+        return challenge_data
+
 
 @app.route("/settings", methods=["GET"])
 def settings():
