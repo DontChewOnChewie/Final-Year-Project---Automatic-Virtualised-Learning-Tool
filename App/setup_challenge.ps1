@@ -31,7 +31,7 @@ function Setup-Attackers-Machine() {
     $selected_machine = $($(cat config.json) | ConvertFrom-Json).selected_machine
     echo "VBoxManage startvm '$selected_machine'" >> ".\Downloads\$challenge_id\start.ps1"
     echo "Start-Sleep -Seconds 5" >> ".\Downloads\$challenge_id\start.ps1"
-    echo "VBoxManage sharedfolder add '$selected_machine' --name 'Program_Shared' --hostpath './VM_Shared' --transient --automount"
+    echo "VBoxManage sharedfolder add '$selected_machine' --name 'Program_Shared' --hostpath './VM_Shared' --transient --automount" >> ".\Downloads\$challenge_id\start.ps1"
     echo "VBoxManage controlvm '$selected_machine' poweroff" >> ".\Downloads\$challenge_id\stop.ps1"
 }
 

@@ -31,7 +31,6 @@ window.onload = function () {
 
             start_process.on("close", function () {
                 download_btn.innerText = "Stop";
-                download_btn.style.backgroundColor = "#963031";
             });
 
         } else if (download_btn.innerText == "Stop") {
@@ -48,7 +47,6 @@ window.onload = function () {
 
             stop_process.on("close", function () {
                 download_btn.innerText = "Run..."
-                download_btn.style.backgroundColor = "#2d9559";
             });
         } else {
             let download_link = download_btn.getAttribute("href");
