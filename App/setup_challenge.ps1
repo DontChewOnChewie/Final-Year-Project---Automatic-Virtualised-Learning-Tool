@@ -8,11 +8,23 @@ function Setup-VBOX($vbox_file, $challenge_id, $filename) {
     echo "VBoxManage controlvm '$challenge_id $filename' poweroff --type headless" >> ".\Downloads\$challenge_id\stop.ps1"
 }
 
+function Get-Docker-Port($dockerfile) {
+    $docker_first_line = Get-Content $dockerfile | select -First 1
+    $docker_first_line_parts = $docker_first_line.Split("=")
+    if ($docker_first_line_parts.Count -gt 1) {
+        if ($docker_first_line_parts[1] -match "^\d+$") {
+            return $docker_first_line_parts[1]
+        }
+    }
+    return 6789
+}
+
 function Setup-Docker($docker_zip, $challenge_id, $filename) {
     Expand-Archive "./Downloads/$challenge_id/build/$docker_zip" -DestinationPath "./Downloads/$challenge_id/$challenge_id $filename"
     rm "./Downloads/$challenge_id/build/$docker_zip"
     mv "./Downloads/$challenge_id/$challenge_id $filename/*" "./Downloads/$challenge_id/$filename"
     rmdir "./Downloads/$challenge_id/$challenge_id $filename"
+
     docker build -t "$challenge_id-$filename" "./Downloads/$challenge_id/$filename/"
 
     # Setup Start/Stop files.
@@ -22,7 +34,10 @@ function Setup-Docker($docker_zip, $challenge_id, $filename) {
         $has_docker_files = 1
     }
 
-    echo "Start-Job -ScriptBlock { docker run --name '$challenge_id-$filename' '$challenge_id-$filename' }" >> ".\Downloads\$challenge_id\start.ps1"
+    $dockerfile_port = Get-Docker-Port "./Downloads/$challenge_id/$filename/Dockerfile"
+    echo "Start-Job -ScriptBlock { docker run --name '$challenge_id-$filename' -p $dockerfile_port`:$dockerfile_port '$challenge_id-$filename' }" >> ".\Downloads\$challenge_id\start.ps1"
+    echo "echo 'Docker `: 172.100.100.1`:$dockerfile_port' >> './VM_Shared/ips.txt'" >> ".\Downloads\$challenge_id\start.ps1"
+
     echo "docker stop '$challenge_id-$filename'" >> ".\Downloads\$challenge_id\stop.ps1"
 }
 
@@ -53,6 +68,11 @@ if ($args.Length -eq 2) {
     $files = dir "./Downloads/$challenge_id/build"
     $files = $files -replace '\s+'
     $files = $files.Split("`n")
+
+    # Create new start and stop files, output IP reset file.
+    New-Item -Path ".\Downloads\$challenge_id\start.ps1" -ItemType File
+    echo "New-Item -Path '$($pwd.Path)\VM_Shared\ips.txt' -ItemType File -Force" >> ".\Downloads\$challenge_id\start.ps1"
+    New-Item -Path ".\Downloads\$challenge_id\stop.ps1" -ItemType File
 
     for ($i = 0; $i -lt $files.Count; $i++) {
         $temp_ext = $files[$i].Split(".")[$files[$i].Split(".").Count - 1]
