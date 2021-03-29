@@ -1,0 +1,119 @@
+$colour_primary : #0054DC;
+$colour_secondary : #f98d58;
+$colour_close : #d14848;
+$colour_standby: #dacf7f;
+$colour_complete: #6cb85d;
+$colour_text: #4f4e59;
+
+@mixin flex($jc, $ai, $dir) {
+    display: flex;
+    justify-content: $jc;
+    align-items: $ai;
+    flex-direction: $dir;
+}
+
+@mixin width-and-height($width, $height) {
+    width: $width;
+    height: $height;
+}
+
+@mixin item-with-shadow() {
+    background-color: rgba(255,255,255, 0.7);
+    box-shadow: 0px 5px 10px 0px rgba(249, 141, 88, 0.4);
+}
+
+@font-face {
+    font-family: "myriad-pro";
+    src: url("Myriad Pro Regular.ttf");
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    font-family: myriad-pro;
+}
+
+body {
+    overflow: hidden;
+    background: radial-gradient(#93a5cf 50%, #e4efe9);
+    @include width-and-height(100%, 100vh);
+}
+
+header {
+
+    @include width-and-height(100%, 6vh);
+    position: relative;
+    padding: 0px 10px;
+    box-sizing: border-box;
+    @include item-with-shadow();
+    @include flex(space-between, center, row);   
+
+    .control-buttons-wrapper {
+        color: white;
+        font-weight: bold;
+        position: absolute;
+        left: 90%;
+        @include flex(center, center, row);
+
+        .control-button {
+            display: inline-block;
+            margin-right: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            @include width-and-height(40px, 30px);
+            @include flex(center, center, row);
+            &:hover { filter: saturate(0.7); }
+        }
+
+        #btn_close { background-color: $colour_close; }
+        #btn_minimise { background-color: $colour_primary; }
+
+    }
+
+}
+
+main {
+    @include flex(center, center, column);
+    margin-top: 20px;
+
+    h1 { color: $colour_text; margin-bottom: 10px; }
+
+    .carousel-wrapper {
+        @include width-and-height(22%, 75vh);
+        @include item-with-shadow();
+        overflow: hidden scroll;
+        border-radius: 30px;
+        padding: 30px;
+        box-sizing: border-box;
+        color: $colour_text;
+    
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        h2 { margin-bottom: 10px; font-size: 32px; text-align: center; }
+        
+        .challenge {
+            @include flex(space-around, center, row);
+            @include width-and-height(100%, 100px);
+            border-bottom: 2px rgba(0, 84, 220, 0.5) solid;
+            margin-top: 10px;
+    
+            h3 { width: 50%; font-size: 22px; }
+
+            button {
+                background-color: $colour_secondary;
+                color: white;
+                padding: 12px 20px;
+                border: none;
+                outline: none;
+                border-radius: 10px;
+                font-weight: bold;
+                cursor: pointer;
+                transition: 0.3s all ease-in-out;
+
+                &:hover { filter: saturate(1.5); }
+            }
+        }
+    }
+}

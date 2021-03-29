@@ -1,0 +1,186 @@
+@font-face {
+  font-family: "myriad-pro";
+  src: url("Myriad Pro Regular.ttf");
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  font-family: myriad-pro;
+}
+
+body {
+  overflow: hidden;
+  background: radial-gradient(#93a5cf 50%, #e4efe9);
+  width: 100%;
+  height: 100vh;
+}
+
+header {
+  width: 100%;
+  height: 6vh;
+  position: relative;
+  padding: 0px 10px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.7);
+  -webkit-box-shadow: 0px 5px 10px 0px rgba(249, 141, 88, 0.4);
+          box-shadow: 0px 5px 10px 0px rgba(249, 141, 88, 0.4);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+header .control-buttons-wrapper {
+  color: white;
+  font-weight: bold;
+  position: absolute;
+  left: 90%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+header .control-buttons-wrapper .control-button {
+  display: inline-block;
+  margin-right: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 40px;
+  height: 30px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+header .control-buttons-wrapper .control-button:hover {
+  -webkit-filter: saturate(0.7);
+          filter: saturate(0.7);
+}
+
+header .control-buttons-wrapper #btn_close {
+  background-color: #d14848;
+}
+
+header .control-buttons-wrapper #btn_minimise {
+  background-color: #0054DC;
+}
+
+main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin-top: 20px;
+}
+
+main h1 {
+  color: #4f4e59;
+  margin-bottom: 10px;
+}
+
+main .carousel-wrapper {
+  width: 22%;
+  height: 75vh;
+  background-color: rgba(255, 255, 255, 0.7);
+  -webkit-box-shadow: 0px 5px 10px 0px rgba(249, 141, 88, 0.4);
+          box-shadow: 0px 5px 10px 0px rgba(249, 141, 88, 0.4);
+  overflow: hidden scroll;
+  border-radius: 30px;
+  padding: 30px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  color: #4f4e59;
+}
+
+main .carousel-wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+main .carousel-wrapper h2 {
+  margin-bottom: 10px;
+  font-size: 32px;
+  text-align: center;
+}
+
+main .carousel-wrapper .challenge {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  width: 100%;
+  height: 100px;
+  border-bottom: 2px rgba(0, 84, 220, 0.5) solid;
+  margin-top: 10px;
+}
+
+main .carousel-wrapper .challenge h3 {
+  width: 50%;
+  font-size: 22px;
+}
+
+main .carousel-wrapper .challenge button {
+  background-color: #f98d58;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  -webkit-transition: 0.3s all ease-in-out;
+  transition: 0.3s all ease-in-out;
+}
+
+main .carousel-wrapper .challenge button:hover {
+  -webkit-filter: saturate(1.5);
+          filter: saturate(1.5);
+}
+/*# sourceMappingURL=styles.css.map */

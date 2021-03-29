@@ -9,6 +9,7 @@
   "author": "Oliver Bowker",
   "license": "ISC",
   "dependencies": {
-    "electron": "^10.1.5"
+    "electron": "^10.1.5",
+    "internet-available": "^1.0.0"
   }
 }

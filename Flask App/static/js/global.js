@@ -31,5 +31,5 @@ function run_globals() {
     
     btn_close.addEventListener("click", function() { remote.getCurrentWindow().close(); });
     btn_minimise.addEventListener("click", function() { remote.getCurrentWindow().minimize(); });
-    setup_links();
+    if (account_link != null) setup_links();
 }

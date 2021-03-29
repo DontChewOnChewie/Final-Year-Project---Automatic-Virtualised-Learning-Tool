@@ -468,6 +468,13 @@ main .upload-wrapper .file-upload-wrapper {
 main .upload-wrapper .file-upload-wrapper .technoliges-chooser img {
   width: 40px;
   height: 40px;
+  -webkit-filter: grayscale(1);
+          filter: grayscale(1);
+}
+
+main .upload-wrapper .file-upload-wrapper .technoliges-chooser .selected {
+  -webkit-filter: none !important;
+          filter: none !important;
 }
 
 main .upload-wrapper .file-upload-wrapper .dropzone {

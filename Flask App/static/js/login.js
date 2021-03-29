@@ -2,7 +2,8 @@ let toggle_pass_button, password_field;
 
 function toggle_password_button() {
     var toggled = toggle_pass_button.getAttribute("data-enabled");
-    if (toggled == "0") {
+    console.log(toggled);
+    if (toggled === "0") {
         toggle_pass_button.setAttribute("data-enabled", "1");
         toggle_pass_button.src = "/static/images/eye.svg";
         password_field.type = "text";

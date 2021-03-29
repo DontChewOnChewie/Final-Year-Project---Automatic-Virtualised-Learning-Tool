@@ -5,6 +5,9 @@ function Setup-VBOX($vbox_file, $challenge_id, $filename) {
     .\setup_vbox.ps1 ".\Downloads\$challenge_id\build\$vbox_file" "$challenge_id $filename"
     # Setup Start/Stop files.
     echo "VBoxManage startvm '$challenge_id $filename' --type headless" >> ".\Downloads\$challenge_id\start.ps1"
+    echo "Start-Sleep -Seconds 5" >> ".\Downloads\$challenge_id\start.ps1"
+    echo "echo $($(VBoxManage guestproperty get `"$challenge_id $filename`" '/VirtualBox/GuestInfo/Net/0/V4/IP').Split(':')[1]) >> ./VM_Shared/ips.txt" >> ".\Downloads\$challenge_id\start.ps1"
+
     echo "VBoxManage controlvm '$challenge_id $filename' poweroff --type headless" >> ".\Downloads\$challenge_id\stop.ps1"
 }
 
