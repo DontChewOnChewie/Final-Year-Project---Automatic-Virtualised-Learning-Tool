@@ -25,14 +25,6 @@
 
         {% else %}
 
-            {% if owns_page %}
-
-            <div class="carousel-wrapper" id="my-list">
-                <h2>My List</h2>
-            </div>
-
-            {% endif %}
-
             <div class="carousel-wrapper">
 
                 {% if owns_page %}
@@ -55,6 +47,14 @@
                     </div>
                 {% endif %}
             </div>
+
+            {% if owns_page %}
+
+            <div class="carousel-wrapper" id="my-list">
+                <h2>My List</h2>
+            </div>
+
+            {% endif %}
 
         {% endif %}
 

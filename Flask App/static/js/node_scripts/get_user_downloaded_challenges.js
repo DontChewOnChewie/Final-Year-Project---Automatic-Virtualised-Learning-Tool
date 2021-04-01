@@ -15,7 +15,6 @@ const create_challenge_divs = (target, json) => {
 
         const wrapper = document.createElement("div");
         wrapper.className = "challenge";
-        wrapper.onclick = () => { navigate_to_challenge(challenge.id) }
 
         const span = document.createElement("span");
         span.className = challenge.difficulty.toLowerCase();
@@ -25,13 +24,51 @@ const create_challenge_divs = (target, json) => {
         title.innerText = challenge.name;
         title.appendChild(span);
 
+        const imageWrapper = document.createElement("div");
+        imageWrapper.className = "image-wrapper";
+
         const img = document.createElement("img");
         img.alt = "Challenge Icon";
         if (challenge.banner_path != null && challenge.banner_path != undefined && challenge.banner_path != "") img.src = challenge.banner_path;
         else img.src = "/static/images/placeholder.jpg";
 
+        const hoverEventSpan = document.createElement("span");
+        hoverEventSpan.className = "hover-event";
+        hoverEventSpan.innerText = "Challenge Options";
+
+        const delServerBtn = document.createElement("img");
+        delServerBtn.src = "/static/images/server.svg";
+        delServerBtn.className = "delete-server-button";
+        delServerBtn.onmouseover = () => { hoverEventSpan.innerText = "Remove Challenge from Server" }
+        delServerBtn.onmouseout = () => { hoverEventSpan.innerText = "Challenge Options" }
+
+        const delPCBtn = document.createElement("img");
+        delPCBtn.src = "/static/images/pc.svg";
+        delPCBtn.className = "delete-pc-button";
+        delPCBtn.onmouseover = () => { hoverEventSpan.innerText = "Remove Challenge from PC" }
+        delPCBtn.onmouseout = () => { hoverEventSpan.innerText = "Challenge Options" }
+
+        const playBtn = document.createElement("img");
+        playBtn.src = "/static/images/play.svg";
+        playBtn.className = "play-button";
+        playBtn.onclick = () => { navigate_to_challenge(challenge.id) }
+        playBtn.onmouseover = () => { hoverEventSpan.innerText = "Go to Challenge" }
+        playBtn.onmouseout = () => { hoverEventSpan.innerText = "Challenge Options" }
+
+        const buttonWrapper = document.createElement("div");
+        buttonWrapper.appendChild(delServerBtn);
+        buttonWrapper.appendChild(delPCBtn);
+        buttonWrapper.appendChild(playBtn);
+
+        const imageOpacityOverlay = document.createElement("div");
+        imageOpacityOverlay.className = "challenge-options-wrapper";
+        imageOpacityOverlay.appendChild(buttonWrapper);
+        imageOpacityOverlay.appendChild(hoverEventSpan);
+
+        imageWrapper.appendChild(img);
+        imageWrapper.appendChild(imageOpacityOverlay);
         wrapper.appendChild(title);
-        wrapper.appendChild(img);
+        wrapper.appendChild(imageWrapper);
         target.appendChild(wrapper);
     });
     

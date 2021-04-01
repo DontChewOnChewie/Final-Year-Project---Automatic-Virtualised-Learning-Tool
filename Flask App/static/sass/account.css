@@ -455,7 +455,6 @@ footer img {
   height: 200px;
   border-bottom: 2px rgba(0, 84, 220, 0.5) solid;
   margin-top: 10px;
-  cursor: pointer;
 }
 
 .carousel-wrapper .challenge h3 {
@@ -469,10 +468,93 @@ footer img {
   font-size: 16px;
 }
 
-.carousel-wrapper .challenge img {
+.carousel-wrapper .challenge .image-wrapper {
   width: 100%;
   height: 60%;
   border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+
+.carousel-wrapper .challenge .image-wrapper:hover .challenge-options-wrapper {
+  opacity: 1;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.carousel-wrapper .challenge .image-wrapper img {
+  width: 100%;
+  height: 100%;
+}
+
+.carousel-wrapper .challenge .image-wrapper .challenge-options-wrapper {
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  -webkit-transition: all ease-in-out 0.3s;
+  transition: all ease-in-out 0.3s;
+  cursor: pointer;
+}
+
+.carousel-wrapper .challenge .image-wrapper .challenge-options-wrapper div {
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+}
+
+.carousel-wrapper .challenge .image-wrapper .challenge-options-wrapper div img {
+  width: 30px;
+  height: 30px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 3px solid transparent;
+  -webkit-transition: all ease-in-out 0.4s;
+  transition: all ease-in-out 0.4s;
+}
+
+.carousel-wrapper .challenge .image-wrapper .challenge-options-wrapper div img:hover {
+  border: 3px solid rgba(255, 255, 255, 0.7);
+}
+
+.carousel-wrapper .challenge .image-wrapper .challenge-options-wrapper div .delete-button:hover .hover-event {
+  content: "Delete Challenge";
+}
+
+.carousel-wrapper .challenge .image-wrapper .challenge-options-wrapper div .play-button:hover {
+  content: "Go to Challenge Page";
+}
+
+.carousel-wrapper .challenge .image-wrapper .challenge-options-wrapper .hover-event {
+  color: white;
+  margin-bottom: 8px;
 }
 
 main {

@@ -113,55 +113,33 @@ def auto_login():
 @app.route("/main", methods=['GET'])
 def main():
     if request.method == "GET":
-        get_args = request.args.get("list")
         cdao = ChallengeDAO()
         new_challenges = cdao.get_recent_challenges()
-
-        my_challenges = None
-        challenges = ""
-        if get_args:
-            get_args = get_args.split(",")
-            for c in get_args:
-                challenges += c + "|"
-            my_challenges = cdao.get_downloaded_challenges(challenges)
-
         cdao.close()
-
-        resp = make_response(render_template("main.html",
-                                            show_options = True,
-                                            new_challenges = new_challenges,
-                                            my_challenges = my_challenges))
-        resp.set_cookie("challenges", challenges[:-1])
-        return resp
+        return render_template("main.html",
+                                show_options = True,
+                                new_challenges = new_challenges)
 
 @app.route("/account/<user>", methods=['GET'])
 def account(user):
     if request.method == 'GET':
         logged_user = request.cookies.get("user")
         sk = request.cookies.get("sk")
-        challenges = request.cookies.get("challenges")
         udao = UserDao()
+        valid_key = udao.check_session_key(logged_user, sk)
         users_page = udao.get_user_from_username(user)
 
         users_challenges = []
         if users_page:
             cdao = ChallengeDAO(conn=udao.conn)
             users_challenges = cdao.get_users_uploaded_challenges(users_page.id)
-
-        valid_key = False
-        my_challenges = None
-        if logged_user == user:
-            valid_key = udao.check_session_key(logged_user, sk)
-            if challenges and valid_key:
-                my_challenges = cdao.get_downloaded_challenges(challenges)
             
         udao.close()
         return render_template("account.html",
                                 show_options = True,
                                 page_owner = users_page,
                                 owns_page = valid_key,
-                                users_challenges = users_challenges,
-                                my_challenges = my_challenges)
+                                users_challenges = users_challenges)
 
 @app.route("/upload", methods=['GET', 'POST'])
 def upload():

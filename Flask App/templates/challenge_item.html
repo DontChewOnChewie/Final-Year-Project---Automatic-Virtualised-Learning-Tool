@@ -1,17 +1,29 @@
 
-<div class="challenge" 
-{% if item != 0 %}
-onclick="navigate_to_challenge({{ item.id }})"
-{% endif %}
->
+<div class="challenge">
     {% if item != 0 %}
         <h3>{{ item.name }} <span class="{{ item.difficulty.lower() }}">{{ item.difficulty }}</span></h3>
 
-        {% if not item.banner_path %}
-            <img src="{{ url_for('static', filename='images/placeholder.jpg') }}" alt="Challenge Icon"/>
-        {% else %}
-            <img src="{{ item.banner_path }}" alt="Challenge Icon"/>
-        {% endif %}
+        <div class="image-wrapper">
+            {% if not item.banner_path %}
+                <img src="{{ url_for('static', filename='images/placeholder.jpg') }}" alt="Challenge Icon"/>
+            {% else %}
+                <img src="{{ item.banner_path }}" alt="Challenge Icon"/>
+            {% endif %}
+
+            <div class="challenge-options-wrapper">
+                <div>
+                    <img class="delete-server-button" src="{{ url_for('static', filename='images/server.svg') }}" alt="Remove Challenge from Server Button" />
+                    <img class="delete-pc-button" src="{{ url_for('static', filename='images/pc.svg') }}" alt="Remove Challenge from PC Button" />
+                    <img class="play-button" src="{{ url_for('static', filename='images/play.svg') }}" alt="Play Challenge Button"
+                    {% if item != 0 %}
+                    onclick="navigate_to_challenge({{ item.id }})"
+                    {% endif %}
+                    >
+                </div>
+
+                <span class="hover-event">Challenge Options</span>
+            </div>
+        </div>
 
     {% else %}
         <h2>More Uploads Coming Soon!</h2>

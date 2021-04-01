@@ -18,7 +18,6 @@
         @include width-and-height(100%, 200px);
         border-bottom: 2px rgba(0, 84, 220, 0.5) solid;
         margin-top: 10px;
-        cursor: pointer;
 
         h3 {
             width: 100%;
@@ -27,9 +26,66 @@
             span { margin-left: 20px; font-size: 16px; }
         }
 
-        img {
+        .image-wrapper {
             @include width-and-height(100%, 60%);
             border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+
+            &:hover .challenge-options-wrapper {
+                opacity: 1;
+                display: flex;
+            }
+
+            img { 
+                @include width-and-height(100%, 100%); 
+            }
+
+            .challenge-options-wrapper {
+                @include width-and-height(100%, 100%);
+                @include flex(space-around, center, column);
+                position: absolute;
+                top: 0;
+                left: 0;
+                background-color: rgba(0,0,0,0.5);
+                opacity: 0;
+                transition: all ease-in-out 0.3s;
+                cursor: pointer;
+
+                div {
+                    @include width-and-height(100%, 100%);
+                    @include flex(space-around, center, row);
+
+                    img {
+                        @include width-and-height(30px, 30px);
+                        padding: 10px;
+                        border-radius: 10px;
+                        border: 3px solid transparent;
+                        transition: all ease-in-out 0.4s;
+
+                        &:hover {
+                            border: 3px solid rgba(255, 255, 255, 0.7);
+                        }
+                    }
+
+                    .delete-button {
+                        &:hover .hover-event {
+                            content: "Delete Challenge";
+                        }
+                    }
+
+                    .play-button {
+                        &:hover {
+                            content: "Go to Challenge Page";
+                        }
+                    }
+                }
+
+                .hover-event {
+                    color: white;
+                    margin-bottom: 8px;
+                }
+            }
         }
     }
 }
