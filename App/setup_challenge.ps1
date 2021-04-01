@@ -5,8 +5,10 @@ function Setup-VBOX($vbox_file, $challenge_id, $filename) {
     .\setup_vbox.ps1 ".\Downloads\$challenge_id\build\$vbox_file" "$challenge_id $filename"
     # Setup Start/Stop files.
     echo "VBoxManage startvm '$challenge_id $filename' --type headless" >> ".\Downloads\$challenge_id\start.ps1"
-    echo "Start-Sleep -Seconds 5" >> ".\Downloads\$challenge_id\start.ps1"
-    echo "echo $($(VBoxManage guestproperty get `"$challenge_id $filename`" '/VirtualBox/GuestInfo/Net/0/V4/IP').Split(':')[1]) >> ./VM_Shared/ips.txt" >> ".\Downloads\$challenge_id\start.ps1"
+    echo "Start-Sleep -Seconds 60" >> ".\Downloads\$challenge_id\start.ps1"
+
+    $selected_machine = $($(cat config.json) | ConvertFrom-Json).selected_machine
+    echo ".\get_vbox_ip.ps1 '$selected_machine'" >> ".\Downloads\$challenge_id\start.ps1"
 
     echo "VBoxManage controlvm '$challenge_id $filename' poweroff --type headless" >> ".\Downloads\$challenge_id\stop.ps1"
 }
@@ -77,6 +79,8 @@ if ($args.Length -eq 2) {
     echo "New-Item -Path '$($pwd.Path)\VM_Shared\ips.txt' -ItemType File -Force" >> ".\Downloads\$challenge_id\start.ps1"
     New-Item -Path ".\Downloads\$challenge_id\stop.ps1" -ItemType File
 
+    Setup-Attackers-Machine
+
     for ($i = 0; $i -lt $files.Count; $i++) {
         $temp_ext = $files[$i].Split(".")[$files[$i].Split(".").Count - 1]
 
@@ -86,8 +90,6 @@ if ($args.Length -eq 2) {
             Setup-Docker $files[$i] $challenge_id $files[$i].Split(".")[0]
         }
     }
-
-    Setup-Attackers-Machine
 
     # Check this is working
     if ($has_docker_files -eq 1) {
