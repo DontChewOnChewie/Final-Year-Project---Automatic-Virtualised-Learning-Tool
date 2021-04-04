@@ -8,7 +8,7 @@ const config_defaults = {
     "selected_machine":"Project_Kali"
 }
 
-const createFiles = () => {
+const createFiles = async () => {
     if (!fs.existsSync("./Downloads")) {
         fs.mkdir("./Downloads", (err) => {
             if (err) throw err;
@@ -28,16 +28,31 @@ const createFiles = () => {
     }
 }
 
-const createWindow = () => {
-    const mainWindow = new BrowserWindow({
+const createBootstrapperWindow = () => {
+    const bootstrapWindow = new BrowserWindow({
         frame: false,
+        width: 120,
+        height: 150,
+        center: true,
+        resizable: false,
         webPreferences: {
             nodeIntegration: true,
             enableRemoteModule: true,
         }
     });
+    bootstrapWindow.loadFile("./Bootstrapper/Bootstrapper.html");
+    return bootstrapWindow;
+}
 
-    createFiles();
+const createWindow = (internet) => {
+    const mainWindow = new BrowserWindow({
+        frame: false,
+        show: false,
+        webPreferences: {
+            nodeIntegration: true,
+            enableRemoteModule: true,
+        }
+    });
 
     internetAvailable().then(function(){
         mainWindow.webContents.session.clearCache( function() { /*Clear Cache for debugging.*/ }) ;
@@ -60,4 +75,11 @@ const createWindow = () => {
     mainWindow.maximize();
 }
 
-app.on('ready', createWindow);
+app.on('ready', () => {
+    createWindow();
+    setTimeout(() => {
+        const bootstrapWindow = createBootstrapperWindow();
+        setTimeout(() => { bootstrapWindow.close(); }, 2000);
+    }, 100);
+    createFiles();
+});

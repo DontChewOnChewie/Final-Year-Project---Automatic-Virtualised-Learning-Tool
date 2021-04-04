@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="{{ url_for('static', filename='css/global.css') }}" rel="stylesheet"/>
-    <link href="{{ url_for('static', filename='css/upload_lesson.css') }}" rel="stylesheet"/>
+    <link href="{{ url_for('static', filename='sass/upload_lesson.css') }}" rel="stylesheet"/>
     <script src="{{ url_for('static', filename='js/global.js')}}"></script>
     <script>let challenge_name = "{{ challenge.name }}";</script>
     <script src="{{ url_for('static', filename='js/upload_lesson.js') }}"></script>
@@ -14,15 +13,10 @@
     {% include 'header.html' %}
 
     <main>
+        <h2>Upload Lesson ({{challenge.name}})</h2>
+
         <div class="builder">
             <div id="add-task-btn">+</div>
-        </div>
-
-        <div class="builder-output">
-            <div class="lesson-minimise"><p>{</p></div>
-            <div class="lesson-obj">
-                <h2>{{ challenge.name }}</h2>
-            </div>
         </div>
     </main>
 

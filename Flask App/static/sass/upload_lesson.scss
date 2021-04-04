@@ -1,0 +1,72 @@
+@import './global';
+
+main {
+    @include flex(center, center, column);
+    height: 85vh;
+
+    h2 {
+        font-size: 36px;
+        text-align: center;
+        color: $colour_text;
+        margin-top: 20px;
+    }
+
+    .builder {
+        @include width-and-height(30%, 100%);
+        @include item-with-shadow();
+        margin-top: 20px;
+        overflow-y: scroll;
+        padding: 15px;
+        border-radius: 20px;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
+
+        .task-div {
+
+            border-bottom: 3px solid $colour_text;
+            margin-bottom: 10px;
+
+            input {
+                width: 80%;
+                display: inline-block;
+                border: none;
+                border-bottom: 1px solid $colour_secondary;
+            }
+
+            div {
+                @include flex(space-between, center, row);
+                position: relative;
+
+                img {
+                    @include width-and-height(20px, 20px);
+                    position: absolute;
+                    left: 90%;
+                    top: 20%;
+                    cursor: pointer;
+                }
+            }
+
+            textarea { @include width-and-height(100%, 100px) }
+
+            select { width: 100%; padding: 5px; }
+
+        }
+
+        #add-task-btn {
+            width: 100%;
+            text-align: center;
+            color: white;
+            font-size: 36px;
+            cursor: pointer;
+            background-color: $colour_secondary;
+            border-radius: 10px;
+        }
+    }
+}
+
+footer {
+    width: 100%;
+    border-radius: 0px;
+}

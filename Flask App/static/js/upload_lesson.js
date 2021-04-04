@@ -1,4 +1,4 @@
-let builder, builder_output, add_task_btn;
+let builder, add_task_btn;
 let upload_btn;
 let type_codes = {"Info":"0", "Input":"1", "Checkbox":"2"};
 
@@ -17,53 +17,6 @@ function upload_lesson() {
 
     xhr.open("post", document.location.href);
     xhr.send(data);
-}
-
-function update_builder_output() {
-    let build = get_current_json_output();
-    builder_output.innerHTML = "";
-    
-    let challenge_title = document.createElement("h2");
-    challenge_title.innerText = build.name;
-    builder_output.appendChild(challenge_title);
-
-    build.objectives.forEach(task => {
-        let task_wrapper = document.createElement("div");
-        task_wrapper.className = "task-div";
-
-        let task_title = document.createElement("h3");
-        task_title.innerText = task.title;
-        let task_description = document.createElement("p");
-        task_description.innerText = task.description;
-        let task_complete_btn = document.createElement("button");
-        task_complete_btn.innerText = "Complete";
-        task_complete_btn.type = "button";
-        
-        task_wrapper.appendChild(task_title);
-        task_wrapper.appendChild(task_description);
-        task_wrapper.appendChild(task_complete_btn);
-
-        // Input
-        if (task.type == "1") {
-            let inp_answer = document.createElement("input");
-            inp_answer.placeholder = "Answer...";
-            task_wrapper.insertBefore(inp_answer, task_complete_btn);
-        }
-
-        // Checkbox
-        if (task.type == "2") {
-            let checkbox_wrapper = document.createElement("div");
-            let checkbox_lbl = document.createElement("label");
-            checkbox_lbl.innerText = "Have you completed the above?";
-            let checkbox = document.createElement("input");
-            checkbox.type = "checkbox";
-            checkbox_wrapper.appendChild(checkbox);
-            checkbox_wrapper.appendChild(checkbox_lbl);
-            task_wrapper.insertBefore(checkbox_wrapper, task_complete_btn);
-        }
-
-        builder_output.appendChild(task_wrapper);
-    });
 }
 
 function get_current_json_output() {
@@ -172,12 +125,8 @@ function add_new_task_inputs() {
 window.onload = function () {
     //run_globals();
     builder = document.querySelector(".builder");
-    builder_output = document.querySelector(".lesson-obj");
     add_task_btn = document.getElementById("add-task-btn");
     add_task_btn.addEventListener("click", function () { add_new_task_inputs(); });
     upload_btn = document.getElementById("upload-btn");
     upload_btn.addEventListener("click", function () { upload_lesson(); });
-
-    // Used to update output of builder.
-    setInterval(function() { update_builder_output(); }, 5000);
 }

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrapper</title>
+
+    <style>
+
+        @keyframes bounce { 
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-20px); }
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-direction: column;
+            padding: 8px;
+            box-sizing: border-box;
+        }
+
+        img {
+            height: 80px;
+            width: 80px;
+            animation: bounce 0.8s;
+            animation-direction: alternate;
+            animation-iteration-count: infinite;
+        }
+
+        span {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <img src="./temp_logo.svg"/>
+    <span>Loading...</span>
+</body>
+</html>
