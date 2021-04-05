@@ -1,14 +1,28 @@
 <header>
 
+    <div id="tooltip">
+        <span></span>
+    </div>
+
     {% if show_options %}
     <div class="toolbar-wrapper">
         <ul>
-            <li class="toolbar-icon"><img src="{{ url_for('static', filename='images/home.svg') }}"><a href="/main" id="home-link"></a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="/">Upgrade/Installs</a></li>
-            <li><a href="#" id="account-link">My Account</a></li>
-            <li class="toolbar-icon"><img src="{{ url_for('static', filename='images/upload.svg') }}"><a href="/upload" id="upload-link"></a></li>
-            <li class="toolbar-icon"><img src="{{ url_for('static', filename='images/settings.svg') }}"><a href="/settings" id="settings-link"></a></li>
+            <li class="toolbar-icon" data-tooltip="Home">
+                <img src="{{ url_for('static', filename='images/home.svg') }}">
+                <a href="/main" id="home-link"></a>
+            </li>
+            <li class="toolbar-icon" data-tooltip="Account">
+                <img src="{{ url_for('static', filename='images/user.svg') }}"/>
+                <a href="#" id="account-link"></a>
+            </li>
+            <li class="toolbar-icon" data-tooltip="Upload">
+                <img src="{{ url_for('static', filename='images/upload.svg') }}">
+                <a href="/upload" id="upload-link"></a>
+            </li>
+            <li class="toolbar-icon" data-tooltip="Settings">
+                <img src="{{ url_for('static', filename='images/settings.svg') }}">
+                <a href="/settings" id="settings-link"></a>
+            </li>
         </ul>
     </div>
     {% endif %}

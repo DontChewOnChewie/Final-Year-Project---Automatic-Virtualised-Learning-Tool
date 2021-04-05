@@ -5,12 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link href="{{ url_for('static', filename='sass/install.css') }}" rel="stylesheet"/>
-    
-    <!-- Old Style.
-    <link href="{{ url_for('static', filename='css/global.css') }}" rel="stylesheet"/>
-    <link href="{{ url_for('static', filename='css/install.css') }}" rel="stylesheet"/>
-    -->
-
     <script src="{{ url_for('static', filename='js/global.js') }}"></script>
     <script src="{{ url_for('static', filename='js/node_scripts/installs.js') }}"></script>
 </head>
@@ -19,6 +13,11 @@
     {% include 'header.html' %}
 
     <main>
+
+        <div class="installed">
+            <h3>Already Installed?</h3>
+            <a href="/login">Go to Sign Up</a>
+        </div>
 
         <div class="alert">
             <div class="alert-message">
@@ -33,7 +32,7 @@
             <span>+</span>
             <img class="running" src="{{ url_for('static', filename='images/docker_original.png') }}" alt="Docker Logo"/>
             <span>+</span>
-            <img src="{{ url_for('static', filename='images/kali.png') }}" alt="Docker Logo"/>
+            <img src="{{ url_for('static', filename='images/kali.png') }}" alt="Kali Logo"/>
         </div>
 
         <button id="btn-both" class="standard-button">Install 'Program Name'</button>

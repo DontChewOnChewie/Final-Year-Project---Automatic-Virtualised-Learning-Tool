@@ -8,6 +8,37 @@
 
 main { 
     @include flex(center, center, column); 
+    position: relative;
+
+    .installed {
+        @include flex(center, center, column);
+        @include item-with-shadow();
+        max-width: 20%;
+        border-radius: 10px;
+        padding: 20px;
+        box-sizing: border-box;
+        position: absolute;
+        top: 0;
+        left: 80%;
+        margin-top: 30px;
+
+        h3 {
+            color: $colour_text;
+            margin-bottom: 8px;
+        }
+
+        a {
+            background-color: $colour_secondary;
+            color: white;
+            padding: 10px 12px;
+            border-radius: 10px;
+            text-decoration: none;
+
+            &:hover {
+                filter: saturate(1.5);
+            }
+        }
+    }
 
     .dependancy-wrapper {
         @include width-and-height(90%, 60vh);
