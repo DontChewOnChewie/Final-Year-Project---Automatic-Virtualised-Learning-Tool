@@ -90,6 +90,11 @@ class UploadHandler:
 
         os.remove(f"{self.CHALLENGE_BANNER_DIR}{challenge_id}/lesson.json")
         return True
+    
+    def remove_challenge(self, challenge_id):
+        if os.path.isdir(f"{self.CHALLENGE_BANNER_DIR}{challenge_id}"):
+            shutil.rmtree(f"{self.CHALLENGE_BANNER_DIR}{challenge_id}", ignore_errors=True)
+        
 
         
 

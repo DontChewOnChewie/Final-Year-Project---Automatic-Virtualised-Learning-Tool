@@ -11,9 +11,7 @@
             {% endif %}
 
             <div class="challenge-options-wrapper">
-                <div>
-                    <img class="delete-server-button" src="{{ url_for('static', filename='images/server.svg') }}" alt="Remove Challenge from Server Button" />
-                    <img class="delete-pc-button" src="{{ url_for('static', filename='images/pc.svg') }}" alt="Remove Challenge from PC Button" />
+                <div data-id="{{ item.id }}">
                     <img class="play-button" src="{{ url_for('static', filename='images/play.svg') }}" alt="Play Challenge Button"
                     {% if item != 0 %}
                     onclick="navigate_to_challenge({{ item.id }})"

@@ -319,6 +319,31 @@ def challenge(id):
                                 download_path = download_path,
                                 error = error)
 
+@app.route("/challenge/<id>/delete", methods=['DELETE'])
+def delete_challenge(id):
+    if request.method == "DELETE":
+        user = request.cookies.get("user")
+        sk = request.cookies.get("sk")
+
+        udao = UserDao()
+        valid_key = udao.check_session_key(user, sk)
+        if valid_key:
+            user_id = udao.get_user_id_from_name_and_session_key(user, sk)
+            cdao = ChallengeDAO(conn=udao.conn)
+            owns_challenge = cdao.check_user_owns_challenge(user_id, id)
+            if owns_challenge:
+                cdao.delete_challenge(id)
+                uh = UploadHandler()
+                uh.remove_challenge(id)
+                cdao.close()
+                udao.close()
+                return "Y"
+
+        cdao.close()
+        udao.close()
+        return "Error"
+
+
 @app.route("/challenge/getuserchallengedata", methods=["GET"])
 def get_user_challenge_data():
     if request.method == "GET":

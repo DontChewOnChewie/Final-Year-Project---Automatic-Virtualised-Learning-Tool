@@ -1,6 +1,26 @@
 const fs = require('fs');
+const cp = require('child_process');
 
-const create_challenge_divs = (target, json) => {
+const deleteChallengeFromPC = (target, challenge_id) => {
+    if (fs.existsSync(`./Downloads/${challenge_id}`)) {   
+        let install_process = cp.exec(`powershell .\\remove_vm.ps1 "${challenge_id}"`);
+
+        install_process.stderr.on("data", (data) => { console.error(data); });
+    
+        install_process.stdout.on("data", (data) => { console.log(data); });
+    
+        install_process.on("close", () => {
+            fs.rmdir(`./Downloads/${challenge_id}`, { recursive: true }, (err) => {
+                if (err) throw err;
+                
+                target.style.animation = "delete-item-animation 2s cubic-bezier(0.075, 0.82, 0.165, 1) 0s 1 normal forwards";
+                setTimeout(() => { target.remove(); }, 2000);
+            });
+        });
+    }
+}
+
+const createChallengeDivs = (target, json) => {
     const challenge_json = JSON.parse(json);
     if (Object.keys(challenge_json).length == 0) {
         const title = document.createElement("h3");
@@ -36,27 +56,21 @@ const create_challenge_divs = (target, json) => {
         hoverEventSpan.className = "hover-event";
         hoverEventSpan.innerText = "Challenge Options";
 
-        const delServerBtn = document.createElement("img");
-        delServerBtn.src = "/static/images/server.svg";
-        delServerBtn.className = "delete-server-button";
-        delServerBtn.onmouseover = () => { hoverEventSpan.innerText = "Remove Challenge from Server" }
-        delServerBtn.onmouseout = () => { hoverEventSpan.innerText = "Challenge Options" }
-
         const delPCBtn = document.createElement("img");
         delPCBtn.src = "/static/images/pc.svg";
         delPCBtn.className = "delete-pc-button";
-        delPCBtn.onmouseover = () => { hoverEventSpan.innerText = "Remove Challenge from PC" }
-        delPCBtn.onmouseout = () => { hoverEventSpan.innerText = "Challenge Options" }
+        delPCBtn.onmouseover = () => { hoverEventSpan.innerText = "Remove Challenge from PC"; }
+        delPCBtn.onmouseout = () => { hoverEventSpan.innerText = "Challenge Options"; }
+        delPCBtn.onclick = () => { deleteChallengeFromPC(wrapper, challenge.id); }
 
         const playBtn = document.createElement("img");
         playBtn.src = "/static/images/play.svg";
         playBtn.className = "play-button";
         playBtn.onclick = () => { navigate_to_challenge(challenge.id) }
-        playBtn.onmouseover = () => { hoverEventSpan.innerText = "Go to Challenge" }
-        playBtn.onmouseout = () => { hoverEventSpan.innerText = "Challenge Options" }
+        playBtn.onmouseover = () => { hoverEventSpan.innerText = "Go to Challenge"; }
+        playBtn.onmouseout = () => { hoverEventSpan.innerText = "Challenge Options"; }
 
         const buttonWrapper = document.createElement("div");
-        buttonWrapper.appendChild(delServerBtn);
         buttonWrapper.appendChild(delPCBtn);
         buttonWrapper.appendChild(playBtn);
 
@@ -70,6 +84,9 @@ const create_challenge_divs = (target, json) => {
         wrapper.appendChild(title);
         wrapper.appendChild(imageWrapper);
         target.appendChild(wrapper);
+        setTimeout(() => {
+            wrapper.style.opacity = "1";
+        }, 500);
     });
     
 }
@@ -81,7 +98,7 @@ const get_user_downloaded_challenges = async (target) => {
             var xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function() {
                 if(xhr.readyState == 4 && xhr.status == 200) {
-                    create_challenge_divs(target, xhr.responseText);
+                    createChallengeDivs(target, xhr.responseText);
                 }
             }
 

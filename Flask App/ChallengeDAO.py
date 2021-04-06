@@ -76,6 +76,18 @@ class ChallengeDAO:
             challenges[x] = Challenge(*records[x])
         return challenges if len(records) > 0 else []
     
+    def check_user_owns_challenge(self, user_id, challenge_id):
+        self.cursor.execute("SELECT c.ID FROM Challenge c \
+                             JOIN Account a on a.ID = c.USER_ID \
+                             WHERE c.ID = ? AND c.USER_ID = ?", (challenge_id, user_id))
+        record = self.cursor.fetchall()
+        return True if len(record) > 0 else False
+    
+    def delete_challenge(self, challenge_id):
+        self.cursor.execute("DELETE FROM Challenge \
+                             WHERE ID = ?", (challenge_id,))
+        self.conn.commit()
+    
     def close(self):
         try:
             self.cursor.close()
