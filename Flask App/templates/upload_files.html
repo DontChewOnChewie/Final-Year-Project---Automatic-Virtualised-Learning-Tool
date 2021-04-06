@@ -23,33 +23,17 @@
 
             <div class="upload-wrapper">
                 <div class="file-upload-wrapper">
-                    <div class="technoliges-chooser">
-                        <img src="{{ url_for('static', filename='images/docker.png') }}" alt="Docker Logo" data-selected="0">
-                        <img src="{{ url_for('static', filename='images/vb.png') }}" alt="VirtualBox Logo" data-selected="0">
-                        <img src="{{ url_for('static', filename='images/unknown.svg')}}" alt="Other Logo" data-selected="0">
+                    <div class="dropzone empty" data-upload-type="VirtualBox">
+                        <span>Virtual Machine</span>
+                        <img src="{{ url_for('static', filename='images/virtualbox.svg') }}" alt="VM Dropzone" />
                     </div>
-                    
-                    <div class="dropzone empty">+</div>
                 </div>
 
-                <div class="file-upload-wrapper">
-                    <div class="technoliges-chooser">
-                        <img src="{{ url_for('static', filename='images/docker.png') }}" alt="Docker Logo" data-selected="0">
-                        <img src="{{ url_for('static', filename='images/vb.png') }}" alt="VirtualBox Logo" data-selected="0">
-                        <img src="{{ url_for('static', filename='images/unknown.svg')}}" alt="Other Logo" data-selected="0">
+                <div class="file-upload-wrapper">                    
+                    <div class="dropzone empty" data-upload-type="Docker">
+                        <span>Docker Zip</span>
+                        <img src="{{ url_for('static', filename='images/docker.svg') }}" alt="Docker Dropzone" />
                     </div>
-                    
-                    <div class="dropzone empty">+</div>
-                </div>
-
-                <div class="file-upload-wrapper">
-                    <div class="technoliges-chooser">
-                        <img src="{{ url_for('static', filename='images/docker.png') }}" alt="Docker Logo" data-selected="0">
-                        <img src="{{ url_for('static', filename='images/vb.png') }}" alt="VirtualBox Logo" data-selected="0">
-                        <img src="{{ url_for('static', filename='images/unknown.svg')}}" alt="Other Logo" data-selected="0">
-                    </div>
-                    
-                    <div class="dropzone empty">+</div>
                 </div>
             </div>
 

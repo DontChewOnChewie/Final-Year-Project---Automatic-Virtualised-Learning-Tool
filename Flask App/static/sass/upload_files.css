@@ -383,6 +383,8 @@ footer {
   background: #f98d58;
   border-radius: 10px 10px 0 0;
   cursor: pointer;
+  -webkit-transition: all ease-in-out 0.4s;
+  transition: all ease-in-out 0.4s;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -399,8 +401,8 @@ footer {
 }
 
 footer:hover {
-  -webkit-filter: saturate(0.7);
-          filter: saturate(0.7);
+  -webkit-filter: saturate(1.5);
+          filter: saturate(1.5);
 }
 
 footer a {
@@ -479,18 +481,6 @@ main .upload-wrapper .file-upload-wrapper {
           flex-direction: column;
 }
 
-main .upload-wrapper .file-upload-wrapper .technoliges-chooser img {
-  width: 40px;
-  height: 40px;
-  -webkit-filter: grayscale(1);
-          filter: grayscale(1);
-}
-
-main .upload-wrapper .file-upload-wrapper .technoliges-chooser .selected {
-  -webkit-filter: none !important;
-          filter: none !important;
-}
-
 main .upload-wrapper .file-upload-wrapper .dropzone {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -515,6 +505,21 @@ main .upload-wrapper .file-upload-wrapper .dropzone {
   font-size: 40px;
   font-weight: bold;
   margin-right: 20px;
+  position: relative;
+}
+
+main .upload-wrapper .file-upload-wrapper .dropzone span {
+  font-size: 18px;
+  position: absolute;
+  top: 10px;
+}
+
+main .upload-wrapper .file-upload-wrapper .dropzone img {
+  width: 50%;
+  height: 50%;
+  opacity: 0.5;
+  -webkit-transition: all ease-in-out 0.4s;
+  transition: all ease-in-out 0.4s;
 }
 
 main .upload-wrapper .file-upload-wrapper .empty {
@@ -523,6 +528,10 @@ main .upload-wrapper .file-upload-wrapper .empty {
 
 main .upload-wrapper .file-upload-wrapper .populated {
   background-color: #6cb85d;
+}
+
+main .upload-wrapper .file-upload-wrapper .populated img {
+  opacity: 1;
 }
 
 main button {

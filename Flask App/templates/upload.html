@@ -18,16 +18,22 @@
 
             <form method="POST" enctype="multipart/form-data">
 
-                <input type="text" name="name" placeholder="Challenge Name..."/>
-                <textarea type="text" name="desc" placeholder="Challenge Description..."></textarea>
-                <select name="difficulty">
-                    <option value="1">Begginer</option>
-                    <option value="2">Intermediate</option>
-                    <option value="3">Advanced</option>
-                </select>
-                <input type="file" name="thumb"/>
+                <div>
+                    <input type="text" name="name" placeholder="Challenge Name..."/>
+                    <textarea type="text" name="desc" placeholder="Challenge Description..."></textarea>
+                    <select name="difficulty">
+                        <option value="1">Begginer</option>
+                        <option value="2">Intermediate</option>
+                        <option value="3">Advanced</option>
+                    </select>
+                </div>
+
+                <div>
+                    <img src="{{ url_for('static', filename='images/placeholder.jpg') }}" alt="Challenge Banner">
+                    <input type="file" name="thumb"/>
+                    <button class="standard-button" type="submit">Upload Challenge</button>
+                </div>
                 
-                <button class="standard-button" type="submit">Upload Challenge</button>
             </form>
 
         {% else %}

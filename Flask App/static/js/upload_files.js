@@ -1,47 +1,40 @@
- let dropzones, btn_submit, tech_btns;
- let files = [null, null, null];
- let types = [null, null, null];
-
+ let dropzones, btn_submit;
+ let files = [null, null];
+ let types = [null, null];
  let footer_a;
 
-function toggle_tech(btn) {
-    if (btn.getAttribute("data-selected") == "1") return;
-    let parent = btn.parentElement;
-    for (var i = 0; i < parent.children.length; i++) {
-        parent.children[i].className = "";
-        parent.children[i].setAttribute("data-selected", "0");
+const checkUploadType = (type, filename) => {
+    if (type == null || filename == null) return false;
+
+    switch (type) {
+        case "Docker":
+            if (!filename.endsWith(".zip")) return false;
+            break;
+        case "VirtualBox":
+            if (!filename.endsWith(".vdi") && !filename.endsWith(".vmdk") && !filename.endsWith(".iso")) return false;
+            break;
+        default:
+            return false;
     }
 
-    btn.className = "selected";
-    btn.setAttribute("data-selected", "1");
+    return true;
 }
 
-function tech_selected(dropzone) {
-    let tech_logos = dropzone.parentElement.getElementsByTagName("img");
-    for (var i = 0; i < tech_logos.length; i++) {
-        if (tech_logos[i].getAttribute("data-selected") == "1") return true;
+const addUploadItem = (dropzone, data) => {
+    let selected_tech = dropzone.getAttribute("data-upload-type");
+
+    if (checkUploadType(selected_tech, data.name)) {
+        let index = Array.prototype.indexOf.call(dropzones, dropzone);
+        files[index] = data;
+        types[index] = selected_tech;
+        dropzone.className = "dropzone populated";
+    } else {
+        dropzone.style.backgroundColor = "#d14848";
+        setTimeout(() => { dropzone.style.backgroundColor=""; }, 500);
     }
-    return false;
 }
 
-function add_upload_item(dropzone, data) {
-    if (!tech_selected(dropzone)) return;
-
-    let tech_wrapper = dropzone.parentElement.querySelector(".technoliges-chooser");
-    let selected_tech;
-    for (var i = 0; i < tech_wrapper.children.length; i++) {
-        if (tech_wrapper.children[i].getAttribute("data-selected") == "1") {
-            selected_tech = tech_wrapper.children[i].getAttribute("alt").split(" ")[0];
-        }
-    }
-
-    let index = Array.prototype.indexOf.call(dropzones, dropzone);
-    files[index] = data;
-    types[index] = selected_tech;
-    dropzone.className = "dropzone populated";
-}
-
-function upload() {
+const upload = () => {
     let formData = new FormData();
     for (var i = 0; i < files.length; i++) {
         if (files[i] != null) {
@@ -72,30 +65,21 @@ function upload() {
     xhr.send(formData);
 }
 
- window.onload = function () {
-     run_globals();
-     dropzones = document.querySelectorAll(".dropzone");
+ window.onload = () => {
+     //run_globals();
+     dropzones = document.getElementsByClassName("dropzone");
      btn_submit = document.querySelector(".standard-button");
-     tech_btns = document.querySelectorAll(".technoliges-chooser img");
 
      for (var i = 0; i < dropzones.length; i++) {
-        dropzones[i].ondrop = function (e) {
+        dropzones[i].ondrop = (e) => {
             e.preventDefault();
-            add_upload_item(this, e.dataTransfer.files[0]);
+            addUploadItem(e.target, e.dataTransfer.files[0]);
         }
 
-         dropzones[i].ondragover = function () {
-            return false;
-         }
+         dropzones[i].ondragover = () => { return false; }
 
-         dropzones[i].ondragleave = function () {
-            return false;
-         }  
+         dropzones[i].ondragleave = () => { return false; }  
      }
 
      btn_submit.addEventListener("click", function () { upload(); });
-
-     for (var i = 0; i < tech_btns.length; i++) {
-         tech_btns[i].addEventListener("click", function () { toggle_tech(this); });
-     }
  }

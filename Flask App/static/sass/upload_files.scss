@@ -11,17 +11,6 @@ main {
         .file-upload-wrapper {
             @include flex(center, center, column);
 
-            .technoliges-chooser {
-
-                img { 
-                    @include width-and-height(40px, 40px); 
-                    filter: grayscale(1); 
-                }
-
-                .selected { filter: none !important; }
-
-            }
-
             .dropzone {
                 @include flex(center, center, column);
                 @include width-and-height(250px, 250px);
@@ -32,10 +21,26 @@ main {
                 font-size: 40px;
                 font-weight: bold;
                 margin-right: 20px;
+                position: relative;
+
+                span {
+                    font-size: 18px;
+                    position: absolute;
+                    top: 10px;
+                }
+
+                img { 
+                    @include width-and-height(50%, 50%);
+                    opacity: 0.5;
+                    transition: all ease-in-out 0.4s;
+                 }
             }
 
             .empty { background-color: $colour_primary; }
-            .populated { background-color: $colour_complete; }
+            .populated { 
+                background-color: $colour_complete;
+                img { opacity: 1; } 
+            }
 
         }
 

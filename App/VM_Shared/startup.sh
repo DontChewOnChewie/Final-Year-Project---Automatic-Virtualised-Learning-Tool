@@ -1,6 +1,6 @@
 TIMEOUT=0
 TEST_DIR="/media/"
-SHARED_DIR="/media/sf_VM_Shared/"
+SHARED_DIR="/media/sf_Program_Shared/"
 
 while [ $TIMEOUT -lt 100 ]
 do
@@ -10,7 +10,8 @@ do
 		messageLength=$(expr length "$message")
 		if [ $messageLength -lt 1 ]; then
 			notify-send "Starting teaching software..."
-			python3 "/media/sf_VM_Shared/main.py"
+			cd $SHARED_DIR"App/"
+			python3 runner.py
 			exit
 		fi
 	fi

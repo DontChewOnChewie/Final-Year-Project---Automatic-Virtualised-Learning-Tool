@@ -367,8 +367,9 @@ def settings():
 @app.route("/testpage", methods=["GET"])
 def testPage():
     if request.method == "GET":
-        return render_template("challenge.html",
-                                show_options = True)
+        return render_template("upload_files.html",
+                                show_options = True,
+                                allowed_edit = True)
 
 if __name__ == "__main__":
     if not os.path.isdir("static/Challenges"):

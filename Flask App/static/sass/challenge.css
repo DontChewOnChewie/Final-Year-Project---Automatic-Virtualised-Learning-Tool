@@ -383,6 +383,8 @@ footer {
   background: #f98d58;
   border-radius: 10px 10px 0 0;
   cursor: pointer;
+  -webkit-transition: all ease-in-out 0.4s;
+  transition: all ease-in-out 0.4s;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -399,8 +401,8 @@ footer {
 }
 
 footer:hover {
-  -webkit-filter: saturate(0.7);
-          filter: saturate(0.7);
+  -webkit-filter: saturate(1.5);
+          filter: saturate(1.5);
 }
 
 footer a {
@@ -624,7 +626,7 @@ body main .challenge-wrapper h1 {
 
 body main .challenge-wrapper img {
   width: 300px;
-  height: 90%;
+  height: 200px;
   border-radius: 30px;
 }
 

@@ -8,11 +8,13 @@ main {
     h2 { margin-bottom: 20px; color: $colour_text; font-weight: bold; font-size: 36px; }
 
     form {
-        width: 300px;
+        width: 60%;
         padding: 20px;
         border-radius: 15px;
         @include item-with-shadow();
-        @include flex(center, flex-start, column);
+        @include flex(center, center, row);
+
+        div { @include flex(center, center, column); }
 
         input { width: 290px; }
 
@@ -20,7 +22,18 @@ main {
 
         select { width: 290px; padding: 10px; box-sizing: border-box; border-radius: 5px; }
 
-        button { margin: 0 auto; padding: 5px 12px; border-radius: 10px; }
+        img { 
+            @include width-and-height(90%, 30%);
+            margin-bottom: 20px;
+            border-radius: 20px;
+        }
+
+        button { 
+            padding: 5px 12px; 
+            border-radius: 10px; 
+            width: 90%;
+            box-sizing: border-box;
+        }
     }
 
     footer { bottom: 30%; border-radius: 10px; }

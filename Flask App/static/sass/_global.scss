@@ -243,8 +243,9 @@ footer {
     background: #f98d58;
     border-radius: 10px 10px 0 0;
     cursor: pointer;
+    transition: all ease-in-out 0.4s;
     @include flex(center, center, row);
-    &:hover { filter: saturate(0.7); }
+    &:hover { filter: saturate(1.5); }
 
     a {
         color: white;
