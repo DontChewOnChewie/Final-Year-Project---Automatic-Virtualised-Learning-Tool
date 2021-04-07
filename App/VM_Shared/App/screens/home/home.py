@@ -15,7 +15,7 @@ class HomeWindow(QtWidgets.QDialog):
         self.setObjectName('Custom_Dialog')
         self.setStyleSheet(Stylesheet)
 
-        self.get_lesson_data('../challenge.json')
+        self.get_lesson_data('../lesson.json')
         self.setup_widgets()
 
     def setup_widgets(self):
@@ -24,7 +24,7 @@ class HomeWindow(QtWidgets.QDialog):
 
         layout = QtWidgets.QVBoxLayout(self)
         layout.addWidget(self.widget)
-        widgetLayout = HomeLayout(self.parent_widget, self.widget, self.lesson_data['name'], self.lesson_data['description'])
+        widgetLayout = HomeLayout(self.parent_widget, self.widget, self.lesson_data['name'])
 
 
     def get_lesson_data(self, lesson_file):

@@ -6,19 +6,21 @@ const setRunButton = () => {
     return fs.existsSync(`Downloads/${challenge_id}`) ? true : false 
 }
 
-const showRunModal = () => {
+const showModal = (challenge_id, script, btn_text) => {
     modal.style.opacity = "1";
     modal.style.zIndex = "100";
+    run_btn.innerText = btn_text;
+    run_btn.onclick = () => { script(challenge_id); }
 }
 
-const closeRunModal = () => {
+const closeModal = () => {
     modal.style.opacity= "0";
     setTimeout(() => { modal.style.zIndex = "-100"; }, 500);
 }
 
 const runLesson = (challenge_id) => {
     download_btn.innerText = "Starting...";
-    closeRunModal();
+    closeModal();
 
     let start_process = cp.exec(`powershell .\\Downloads\\${challenge_id}\\start.ps1`);
 
@@ -43,6 +45,8 @@ const stopLesson = (challenge_id) => {
 const downloadLesson = (challenge_id) => {
     let download_link = download_btn.getAttribute("href");
     download_btn.innerText = "Downloading...";
+    closeModal();
+
     let install_process = cp.exec(`powershell .\\setup_challenge.ps1 ${download_link} "${challenge_id}"`);
 
     install_process.stderr.on("data", (data) => { console.error(data); });
@@ -66,15 +70,14 @@ window.onload = () => {
         e.preventDefault();
 
         if (download_btn.innerText == "Run...") { 
-            showRunModal();
+            showModal(challenge_id, runLesson, "Run Lesson");
         } else if (download_btn.innerText == "Stop") {
             stopLesson(challenge_id);
         } else {
-            downloadLesson(challenge_id)
+            showModal(challenge_id, downloadLesson, "Download Lesson");
         }
     });
 
-    run_btn.addEventListener("click", () => { runLesson(challenge_id); });
-    close_modal_btn.addEventListener("click", () => { closeRunModal(); });
-    modal.addEventListener("click", () => { closeRunModal(); });
+    close_modal_btn.addEventListener("click", () => { closeModal(); });
+    modal.addEventListener("click", () => { closeModal(); });
 }

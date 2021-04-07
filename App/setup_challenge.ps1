@@ -70,9 +70,11 @@ if ($args.Length -eq 2) {
     $files = $files -replace '\s+'
     $files = $files.Split("`n")
 
-    # Create new start and stop files, output IP reset file.
+    # Create new start and stop files, output IP reset file and reset lesson file.
     New-Item -Path ".\Downloads\$challenge_id\start.ps1" -ItemType File
     echo "New-Item -Path '$($pwd.Path)\VM_Shared\ips.txt' -ItemType File -Force" >> ".\Downloads\$challenge_id\start.ps1"
+    echo "if (Test-Path '.\VM_Shared\lesson.json') { rm '.\VM_Shared\lesson.json'}" >> ".\Downloads\$challenge_id\start.ps1"
+    echo "if (Test-Path '.\Downloads\$challenge_id\lesson.json') { cp '.\Downloads\$challenge_id\lesson.json' '.\VM_Shared\lesson.json' }" >> ".\Downloads\$challenge_id\start.ps1"
     New-Item -Path ".\Downloads\$challenge_id\stop.ps1" -ItemType File
 
     for ($i = 0; $i -lt $files.Count; $i++) {

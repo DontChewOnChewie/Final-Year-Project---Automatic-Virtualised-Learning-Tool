@@ -1,3 +1,5 @@
+#!/bin/bash
+
 TIMEOUT=0
 TEST_DIR="/media/"
 SHARED_DIR="/media/sf_Program_Shared/"
