@@ -3,6 +3,54 @@
  let types = [null, null];
  let footer_a;
 
+const showUploadingDiv = () => {
+    const remove = document.getElementsByClassName("file-upload-wrapper");
+    const length = remove.length;
+    for (let i = 0; i < length; i++) {
+        remove[i].style.opacity = "0";
+        setTimeout(() => {
+            remove[0].remove();
+        }, 1000);
+    }
+
+    setTimeout(() => {
+        const wrapper = document.createElement("div");
+        wrapper.className = "file-upload-wrapper";
+        wrapper.style.opacity = "0";
+
+        const zone = document.createElement("div");
+        zone.className = "dropzone empty";
+
+        const title = document.createElement("span");
+        title.innerText = "Uploading...";
+
+        const img = document.createElement("img");
+        img.src = "/static/images/upload_orange.svg";
+
+        const topLoadingBar = document.createElement("div");
+        topLoadingBar.className = "loading-bar";
+        topLoadingBar.style.zIndex = "-1";
+        topLoadingBar.style.backgroundColor = "#0054DC";
+
+        const bottomLoadingBar = document.createElement("div");
+        bottomLoadingBar.className = "loading-bar";
+        bottomLoadingBar.style.zIndex = "-2";
+        bottomLoadingBar.style.backgroundColor = "#6cb85d";
+
+        zone.appendChild(title);
+        zone.appendChild(img);
+        zone.appendChild(topLoadingBar);
+        zone.appendChild(bottomLoadingBar);
+        wrapper.appendChild(zone);
+        document.querySelector(".upload-wrapper").appendChild(wrapper);
+        setTimeout(() => { 
+            wrapper.style.opacity = "1";
+            topLoadingBar.style.animation = "loading 3s cubic-bezier(0.075, 0.82, 0.165, 1) 2s infinite normal forwards";
+            btn_submit.style.display = "none";
+        }, 400);
+    }, 2500);
+}
+
 const checkUploadType = (type, filename) => {
     if (type == null || filename == null) return false;
 
@@ -43,21 +91,37 @@ const upload = () => {
         }
     }
 
-    let footer = document.createElement("footer");
-    footer.style.width = "100%";
-    footer_a = document.createElement("a");
-    footer_a.innerText = "Uploading Files...";
-    footer.appendChild(footer_a);
-    document.querySelector("body").appendChild(footer);
+    if (files[0] == null && files[1] == null) {
+        for (let i = 0; i < dropzones.length; i++) {
+            dropzones[i].style.backgroundColor = "#d14848";
+            setTimeout(() => { dropzones[i].style.backgroundColor=""; }, 500);
+        }
+        return;
+    }
+
+    showUploadingDiv();
 
     let xhr = new XMLHttpRequest();
 
     xhr.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200 && this.responseText == "Y") {
-            let footer_link = document.location.href.substring(0, document.location.href.length - 5);
-            footer_a.setAttribute("href", `${footer_link}lesson`);
-            footer_a.innerText = "Upload Lesson for Challenge >>";
-            footer_a.className = "populated";
+            setTimeout(() => {
+                // Remove loading bars.
+                const loadingDropzone = document.querySelector(".dropzone");
+                loadingDropzone.children[2].remove();
+                loadingDropzone.children[2].remove();
+
+                // Reset Label
+                loadingDropzone.children[0].innerText = "Uploaded";
+
+                // Add next page button
+                btn_submit.style.display = "block";
+                btn_submit.innerText = "Go to Upload Lesson";
+                btn_submit.removeEventListener("click", upload);
+                btn_submit.onclick = () => {
+                    window.location.href = `${window.location.href.replace("files", "")}lesson`;
+                }
+            }, 3000);
         }
     };
 
@@ -66,7 +130,7 @@ const upload = () => {
 }
 
  window.onload = () => {
-     //run_globals();
+     run_globals();
      dropzones = document.getElementsByClassName("dropzone");
      btn_submit = document.querySelector(".standard-button");
 
@@ -81,5 +145,5 @@ const upload = () => {
          dropzones[i].ondragleave = () => { return false; }  
      }
 
-     btn_submit.addEventListener("click", function () { upload(); });
+     btn_submit.addEventListener("click", upload);
  }
