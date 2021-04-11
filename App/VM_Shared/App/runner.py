@@ -2,36 +2,40 @@ from PyQt5.QtCore  import Qt, QSize, QTimer
 from PyQt5 import QtWidgets
 import sys
 import math
+import os
 from screens.home.home import HomeWindow
 from screens.dock.dock import DockWindow
+from screens.lesson.lesson import LessonWindow
 
 class ApplicationRunner(QtWidgets.QStackedWidget):
 
 	def __init__(self, app):
 		super(QtWidgets.QStackedWidget, self).__init__()
 		self.app = app
-		self.routes = { "home": self.start_screen, "dock": self.dock_screen }
+		self.routes = { "home": self.standard_screen, "dock": self.dock_screen, "lesson": self.lesson_screen }
 
 		self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
 		self.setAttribute(Qt.WA_TranslucentBackground, True)
-		self.start_screen = HomeWindow(self.app, self)
-		self.dock_screen = DockWindow(self.app, self)
-		self.addWidget(self.start_screen)
-		self.addWidget(self.dock_screen)
+		self.start = HomeWindow(self.app, self)
+		self.dock = DockWindow(self.app, self)
+		self.lesson = LessonWindow(self.app, self)
+		self.addWidget(self.start)
+		self.addWidget(self.dock)
+		self.addWidget(self.lesson)
 		self.screen_dimensions = self.app.primaryScreen().availableGeometry()
-		self.set_start_screen_geometry()
+		self.set_screen_geometry()
 
 	def swap_screen(self, screen):
 		self.routes[screen]()
 
-	def start_screen(self):
-		self.set_start_screen_geometry()
+	def standard_screen(self):
+		self.set_screen_geometry()
 		self.setCurrentIndex(0)
 
-	def set_start_screen_geometry(self):
-		self.window_size = [math.floor(self.screen_dimensions.width() * 0.3), math.floor(self.screen_dimensions.height() * 0.8)]
+	def set_screen_geometry(self):
+		self.window_size = [math.floor(self.screen_dimensions.width() * 0.3), math.floor(self.screen_dimensions.height() * 0.5)]
 		self.setFixedSize(self.window_size[0], self.window_size[1])
-		self.window_position = [math.floor(self.screen_dimensions.width() * 0.7), math.floor(self.screen_dimensions.height() * 0.1)]
+		self.window_position = [math.floor(self.screen_dimensions.width() * 0.35), math.floor(self.screen_dimensions.height() * 0.25)]
 		self.move(self.window_position[0], self.window_position[1])
 
 	def dock_screen(self):
@@ -43,6 +47,17 @@ class ApplicationRunner(QtWidgets.QStackedWidget):
 		self.setFixedSize(self.window_size[0], self.window_size[1])
 		self.window_position = [math.floor(self.screen_dimensions.width() * 0.95), math.floor(self.screen_dimensions.height() * 0.3)]
 		self.move(self.window_position[0], self.window_position[1])
+
+	def lesson_screen(self):
+		self.set_lesson_screen_geometry()
+		self.setCurrentIndex(2)
+
+	def set_lesson_screen_geometry(self):
+		self.window_size = [math.floor(self.screen_dimensions.width() * 0.3), math.floor(self.screen_dimensions.height() * 0.5)]
+		self.setFixedSize(self.window_size[0], self.window_size[1])
+		self.window_position = [math.floor(self.screen_dimensions.width() * 0.35), math.floor(self.screen_dimensions.height() * 0.25)]
+		self.move(self.window_position[0], self.window_position[1])
+
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
