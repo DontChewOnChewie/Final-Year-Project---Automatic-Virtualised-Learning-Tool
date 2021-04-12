@@ -1,0 +1,24 @@
+{
+    "name":"Test Challenge",
+	"description":"This is a test challenge so the description does not matter.",
+
+    "objectives": [
+        {
+            "type":"0",
+            "title":"Welcome to the Challenge",
+            "description":"This is a test challenge so there's really not much for you to do."
+        },
+        {
+            "type":"1",
+            "title":"Input Test",
+            "description":"Type 'Hello World' into the box below to pass.",
+            "answers": ["hello world", "hey world"],
+            "case-sensitive": true
+        },
+        {
+            "type":"2",
+            "title":"CheckBox Test",
+            "description":"Check the checkbox below to pass this challenge."
+        }
+    ]
+}
