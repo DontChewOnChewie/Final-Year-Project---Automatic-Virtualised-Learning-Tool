@@ -8,7 +8,6 @@ class DockWindow(QtWidgets.QDialog):
 		self.app = app
 		self.parent_widget = parent_widget
 		self.setup_widgets()
-		self.setFocus()
 
 
 	def setup_widgets(self):

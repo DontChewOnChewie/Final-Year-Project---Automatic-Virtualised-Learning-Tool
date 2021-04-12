@@ -71,7 +71,6 @@ class ApplicationRunner(QtWidgets.QStackedWidget):
 		self.window_position = [math.floor(self.screen_dimensions.width() * 0.35), math.floor(self.screen_dimensions.height() * 0.25)]
 		self.move(self.window_position[0], self.window_position[1])
 
-
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)
     stacked_widget = ApplicationRunner(app)

@@ -16,8 +16,8 @@ class HomeWindow(QtWidgets.QDialog):
         self.setObjectName('Custom_Dialog')
         self.setStyleSheet(Stylesheet)
 
-        self.get_lesson_data('../lesson.json')
-        self.get_docker_ip_file()
+        self.lesson_data = self.get_lesson_data('../lesson.json')
+        self.get_docker_ip_file("../ips.txt")
         sweeper = PingSweeper()
         vm_ip = sweeper.mass_sweep("10.10.10.4")
         self.ips.append(vm_ip)
@@ -35,14 +35,16 @@ class HomeWindow(QtWidgets.QDialog):
     def get_lesson_data(self, lesson_file):
         if os.path.isfile(lesson_file):
         	with open(lesson_file, 'r') as lesson:
-        		self.lesson_data = json.load(lesson)
+        		return json.load(lesson)
         else:
-            self.lesson_data = { "name":"Un-Named Lesson" } 
+            return { "name":"Un-Named Lesson" } 
 
-    def get_docker_ip_file(self):
-        if os.path.isfile("../ips.txt"):
-            with open("../ips.txt", 'r', encoding='utf-16') as docker_ip_file:
-                self.ips.append(docker_ip_file.read())
+    def get_docker_ip_file(self, docker_ip_file):
+        if os.path.isfile(docker_ip_file):
+            with open(docker_ip_file, 'r', encoding='utf-16') as _docker_ip_file:
+                self.ips.append(_docker_ip_file.read())
+                return _docker_ip_file.read()
+        return False
 
 
 Stylesheet = """

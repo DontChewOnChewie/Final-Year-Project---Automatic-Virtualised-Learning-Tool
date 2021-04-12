@@ -13,7 +13,7 @@ class LessonWindow(QtWidgets.QDialog):
         self.parent_widget = parent_widget
         self.setStyleSheet(Stylesheet)
 
-        self.get_lesson_data('../lesson.json')
+        self.lesson_data = self.get_lesson_data('../lesson.json')
         self.setup_widgets()
 
     def setup_widgets(self):
@@ -28,9 +28,9 @@ class LessonWindow(QtWidgets.QDialog):
     def get_lesson_data(self, lesson_file):
         if os.path.isfile(lesson_file):
         	with open(lesson_file, 'r') as lesson:
-        		self.lesson_data = json.load(lesson)
+        		return son.load(lesson)
         else:
-            self.lesson_data = { "name":"No lesson file was uploaded for this task.\n You're on your own!" } 
+            return { "name":"No lesson file was uploaded for this task.\n You're on your own!" } 
 
 
 Stylesheet = """
