@@ -31,6 +31,10 @@ class LessonLayout(QtWidgets.QVBoxLayout):
 			self.addLayout(self.objective)
 
 	def swap_challenge(self, incr):
+		if self.current_obj + incr == len(self.objectives):
+			self.objective.show_start_screen()
+			return
+
 		if self.current_obj + incr > -1 and self.current_obj < len(self.objectives) - 1:
 			self.current_obj += incr
 			self.objective.update_widget(self.objectives[self.current_obj])

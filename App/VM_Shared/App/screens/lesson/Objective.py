@@ -38,11 +38,13 @@ class Objective(QtWidgets.QVBoxLayout):
 			self.btn_continue.setStyleSheet('QPushButton { background-color: #f98d58; color: white; border: 1px solid #f98d58; border-radius: 5px; padding: 5px 10px; }')
 		elif self.objective_data['type'] == "1":
 			self.inp_answer = QtWidgets.QLineEdit()
+			self.inp_answer.setStyleSheet('QLineEdit { margin-top: 10px; margin-bottom: 10px; }')
 			self.inp_answer.textChanged.connect(self.textinput_changed)
 			self.btn_continue.setStyleSheet('QPushButton { background-color: #d14848; color: white; border: 1px solid #d14848; border-radius: 5px; padding: 5px 10px; }')
 			self.addWidget(self.inp_answer)
 		elif self.objective_data['type'] == "2":
 			self.checkbox = QtWidgets.QCheckBox("Complete?")
+			self.checkbox.setStyleSheet('QCheckBox { margin-top: 10px; margin-bottom: 10px; color: #4f4e59; }')
 			self.checkbox.stateChanged.connect(self.checkbox_changed)
 			self.btn_continue.setStyleSheet('QPushButton { background-color: #d14848; color: white; border: 1px solid #d14848; border-radius: 5px; padding: 5px 10px; }')
 			self.addWidget(self.checkbox)
@@ -65,6 +67,15 @@ class Objective(QtWidgets.QVBoxLayout):
 		else:
 			self.btn_continue.setDisabled(True)
 			self.btn_continue.setStyleSheet('QPushButton { background-color: #d14848; color: white; border: 1px solid #d14848; border-radius: 5px; padding: 5px 10px; }')
+
+	def show_start_screen(self):
+		self.clear_layout()
+		self.lbl_obj_title = QtWidgets.QLabel("End of lesson.")
+		self.lbl_obj_title.setStyleSheet('QLabel { font-size: 16px; color: #4f4e59;}')
+		self.lbl_obj_desc = QtWidgets.QLabel("Feel free close and look for some more lessons.")
+		self.lbl_obj_desc.setStyleSheet('QLabel { font-size: 14px; color: #4f4e59;}')
+		self.addWidget(self.lbl_obj_title)
+		self.addWidget(self.lbl_obj_desc)
 
 	def clear_layout(self):
 		for i in reversed(range(self.count())):

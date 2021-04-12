@@ -24,6 +24,14 @@ class DockLayout(QtWidgets.QVBoxLayout):
 		self.lesson_button.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
 		self.lesson_button.clicked.connect(lambda: self.window.swap_screen("lesson"))
 
+		self.notes_button= QtWidgets.QPushButton()
+		self.notes_image = QtGui.QPixmap('../notes.svg').scaled(40, 40)
+		self.notes_button.setIcon(QtGui.QIcon(self.notes_image))
+		self.notes_button.setFixedSize(40, 40)
+		self.notes_button.setStyleSheet('QPushButton { background-color: #f98d58; color: white; border: 2px solid #ffffff; border-radius: 5px; padding: 5px 10px; }')
+		self.notes_button.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+		self.notes_button.clicked.connect(lambda: self.window.swap_screen("notes"))
+
 		self.close_button= QtWidgets.QPushButton()
 		self.close_image = QtGui.QPixmap('../close.svg').scaled(40, 40)
 		self.close_button.setIcon(QtGui.QIcon(self.close_image))
@@ -34,4 +42,5 @@ class DockLayout(QtWidgets.QVBoxLayout):
 
 		self.addWidget(self.home_button, alignment=QtCore.Qt.AlignCenter)
 		self.addWidget(self.lesson_button, alignment=QtCore.Qt.AlignCenter)
+		self.addWidget(self.notes_button, alignment=QtCore.Qt.AlignCenter)
 		self.addWidget(self.close_button, alignment=QtCore.Qt.AlignCenter)
