@@ -8,9 +8,10 @@ from SessionDao import SessionDao
 
 class UserDao:
 
-    def __init__(self, cursor=None):
+    def __init__(self, cursor=None, db_name="db.db"):
+        self.db_name = db_name
         if not cursor:
-            self.conn = sqlite3.connect("db.db")
+            self.conn = sqlite3.connect(db_name)
             self.cursor = self.conn.cursor()
         else:
             self.cursor = cursor
@@ -19,17 +20,17 @@ class UserDao:
         return hashlib.sha512(password.encode('utf-8')).hexdigest()
 
     def check_account_exists(self, credentials):
-        self.cursor.execute("SELECT USERNAME, EMAIL\
+        self.cursor.execute("SELECT USERNAME, EMAIL \
                              FROM Account \
                              WHERE USERNAME = ? AND EMAIL = ?", (credentials[0], credentials[1]))
         record = self.cursor.fetchone()
         return True if record else False
     
     def get_user_id_from_name_and_email(self, username, email):
-        self.cursor.execute("SELECT ID FROM Account\
+        self.cursor.execute("SELECT ID FROM Account \
                              WHERE USERNAME = ? AND EMAIL = ?", (username, email))
         record = self.cursor.fetchone()
-        return record[0]
+        return record[0] if record else None
     
     def get_user_id_from_name_and_session_key(self, username, session_key):
         self.cursor.execute("SELECT a.ID FROM Account a \
@@ -64,7 +65,7 @@ class UserDao:
             self.conn.commit()
             sdao.close()
         except sqlite3.IntegrityError:
-            return f"Username {credentials[0]} is already taken, please try again."
+            return "Username {} is already taken, please try again.".format(credentials[0])
 
         return [user, key]
 

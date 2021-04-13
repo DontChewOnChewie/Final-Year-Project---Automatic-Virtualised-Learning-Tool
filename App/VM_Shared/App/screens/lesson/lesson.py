@@ -28,7 +28,7 @@ class LessonWindow(QtWidgets.QDialog):
     def get_lesson_data(self, lesson_file):
         if os.path.isfile(lesson_file):
         	with open(lesson_file, 'r') as lesson:
-        		return son.load(lesson)
+        		return json.load(lesson)
         else:
             return { "name":"No lesson file was uploaded for this task.\n You're on your own!" } 
 

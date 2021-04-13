@@ -29,7 +29,11 @@ class ApplicationRunner(QtWidgets.QStackedWidget):
 		self.set_screen_geometry()
 
 	def swap_screen(self, screen):
-		self.routes[screen]()
+		try:
+			self.routes[screen]()
+			return True
+		except KeyError:
+			return False
 
 	def standard_screen(self):
 		self.set_screen_geometry()

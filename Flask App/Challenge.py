@@ -11,7 +11,16 @@ class Challenge:
         self.user_id = user_id
         self.name = name
         self.description = description
-        self.difficulty = self.DIFFICULTY_LEVELS[difficulty]
+        self.difficulty = self.set_difficulty_level(difficulty)
         self.technoligies = technoligies
         self.upload_timestamp = upload_timestamp
         self.banner_path = banner_path
+    
+    def set_difficulty_level(self, difficulty):
+        if isinstance(difficulty, bool):
+            return "Unknown"
+
+        try:
+            return self.DIFFICULTY_LEVELS[difficulty]
+        except KeyError:
+            return "Unknown"  

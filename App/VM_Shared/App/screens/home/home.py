@@ -31,7 +31,6 @@ class HomeWindow(QtWidgets.QDialog):
         layout.addWidget(self.widget)
         widgetLayout = HomeLayout(self.parent_widget, self.widget, self.lesson_data['name'], self.ips)
 
-
     def get_lesson_data(self, lesson_file):
         if os.path.isfile(lesson_file):
         	with open(lesson_file, 'r') as lesson:

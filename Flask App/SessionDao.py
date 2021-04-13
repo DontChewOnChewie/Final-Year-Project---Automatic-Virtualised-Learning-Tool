@@ -8,14 +8,17 @@ class SessionDao:
 
     SESSION_KEY_LENGTH = 50
 
-    def __init__(self, cursor=None):
+    def __init__(self, cursor=None, db_name="db.db"):
         if not cursor:
-            self.conn = sqlite3.connect("db.db")
+            self.conn = sqlite3.connect(db_name)
             self.cursor = self.conn.cursor()
         else:
             self.cursor = cursor
 
     def check_session_exists(self, user_id, ip):
+        if isinstance(user_id, bool):
+            return False
+
         self.cursor.execute("SELECT * FROM User_Session \
                              WHERE USER_ID = ? AND IP = ?", (user_id, ip))
         record = self.cursor.fetchone()

@@ -37,5 +37,4 @@ class PingSweeper:
 
 			next_ip = base_address + str(device)
 
-		print("Ip found {}".format(self.host))
-		return "No VMs were found on scan." if not self.host else "VM:{}".format(self.host)
+		return "VM:{}".format(self.host) if self.host else "VM:No VMs were found."
