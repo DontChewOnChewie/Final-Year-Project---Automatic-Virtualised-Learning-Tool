@@ -5,9 +5,9 @@ from datetime import datetime
 
 class ChallengeDAO:
 
-    def __init__(self, conn=None):
+    def __init__(self, conn=None, db_name="db.db"):
         if not conn:
-            self.conn = sqlite3.connect("db.db")
+            self.conn = sqlite3.connect(db_name)
             self.cursor = self.conn.cursor()
         else:
             self.conn = conn

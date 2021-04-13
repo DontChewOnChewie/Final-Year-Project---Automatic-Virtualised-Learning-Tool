@@ -37,5 +37,17 @@ CREATE TABLE Challenge (
 INSERT INTO Account (USERNAME, EMAIL, PASSWORD, SIGN_UP_DATE, LAST_SIGN_IN)
 Values ("Test User 1", "testuser1@test.com", "password", current_timestamp, current_timestamp)
 
+INSERT INTO Account (USERNAME, EMAIL, PASSWORD, SIGN_UP_DATE, LAST_SIGN_IN)
+Values ("Test User 2", "testuser2@test.com", "password", current_timestamp, current_timestamp)
+
+INSERT INTO Account (USERNAME, EMAIL, PASSWORD, SIGN_UP_DATE, LAST_SIGN_IN)
+Values ("Test User No Challenges", "testuser3@test.com", "password", current_timestamp, current_timestamp)
+
 INSERT INTO User_Session (SESSION_KEY, USER_ID, IP, CREATION_DATE)
 Values ("sIdIyofEKJXXFaAUNmUQpvkZJYPEDFIoBRvSoTLMjecZnajeCl", 1, "127.0.0.1", current_timestamp)
+
+INSERT INTO Challenge (USER_ID, NAME, DESCRIPTION, DIFFICULTY, UPLOAD_DATE)
+Values (1, "Test Challenge 1", "Test Challenge 1 Description", 1, current_timestamp)
+
+INSERT INTO Challenge (USER_ID, NAME, DESCRIPTION, DIFFICULTY, UPLOAD_DATE)
+Values (2, "Test Challenge 2", "Test Challenge 2 Description", 3, current_timestamp)
