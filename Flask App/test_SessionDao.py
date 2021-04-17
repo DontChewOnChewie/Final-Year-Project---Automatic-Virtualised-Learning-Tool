@@ -1,6 +1,7 @@
 import unittest
 import sqlite3
 from SessionDao import SessionDao
+from User import User
 
 class TestSessionDao(unittest.TestCase):
 
@@ -26,7 +27,36 @@ class TestSessionDao(unittest.TestCase):
         sdao.close()
     
     def test_update_session_key(self):
-        pass
+        # Adding of session key
+        user = User(3, "Not", "Needed", "Data", 12345678, 12345678, 0, 0)
+        sdao = SessionDao(db_name="mocked_db.db")
+        sdao.update_session_key(user, "127.0.0.1")
+        sdao.conn.commit()
+
+        connection = sqlite3.connect("mocked_db.db")
+        cursor = connection.cursor()
+        cursor.execute("SELECT ID FROM User_Session \
+                        WHERE USER_ID = ?", (user.id,))
+        result = cursor.fetchall()
+        self.assertEqual(1, len(result))
+
+        # Updating of session key
+        cursor.execute("SELECT SESSION_KEY FROM User_Session \
+                        WHERE USER_ID = ?", (user.id,))
+        prev_key = cursor.fetchone()[0]
+        sdao.update_session_key(user, "127.0.0.1")
+        sdao.conn.commit()
+        cursor.execute("SELECT SESSION_KEY FROM User_Session \
+                        WHERE USER_ID = ?", (user.id,))
+        new_key = cursor.fetchone()[0]
+        self.assertNotEqual(prev_key, new_key)
+
+        # Tidy up
+        cursor.execute("DELETE FROM User_Session \
+                        WHERE USER_ID = ?", (3,))
+        cursor.close()
+        connection.close()
+        sdao.close()
 
     def test_create_session_key(self):
         sdao = SessionDao(db_name="mocked_db.db")
@@ -48,6 +78,7 @@ class TestSessionDao(unittest.TestCase):
     def _test_enable_auto_login_helper(self, user_id, ip):
         sdao = SessionDao(db_name="mocked_db.db")
         sdao.enable_auto_login(user_id, ip)
+        sdao.conn.commit()
         sdao.close()
 
         connection = sqlite3.connect("mocked_db.db")

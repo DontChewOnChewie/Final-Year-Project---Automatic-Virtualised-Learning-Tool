@@ -45,7 +45,25 @@ class TestChallengeDAO(unittest.TestCase):
         cdao.close()
     
     def test_add_challenge(self):
-        pass
+        # Test good insert
+        cdao = ChallengeDAO(db_name="mocked_db.db")
+        challenge = cdao.add_challenge(1, "Test Add", "Added by test.", 3)
+        self.assertIsInstance(challenge, Challenge)
+
+        connection = sqlite3.connect("mocked_db.db")
+        cursor = connection.cursor()
+        cursor.execute("SELECT ID FROM Challenge WHERE NAME = ?", ("Test Add",))
+        result = cursor.fetchall()
+        self.assertEqual(1, len(result))
+
+
+        # Test user has already got same challenge
+        challenge = cdao.add_challenge(1, "Test Add", "Added by test.", 3)
+        self.assertEqual(challenge, "You already have a challenege with the same name uploaded.")
+    
+        # Tidy up for new run
+        cdao.delete_challenge(cdao.get_challenge_id_from_user_and_name(1, "Test Add"))
+        cdao.close()
 
     def test_get_challenge_by_id(self):
         cdao = ChallengeDAO(db_name="mocked_db.db")
@@ -140,13 +158,14 @@ class TestChallengeDAO(unittest.TestCase):
         connection.close()
 
         cdao = ChallengeDAO(db_name="mocked_db.db")
-        cdao.delete_challenge(3)
+        challenge_id = cdao.get_challenge_id_from_user_and_name(1, "Challenge to Delete")
+        cdao.delete_challenge(challenge_id)
         cdao.close()
 
         connection = sqlite3.connect("mocked_db.db")
         cursor = connection.cursor()
         cursor.execute("SELECT ID FROM Challenge \
-                        WHERE ID = ?", (3, ))
+                        WHERE NAME = ?", ("Challenge to Delete", ))
         record = cursor.fetchone()
         cursor.close()
         connection.close()

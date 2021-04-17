@@ -40,7 +40,17 @@ class TestUserDao(unittest.TestCase):
         udao.close()
     
     def test_get_user_id_from_name_and_session_key(self):
-        pass
+        udao = UserDao(db_name="mocked_db.db")
+
+        # Test user with session key
+        result = udao.get_user_id_from_name_and_session_key("Test User 1", "sIdIyofEKJXXFaAUNmUQpvkZJYPEDFIoBRvSoTLMjecZnajeCl")
+        self.assertEqual(result, 1)
+
+        # Test user without session key
+        result = udao.get_user_id_from_name_and_session_key("Test User 2", "sIdIyofEKJXXFaAUNmUQpvkZJYPEDFIoBRvSoTLMjecZnajeCl")
+        self.assertIsNone(result)
+
+        udao.close()
     
     def test_get_user_from_username(self):
         udao = UserDao(db_name="mocked_db.db")
@@ -55,11 +65,79 @@ class TestUserDao(unittest.TestCase):
 
         udao.close()
     
+    def test_update_last_login(self):
+        udao = UserDao(db_name="mocked_db.db")
+
+        connection = sqlite3.connect("mocked_db.db")
+        cursor = connection.cursor()
+        cursor.execute("SELECT LAST_SIGN_IN from Account \
+                        WHERE ID = ?", (1, ))
+        prev_timestamp = cursor.fetchone()[0]
+
+        udao.update_last_login(1)
+        cursor.execute("SELECT LAST_SIGN_IN from Account \
+                        WHERE ID = ?", (1, ))
+        new_timestamp = cursor.fetchone()[0]
+        self.assertNotEqual(prev_timestamp, new_timestamp)
+    
     def test_signup(self):
-        pass
+        udao = UserDao(db_name="mocked_db.db")
+        new_creds = ["Added User", "addeduser@gmail.com", "password"]
+
+        # Test good signup
+        result = udao.signup(new_creds, "127.0.0.1", None)
+        self.assertIsInstance(result[0], User)
+        self.assertEqual(len(result[1]), 50)
+
+        connection = sqlite3.connect("mocked_db.db")
+        cursor = connection.cursor()
+        cursor.execute("SELECT ID FROM Account \
+                        WHERE USERNAME = ?", ("Added User", ))
+        result = cursor.fetchone()
+        self.assertEqual(len(result), 1)
+        udao.close()
+
+        # Test for same username exception
+        udao = UserDao(db_name="mocked_db.db")
+        result = udao.signup(["Test User 1", "samename@gmail.com", "password"], "127.0.0.1", None)
+        self.assertIsInstance(result, str)
+        udao.close()
+
+        # Tidy up
+        cursor.execute("DELETE FROM User_Session \
+                        WHERE USER_ID IN \
+                        (SELECT ID FROM Account WHERE USERNAME = ?)", ("Added User", ))
+        cursor.execute("DELETE FROM Account \
+                        WHERE USERNAME = ?", ("Added User", ))
+        connection.commit()
+        cursor.close()
+        connection.close()
     
     def test_login(self):
-        pass
+        udao = UserDao(db_name="mocked_db.db")
+
+        # Test successful login
+        result = udao.login(["Test User 1", "testuser1@test.com", "password"], "127.0.0.1", None)
+        self.assertIsInstance(result[0], User)
+        self.assertEqual(len(result[1]), 50)
+        udao.close()
+
+        # Test unsuccessful login
+        udao = UserDao(db_name="mocked_db.db")
+        result = udao.login(["Test User 1", "testuser1@gmail.com", "pasword"], "127.0.0.1", None)
+        self.assertEqual(result, "Password for account credentials inccorect")
+        udao.close()
+
+        # Tidy up
+        connection = sqlite3.connect("mocked_db.db")
+        cursor = connection.cursor()
+        cursor.execute("UPDATE User_Session \
+                        SET SESSION_KEY = ? \
+                        WHERE USER_ID = ?", ("sIdIyofEKJXXFaAUNmUQpvkZJYPEDFIoBRvSoTLMjecZnajeCl", 1))
+
+        connection.commit()
+        cursor.close()
+        connection.close()
     
     def test_auto_login(self):
         pass

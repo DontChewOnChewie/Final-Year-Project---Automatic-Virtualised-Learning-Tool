@@ -33,7 +33,7 @@ class SessionDao:
                                 WHERE IP = ? AND USER_ID = ?", (key, timestamp, ip, user.id))
         else:
             self.cursor.execute("INSERT INTO User_Session (SESSION_KEY, USER_ID, IP, CREATION_DATE)\
-                                 VALUES (?, ?, ?, ?)", (key, user.id, ip, timestamp))   
+                                 VALUES (?, ?, ?, ?)", (key, user.id, ip, timestamp))
         return key
 
     def create_session_key(self):

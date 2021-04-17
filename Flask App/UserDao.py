@@ -37,26 +37,33 @@ class UserDao:
                              JOIN User_Session u ON a.ID = u.USER_ID \
                              WHERE a.USERNAME = ? AND u.SESSION_KEY = ?", (username, session_key))
         record = self.cursor.fetchone()
-        return record[0]
+        return record[0] if record else None
     
     def get_user_from_username(self, username):
         self.cursor.execute("SELECT * FROM Account \
                              WHERE USERNAME = ?", (username,))
         record = self.cursor.fetchone()
         return User(*record) if record else None
+    
+    def update_last_login(self, user_id):
+        timestamp = datetime.timestamp(datetime.now())
+        self.cursor.execute("UPDATE Account \
+                             SET LAST_SIGN_IN = ? \
+                             WHERE ID = ?", (timestamp, user_id))
+        self.conn.commit()
 
 
     def signup(self, credentials, ip, auto_login):
         try:
             timestamp = datetime.timestamp(datetime.now())
-            self.cursor.execute("INSERT INTO Account (USERNAME, EMAIL, PASSWORD, SIGN_UP_DATE, LAST_SIGN_IN)\
-                                VALUES (?, ?, ?, ?, ?)", (credentials[0].lower(), 
+            self.cursor.execute("INSERT INTO Account (USERNAME, EMAIL, PASSWORD, SIGN_UP_DATE, LAST_SIGN_IN) \
+                                VALUES (?, ?, ?, ?, ?)", (credentials[0], 
                                                         credentials[1],
                                                         self.hash_password(credentials[2]),
                                                         timestamp,
                                                         timestamp))
-            id = self.get_user_id_from_name_and_email(credentials[0], credentials[1])
-            user = User(id, credentials[0], credentials[1], credentials[2], timestamp, timestamp, 0, 0)
+            user_id = self.get_user_id_from_name_and_email(credentials[0], credentials[1])
+            user = User(user_id, credentials[0], credentials[1], credentials[2], timestamp, timestamp, 0, 0)
             sdao = SessionDao(self.cursor)
             key = sdao.update_session_key(user, ip)
 
@@ -78,6 +85,7 @@ class UserDao:
 
         if record:
             user = User(*record)
+            self.update_last_login(user.id)
             sdao = SessionDao(self.cursor)
             key = sdao.update_session_key(user, ip)
             if auto_login:
