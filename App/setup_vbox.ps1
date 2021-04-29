@@ -1,3 +1,5 @@
+$nat_network = $($(cat config.json) | ConvertFrom-Json).nat_network_name
+
 function ISO_Setup ($img_file, $vm_name) {
     VBoxManage createvm --name $vm_name --ostype "Other_64" --register
 
@@ -5,7 +7,7 @@ function ISO_Setup ($img_file, $vm_name) {
     VBoxManage storageattach $vm_name --storagectl "IDE Controller" --port 1 --device 0 --type dvddrive --medium $img_file      
     VBoxManage modifyvm $vm_name --boot1 dvd --boot2 disk --boot3 none --boot4 none 
     VBoxManage modifyvm $vm_name --nic1 natnetwork
-    VBoxManage modifyvm $vm_name --nat-network1 "Program Name Here"
+    VBoxManage modifyvm $vm_name --nat-network1 $nat_network
 }
 
 function VDI_Setup($img_file, $vm_name) {
@@ -14,7 +16,7 @@ function VDI_Setup($img_file, $vm_name) {
     VBoxManage storagectl $vm_name --name "SATA Controller" --add sata --controller IntelAHCI
     VBoxManage storageattach $vm_name --storagectl "SATA Controller" --port 1 --device 0 --type hdd --medium $img_file
     VBoxManage modifyvm $vm_name --nic1 natnetwork
-    VBoxManage modifyvm $vm_name --nat-network1 "Program Name Here"
+    VBoxManage modifyvm $vm_name --nat-network1 $nat_network
 }
 
 function VMKD_Setup($img_file, $vm_name) {
@@ -26,7 +28,7 @@ function VMKD_Setup($img_file, $vm_name) {
     VBoxManage storagectl $vm_name --name "SATA Controller" --add sata --controller IntelAHCI
     VBoxManage storageattach $vm_name --storagectl "SATA Controller" --port 1 --device 0 --type hdd --medium ".\Downloads\$challenge_id\$vdi_name.vdi"
     VBoxManage modifyvm $vm_name --nic1 natnetwork
-    VBoxManage modifyvm $vm_name --nat-network1 "Program Name Here"
+    VBoxManage modifyvm $vm_name --nat-network1 $nat_network
 }
 
 echo $args

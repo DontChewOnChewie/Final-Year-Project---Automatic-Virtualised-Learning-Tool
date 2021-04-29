@@ -17,6 +17,12 @@ def installs():
         return render_template("install.html",
                                 show_options = False)
 
+@app.route("/install/manual", methods=['GET'])
+def manual_install():
+    if request.method == 'GET':
+        return render_template("manual_install.html",
+                                show_options = False)
+
 @app.route("/login", methods=['GET', 'POST'])
 def login():
     if request.method == "GET":
@@ -113,18 +119,25 @@ def auto_login():
 @app.route("/main", methods=['GET'])
 def main():
     if request.method == "GET":
+        error_cookie = request.cookies.get("error")
+
         cdao = ChallengeDAO()
         new_challenges = cdao.get_recent_challenges()
         cdao.close()
-        return render_template("main.html",
+
+        resp = make_response(render_template("main.html",
                                 show_options = True,
-                                new_challenges = new_challenges)
+                                new_challenges = new_challenges))
+        if error_cookie:
+            resp.delete_cookie("error")
+        return resp
 
 @app.route("/account/<user>", methods=['GET'])
 def account(user):
     if request.method == 'GET':
         logged_user = request.cookies.get("user")
         sk = request.cookies.get("sk")
+        error = request.cookies.get("error")
         udao = UserDao()
         valid_key = udao.check_session_key(logged_user, sk)
         users_page = udao.get_user_from_username(user)
@@ -135,11 +148,15 @@ def account(user):
             users_challenges = cdao.get_users_uploaded_challenges(users_page.id)
             
         udao.close()
-        return render_template("account.html",
+
+        resp = make_response(render_template("account.html",
                                 show_options = True,
                                 page_owner = users_page,
                                 owns_page = valid_key,
-                                users_challenges = users_challenges)
+                                users_challenges = users_challenges))
+        if error:
+            resp.delete_cookie("error")
+        return resp
 
 @app.route("/upload", methods=['GET', 'POST'])
 def upload():
@@ -293,7 +310,6 @@ def upload_lesson(id):
 @app.route("/challenge/<id>", methods=['GET'])
 def challenge(id):
     if request.method == 'GET':
-        error = request.cookies.get("error")
         author = None
         banner_path = None
         download_path = None
@@ -316,8 +332,7 @@ def challenge(id):
                                 challenge = challenge,
                                 author = author,
                                 banner_path = banner_path,
-                                download_path = download_path,
-                                error = error)
+                                download_path = download_path)
 
 @app.route("/challenge/<id>/delete", methods=['DELETE'])
 def delete_challenge(id):

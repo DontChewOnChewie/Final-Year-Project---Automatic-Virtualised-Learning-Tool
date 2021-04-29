@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="{{ url_for('static', filename='sass/manual_install.css') }}" rel="stylesheet"/>
+    <script src="{{ url_for('static', filename='js/global.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/manual_install.js') }}"></script>
+    <title>Manual Install</title>
+</head>
+<body>
+
+    {% include 'header.html' %}
+
+    <main>
+        <div>
+            <h1>Manual Install</h1>
+
+            <ol>
+                <li>
+                    <h3>Install Docker and VirtualBox</h3>
+                    <span>The first step is to install Docker and VirtualBox on your system.</span>
+                    <a href="https://www.docker.com/">Docker</a>
+                    <a href="https://www.virtualbox.org/">VirtualBox</a>
+                </li>
+                <li>
+                    <h3>Add VirtualBox to PATH Environment Variables</h3>
+                    <span>VirtualBox must be added to the Local Machines PATH environment variables.</span>
+                    <span>To do this open up the Registry Editor and navigate to the path </span>
+                    <span><b>Computer\HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Environment</b></span>
+                    <span>Right click and select modify and append ';C:\Program Files\Oracle\VirtualBox' to the end of the string.</span>
+                    <span>A restart will be needed to have this change take effect.</span>
+                    <span>This is done so that VBoxManage can be used to automate start up of VMs.</span>
+                </li>
+                <li>
+                    <h3>Enable Windows Network Discovery</h3>
+                    <span>In control panel navigate to 'Control Panel\Network and Internet\Network and Sharing Centre\Advanced sharing settings'</span>
+                    <span>From here enable 'Turn on network discovery'.</span>
+                    <span>This has to be enabled to allow VMs to communicate with the Docker containers.</span>
+                </li>
+                <li>
+                    <h3>Restart PC</h3>
+                    <span>Restart your PC for the above changes to take affect.</span>
+                </li>
+                <li>
+                    <h3>Setup Virtual Networks</h3>
+                    <span>In order to setup the correct virtual networks the setup_networks.ps1 script has to be run.</span>
+                    <span>This is located in the source directory of the downloaded application.</span>
+                    <button type="button">Or Click Here to Run It</button>
+                </li>
+            </ol>
+        </div>
+
+        <a href="/">Back to Install</a>
+    </main>
+    
+</body>
+</html>

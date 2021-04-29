@@ -1,0 +1,49 @@
+@import './global';
+
+main {
+    @include flex(center, center, column);
+
+    div {
+        @include item-with-shadow();
+        @include width-and-height(80%, 65vh);
+        margin-top: 20px;
+        border-radius: 20px;
+        box-sizing: border-box;
+        padding: 20px;
+        overflow: hidden scroll;
+    
+
+        h1 {
+            text-align: center;
+        }
+
+        li {
+            box-sizing: border-box;
+            padding: 10px;
+
+            b { display: block; }
+
+            button {
+                padding: 3px;
+                border-radius: 10px;
+            }
+        }
+    }
+
+    a {
+        background-color: $colour_secondary;
+        color: white;
+        padding: 10px 12px;
+        border-radius: 10px;
+        text-decoration: none;
+        margin-bottom: 8px;
+
+        &:hover {
+            filter: saturate(1.5);
+        }
+
+        &:last-child {
+            margin-top: 10px;
+        }
+    }
+}

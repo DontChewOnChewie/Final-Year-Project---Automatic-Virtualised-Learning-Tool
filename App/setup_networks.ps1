@@ -1,6 +1,17 @@
+# Self-elevate the script if required (https://blog.expta.com/2017/03/how-to-self-elevate-powershell-script.html)
+if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] 'Administrator')) {
+ if ([int](Get-CimInstance -Class Win32_OperatingSystem | Select-Object -ExpandProperty BuildNumber) -ge 6000) {
+  $CommandLine = "-File `"" + $MyInvocation.MyCommand.Path + "`" " + $MyInvocation.UnboundArguments
+  Start-Process -FilePath PowerShell.exe -Verb Runas -ArgumentList $CommandLine
+  Exit
+ }
+}
+
 # --- Network Setup --- #
 
 [System.Collections.ArrayList]$orig_connections = @()
+$kali_machine_name = $($(cat config.json) | ConvertFrom-Json).default_machine
+$nat_network = $($(cat config.json) | ConvertFrom-Json).nat_network_name
 $added_connection = ""
 
 # https://stackoverflow.com/questions/10042354/how-to-get-local-area-connection-name-with-batch-script-in-windows-7
@@ -36,13 +47,13 @@ netsh interface set interface name="$added_connection" admin=ENABLED
 
 
 # Create NAT Network
-VBoxManage natnetwork add --netname "Program Name Here" --network "10.10.10.0/24" --dhcp on --enable
+VBoxManage natnetwork add --netname $nat_network --network "10.10.10.0/24" --dhcp on --enable
 
 # Setup bundled Kali machine.
-VBoxManage modifyvm "Kali Machine Name Here" --nic1 hostonly
-VBoxManage modifyvm "Kali Machine Name Here" --hostonlyadapter1 "$added_connection"
-VBoxManage modifyvm "Kali Machine Name Here" --nic2 natnetwork
-VBoxManage modifyvm "Kali Machine Name Here" --nat-network2 "Program Name Here"
+VBoxManage modifyvm $kali_machine_name --nic1 hostonly
+VBoxManage modifyvm $kali_machine_name --hostonlyadapter1 "$added_connection"
+VBoxManage modifyvm $kali_machine_name --nic2 natnetwork
+VBoxManage modifyvm $kali_machine_name --nat-network2 $nat_network
 
 
 

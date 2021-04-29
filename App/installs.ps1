@@ -7,6 +7,19 @@ if (-Not ([Security.Principal.WindowsPrincipal] [Security.Principal.WindowsIdent
  }
 }
 
+function Add_VBoxManage_To_PATH() {
+    $registry_path_base = "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment"
+    $registry_PATH = "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment\Path"
+
+    if ((Test-Path $registry_path_base)) {
+        $current_path_value = (Get-ItemProperty -Path $registry_path_base -Name path).path
+        $new_path = $current_path_value + ";C:\Program Files\Oracle\VirtualBox"
+        New-ItemProperty -Path $registry_path_base -Name path -Value $new_path -PropertyType ExpandString -Force | Out-Null
+    } else {
+        echo "Path route does not exist!"
+    }
+}
+
 $VBOX_SAVE_PATH = "installers\vbox-install.exe"
 $VBOX_URI = "https://download.virtualbox.org/virtualbox/6.1.14/VirtualBox-6.1.14-140239-Win.exe"
 
@@ -27,6 +40,9 @@ if ($args[0] -eq "1") {
     echo "Installing VirtualBox..."
     .\installers\vbox-install.exe --silent --ignore-reboot
     echo "Installation of VirtualBox complete."
+
+    Start-Sleep -Seconds 5
+    Add_VBoxManage_To_PATH
 }
 
 if ($args[1] -eq "1") {
@@ -43,6 +59,8 @@ if ($args[1] -eq "1") {
     #echo "Installing WSL (Docker dependancy)..."
     .\installers\wsl.msi /quiet
     #echo "Installation of WSL (Docker dependancy) complete."
+
+    netsh advfirewall firewall set rule group="Network Discovery" new enable=Yes
 }
 
 echo "Installations Complete - We Reccommend a Re-Start of your System."
