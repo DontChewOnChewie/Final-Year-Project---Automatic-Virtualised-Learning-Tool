@@ -5,7 +5,8 @@ const internetAvailable = require('internet-available');
 const config_defaults = {
     "installed":0,
     "default_machine":"Project_Kali",
-    "selected_machine":"Project_Kali"
+    "selected_machine":"Project_Kali",
+    "nat_network_name":"Project_NAT_Net"
 }
 
 const createFiles = async () => {
@@ -65,7 +66,7 @@ const createWindow = (internet) => {
         else {
             fs.readFile("config.json", 'utf8', function (err, data) {
                 const installed = JSON.parse(data).installed;
-                installed === 1 ? mainWindow.loadURL("http://localhost:5000/login") : mainWindow.loadURL("http://localhost:5000/");
+                installed > 0 ? mainWindow.loadURL("http://localhost:5000/login") : mainWindow.loadURL("http://localhost:5000/");
             });
         }
     }).catch(function(){

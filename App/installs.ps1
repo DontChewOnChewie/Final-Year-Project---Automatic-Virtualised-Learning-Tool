@@ -63,6 +63,9 @@ if ($args[1] -eq "1") {
     netsh advfirewall firewall set rule group="Network Discovery" new enable=Yes
 }
 
-echo "Installations Complete - We Reccommend a Re-Start of your System."
+$config_path = $args[2]
+node "$config_path\installer.js"
 
-Remove-Item -Recurse -Force installers
+echo "Y" > "$config_path\installed.dat"
+
+echo "Installations Complete - We Reccommend a Re-Start of your System."

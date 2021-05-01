@@ -1,69 +1,50 @@
 const cp = require("child_process");
 const fs = require("fs");
-let btn_both, btn_installed;
-let main, status_label;
-let dependancies;
+let btn_both, main, dependancies, btn_installed;
 
-const setInstalled = () => {
-    if (fs.existsSync("config.json")) {
-        fs.readFile('config.json', 'utf8', (err, data) => {
-            if (err) return console.log(err);
+const setInstalledConfig = () => {
+    cp.exec("node installer.js");
+}
 
-            const json_data = JSON.parse(data);
-            json_data.installed = 1;
-
-            fs.writeFile("config.json", JSON.stringify(json_data, null, 4), (err) => {
-                if (err) throw err;
-            });
-        });
-    }
-};
-
-function start_installs(args) {
+const startInstall = (args) => {
     let final_args = [".\\installs.ps1"];
     for (var i = 0; i < args.length; i++) {
         final_args.push(args[i]);
     } 
 
-    setup_installing_view(args);
+    setupInstallingView();
 
     let install_process = cp.spawn("powershell", final_args);
 
-    install_process.stdout.on("data", function (data) {
-        status_label.innerText = data;
-    });
+    install_process.stdout.on("data", (data) => { console.log(data); });
 
-    install_process.on("close", function (code) {
-
-        for (var i = 0; i < dependancies.length; i++) {
-            if (args[i] == 1) dependancies[i].children[0].className ="install finish-install";
-        }
-
-    });
+    install_process.stderr.on("data", (data) => { console.log(data); });
 }
 
-function setup_installing_view(args) {
-    status_label = document.createElement("h3");
-    status_label.className = "status-label";
-    
-    main.removeChild(btn_both);
-    main.appendChild(status_label);
-
-    for (var i = 0 ; i < dependancies.length; i++) {
-        console.log(dependancies[i]);
-        dependancies[i].removeChild(dependancies[i].children[1]); // Remove Buttons
-        dependancies[i].children[0].className = args[i] == 1 ? "install pulsing-install" : "install no-install";
-    }
+const setupInstallingView = () => {
+    main.removeChild(document.querySelector(".installed"));  
+    btn_both.innerText = "Installing...";
 }
 
-window.onload = function () {
+const checkInstalled = () => {
+     if (fs.existsSync("installed.dat")) {
+         fs.unlinkSync("installed.dat");
+         btn_both.innerText = "Installed, Restart Your PC";
+         btn_both.disabled = true;
+     }
+}
+
+window.onload = () => {
     run_globals();
 
     btn_both = document.getElementById("btn-both");
-    btn_installed = document.querySelector(".installed a");
     main = document.getElementsByTagName("main")[0];
     dependancies = document.querySelectorAll(".dependancy");
+    btn_installed = document.getElementById("already-installed");
 
-    btn_both.addEventListener("click", function() { start_installs([1, 1]); });
-    btn_installed.addEventListener("click", () => { setInstalled(); });
+    btn_installed.addEventListener("click", () => { setInstalledConfig(); })
+    btn_both.addEventListener("click", () => { startInstall([1, 1, process.cwd()]); });
+    setInterval(() => {
+        checkInstalled();
+    }, 1000);
 };

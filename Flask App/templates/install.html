@@ -17,7 +17,7 @@
         <div class="installed">
             <h3>Already Installed?</h3>
             <a href="/login">Go to Sign Up</a>
-            <a href="/install/manual">Or Manually Install</a>
+            <a id="already-installed" href="/install/manual">Or Manually Install</a>
         </div>
 
         <div class="alert">
@@ -32,8 +32,6 @@
             <img class="complete" src="{{ url_for('static', filename='images/VirtualBox.png') }}" alt="VirtualBox Logo"/>
             <span>+</span>
             <img class="running" src="{{ url_for('static', filename='images/docker_original.png') }}" alt="Docker Logo"/>
-            <span>+</span>
-            <img src="{{ url_for('static', filename='images/kali.png') }}" alt="Kali Logo"/>
         </div>
 
         <button id="btn-both" class="standard-button">Install 'Program Name'</button>

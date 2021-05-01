@@ -1,8 +1,9 @@
+const cp = require("child_process");
+const fs = require("fs");
 let toggle_pass_button, password_field;
 
-function toggle_password_button() {
+const togglePasswordButton = () => {
     var toggled = toggle_pass_button.getAttribute("data-enabled");
-    console.log(toggled);
     if (toggled === "0") {
         toggle_pass_button.setAttribute("data-enabled", "1");
         toggle_pass_button.src = "/static/images/eye.svg";
@@ -14,9 +15,34 @@ function toggle_password_button() {
     }
 }
 
-window.onload = function () {
+const checkNetworkSetup = async () => {
+    if (fs.existsSync("config.json")) {
+        fs.readFile('config.json', 'utf8', (err, data) => {
+            if (err) return console.log(err);
+            let json = JSON.parse(data);
+            console.log(json);
+            if (json.installed === 1) {
+                json.installed = 2;
+                fs.writeFileSync("config.json", JSON.stringify(json, null, 4), (err) => {
+                    if (err) throw err;
+                });
+
+                const args = [".\\setup_networks.ps1", process.cwd()];
+
+                let install_process = cp.spawn("powershell", args);
+
+                install_process.stdout.on("data", (data) => { console.log(data); });
+            
+                install_process.stderr.on("data", (data) => { console.log(data); });
+            }
+        });
+    }
+}
+
+window.onload = () => {
     run_globals();
+    checkNetworkSetup();
     toggle_pass_button = document.getElementById("toggle-password");
     password_field = document.querySelector("input[type='password']");
-    toggle_pass_button.addEventListener("click", function () { toggle_password_button(); });
+    toggle_pass_button.addEventListener("click", () => { togglePasswordButton(); });
 }

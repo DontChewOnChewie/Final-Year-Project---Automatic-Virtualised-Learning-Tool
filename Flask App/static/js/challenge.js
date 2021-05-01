@@ -54,6 +54,10 @@ const downloadLesson = (challenge_id) => {
     install_process.stdout.on("data", (data) => { console.log(data); });
 
     install_process.on("close", () => { download_btn.innerText = "Run..."; });
+
+    setInterval(() => {
+        if (fs.existsSync(`Downloads/${challenge_id}`)) { download_btn.innerText = "Run..."; }
+    }, 1000);
 }
 
 window.onload = () => {
