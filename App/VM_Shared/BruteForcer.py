@@ -35,5 +35,5 @@ class BruteForcer:
                 pass
 
 if __name__ == "__main__":
-    bf = BruteForcer("Target.zip", 5)
+    bf = BruteForcer("content.zip", 5)
     bf.start()

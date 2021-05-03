@@ -1,6 +1,7 @@
 const cp = require("child_process");
 const fs = require("fs");
 let challenge_id, download_btn, run_btn, modal, close_modal_btn;
+let check_downloaded = true;
 
 const setRunButton = () => {
     return fs.existsSync(`Downloads/${challenge_id}`) ? true : false 
@@ -56,7 +57,10 @@ const downloadLesson = (challenge_id) => {
     install_process.on("close", () => { download_btn.innerText = "Run..."; });
 
     setInterval(() => {
-        if (fs.existsSync(`Downloads/${challenge_id}`)) { download_btn.innerText = "Run..."; }
+        if (fs.existsSync(`Downloads/${challenge_id}`) && check_downloaded === true) { 
+            download_btn.innerText = "Run..."; 
+            check_downloaded = false;
+        }
     }, 1000);
 }
 
