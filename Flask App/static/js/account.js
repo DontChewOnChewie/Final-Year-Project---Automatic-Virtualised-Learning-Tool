@@ -1,15 +1,23 @@
+/* 
+    File used to manage actions on the account page.
+*/
+
 let playBtns, eventHoverLabels, challenges, my_uploads;
 
+// Function used to set label text on challenge hover.
 const setHoverEventLabel = (target, text) => {
     target.innerText = text;
 }
 
+// Function used to fade in all challenges based on a timer.
 const fadeInChallenge = (target, timeModifier) => {
     setTimeout(() => {
         target.style.opacity = "1";
     }, 700 * timeModifier);
 }
 
+// Function used to delete a challenge by calling an 'API'. Also removes object from screen on
+// successful deletion from server.
 const deleteChallenge = (object, challenge_id) => {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function() {
@@ -23,6 +31,7 @@ const deleteChallenge = (object, challenge_id) => {
     xhr.send(); 
 }
 
+// Function used to add delete option from user owned challenges.
 const addDeleteOption = (target) => {
     const img = document.createElement("img");
     img.className = "delete-server-button";

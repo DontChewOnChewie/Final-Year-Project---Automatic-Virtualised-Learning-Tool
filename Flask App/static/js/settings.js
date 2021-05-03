@@ -1,8 +1,13 @@
+/* 
+    File used to manage the settings page.
+*/
+
 const cp = require('child_process');
 const fs = require('fs');
 let dd_machines, btn_save;
 
-const save_changes = () => {
+// Function used to save the users settings changes to the config file.
+const saveChanges = () => {
     if (fs.existsSync("config.json")) {
         fs.readFile('config.json', 'utf8', (err, data) => {
             if (err) return console.log(err);
@@ -17,7 +22,8 @@ const save_changes = () => {
     }
 }
 
-const populate_drop_down = () => {
+// Function used to add all Virtual Machines available to the drop down list.
+const populateVMDropDown = () => {
     const machines = [];
     const process = cp.exec("VBoxManage list vms");
 
@@ -42,6 +48,6 @@ window.onload = () => {
     run_globals();
     dd_machines = document.getElementsByTagName("select")[0];
     btn_save = document.querySelector("footer");
-    btn_save.addEventListener("click", () => { save_changes(); });
-    populate_drop_down();
+    btn_save.addEventListener("click", () => { saveChanges(); });
+    populateVMDropDown();
 }

@@ -9,6 +9,8 @@ from ChallengeDAO import ChallengeDAO
 import os
 import json
 
+# This file contains all the routes a user can visit.
+
 app = Flask(__name__)
 
 @app.route("/", methods=['GET'])

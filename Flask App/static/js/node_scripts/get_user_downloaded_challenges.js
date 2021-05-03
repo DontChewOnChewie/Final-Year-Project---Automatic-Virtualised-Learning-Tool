@@ -1,6 +1,11 @@
+/* 
+    File used to setup and remove users downloaded challenges on both main and account page.
+*/
+
 const fs = require('fs');
 const cp = require('child_process');
 
+// Function used to remove a challenge from the users systsem.
 const deleteChallengeFromPC = (target, challenge_id) => {
     if (fs.existsSync(`./Downloads/${challenge_id}`)) {   
         let install_process = cp.exec(`powershell .\\remove_vm.ps1 "${challenge_id}"`);
@@ -20,6 +25,7 @@ const deleteChallengeFromPC = (target, challenge_id) => {
     }
 }
 
+// Function used to create challenges that user has downloaded and display them on the screen.
 const createChallengeDivs = (target, json) => {
     const challenge_json = JSON.parse(json);
     if (Object.keys(challenge_json).length == 0) {
@@ -91,6 +97,7 @@ const createChallengeDivs = (target, json) => {
     
 }
 
+// Function called from other files to get the users downloaded challenges.
 const get_user_downloaded_challenges = async (target) => {
     if (fs.existsSync("./Downloads")) {
         fs.readdir("./Downloads", (err, files) => {

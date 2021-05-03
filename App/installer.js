@@ -1,5 +1,11 @@
+/*
+    File called when user has finished downloading the first install stage.
+*/
+
 const fs = require("fs");
 
+
+// Function used to set the installed value in config file to 1.
 const setInstalled = () => {
     if (fs.existsSync(`${__dirname}\\config.json`)) {
         fs.readFile(`${__dirname}\\config.json`, 'utf8', (err, data) => {

@@ -1,6 +1,11 @@
+/* 
+    File not currently used, however is the basis for future autologin option.
+*/ 
+
 var fs = require("fs");
 const remote = require ("electron").remote;
 
+// Function to get a cookie.
 function get_cookies() {
     let cookies = document.cookie.split(";");
     let data;

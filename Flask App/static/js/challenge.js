@@ -1,12 +1,19 @@
+/* 
+    File used to manage the challenge page.
+*/
+
 const cp = require("child_process");
 const fs = require("fs");
 let challenge_id, download_btn, run_btn, modal, close_modal_btn;
 let check_downloaded = true;
 
+// Function used to check if a challenge is downloaded.
 const setRunButton = () => {
     return fs.existsSync(`Downloads/${challenge_id}`) ? true : false 
 }
 
+// Function used to show a warning before the user starts or downloads a lesson.
+// script depends on the function wanted to be ran on button press.
 const showModal = (challenge_id, script, btn_text) => {
     modal.style.opacity = "1";
     modal.style.zIndex = "100";
@@ -14,11 +21,13 @@ const showModal = (challenge_id, script, btn_text) => {
     run_btn.onclick = () => { script(challenge_id); }
 }
 
+// Function used to close modal.
 const closeModal = () => {
     modal.style.opacity= "0";
     setTimeout(() => { modal.style.zIndex = "-100"; }, 500);
 }
 
+// Function used to run a lesson.
 const runLesson = (challenge_id) => {
     download_btn.innerText = "Starting...";
     closeModal();
@@ -32,6 +41,7 @@ const runLesson = (challenge_id) => {
     start_process.on("close", () => { download_btn.innerText = "Stop"; });  
 }
 
+// Function used to stop a currently running lesson.
 const stopLesson = (challenge_id) => {
     download_btn.innerText = "Stopping...";
     let stop_process = cp.exec(`powershell .\\Downloads\\${challenge_id}\\stop.ps1`);
@@ -43,6 +53,7 @@ const stopLesson = (challenge_id) => {
     stop_process.on("close", () => { download_btn.innerText = "Run..."; });
 }
 
+// Function used to download a lesson.
 const downloadLesson = (challenge_id) => {
     let download_link = download_btn.getAttribute("href");
     download_btn.innerText = "Downloading...";
@@ -56,6 +67,7 @@ const downloadLesson = (challenge_id) => {
 
     install_process.on("close", () => { download_btn.innerText = "Run..."; });
 
+    // Check if download has complete.
     setInterval(() => {
         if (fs.existsSync(`Downloads/${challenge_id}`) && check_downloaded === true) { 
             download_btn.innerText = "Run..."; 

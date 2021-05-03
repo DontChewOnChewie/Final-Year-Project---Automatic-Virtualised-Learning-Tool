@@ -3,11 +3,17 @@ from Crypto.Cipher import AES
 import math
 import base64
 
+'''
+This class is not really used in the version of the program.
+This will hopefully be implemented fully in the future.
+'''
 class EncryptionService:
 
+    # Constructor for EncryptioService object.
     def __init__(self):
         pass
 
+    # Function used to encrypt given data.
     def encrypt(self, data):
         key = urandom(16)
         iv = urandom(16)
@@ -21,6 +27,7 @@ class EncryptionService:
         print(f"B64 Encrypted Data : {str(encrypted_data)}")
         return [key, iv, encrypted_data]
 
+    # Function used to decrypt data with given iv and key.
     def decrypt(self, data, key, iv):
         b64_decoded = base64.b64decode(data)
         decrypt_key = AES.new(key, AES.MODE_CBC, iv)

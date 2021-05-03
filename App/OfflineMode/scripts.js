@@ -1,9 +1,14 @@
+/*
+    File used to manage offline mode functionality.
+*/
+
 const remote = require("electron").remote;
 const fs = require("fs");
 const cp = require("child_process");
 let closeBtn, minimiseBtn, carousel;
 
-const create_challenge_divs = () => {
+// Function used to create all the users downloaded challenge items.
+const createChallengeDivs = () => {
     fs.readdir("./Downloads/", (err, files) => {
         //handling error
         if (err) return console.log('Unable to scan directory: ' + err); 
@@ -44,7 +49,7 @@ const create_challenge_divs = () => {
 
 window.onload = () => {
     carousel = document.getElementById("my-list");
-    create_challenge_divs();
+    createChallengeDivs();
 
     closeBtn = document.getElementById("btn_close");
     closeBtn.addEventListener("click", () => { remote.getCurrentWindow().close(); });

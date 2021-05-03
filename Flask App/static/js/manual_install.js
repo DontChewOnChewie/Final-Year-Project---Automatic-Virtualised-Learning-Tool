@@ -1,3 +1,7 @@
+/* 
+    File used to manage the mauanl install page.
+*/
+
 const cp = require("child_process");
 let btn_network_install;
 

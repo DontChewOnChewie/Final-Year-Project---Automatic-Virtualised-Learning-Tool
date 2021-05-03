@@ -9,6 +9,7 @@ const config_defaults = {
     "nat_network_name":"Project_NAT_Net"
 }
 
+// Function used to create all files needed for program to run.
 const createFiles = async () => {
     if (!fs.existsSync("./Downloads")) {
         fs.mkdir("./Downloads", (err) => {
@@ -29,6 +30,7 @@ const createFiles = async () => {
     }
 }
 
+// Function used to create the loading bootstraper window.
 const createBootstrapperWindow = () => {
     const bootstrapWindow = new BrowserWindow({
         frame: false,
@@ -45,7 +47,8 @@ const createBootstrapperWindow = () => {
     return bootstrapWindow;
 }
 
-const createWindow = (internet) => {
+// Function used to create the main window.
+const createWindow = () => {
     const mainWindow = new BrowserWindow({
         frame: false,
         show: false,
@@ -55,21 +58,23 @@ const createWindow = (internet) => {
         }
     });
 
-    internetAvailable().then(function(){
-        mainWindow.webContents.session.clearCache( function() { /*Clear Cache for debugging.*/ }) ;
+    // Check if the user has internet connectivity available.
+    // If not then load offline mode.
+    internetAvailable().then( () => {
+        mainWindow.webContents.session.clearCache( () => { /*Clear Cache for debugging.*/ }) ;
         if (fs.existsSync("auto_creds")) {
-            fs.readFile('auto_creds', 'utf8', function (err, data) {
+            fs.readFile('auto_creds', 'utf8', (err, data) => {
                 if (err) return console.log(err);
                 mainWindow.loadURL("http://localhost:5000/autologin?data=" + data);
             });
         }
         else {
-            fs.readFile("config.json", 'utf8', function (err, data) {
+            fs.readFile("config.json", 'utf8', (err, data) => {
                 const installed = JSON.parse(data).installed;
                 installed > 0 ? mainWindow.loadURL("http://localhost:5000/login") : mainWindow.loadURL("http://localhost:5000/");
             });
         }
-    }).catch(function(){
+    }).catch( () => {
         mainWindow.loadFile("./OfflineMode/index.html");
     });
     

@@ -1,11 +1,17 @@
+/*
+    File used to manage the users installing of the program.
+*/
+
 const cp = require("child_process");
 const fs = require("fs");
 let btn_both, main, dependancies, btn_installed;
 
+// Run the installer confirmation.
 const setInstalledConfig = () => {
     cp.exec("node installer.js");
 }
 
+// Function used to start the install process on button click.
 const startInstall = (args) => {
     let final_args = [".\\installs.ps1"];
     for (var i = 0; i < args.length; i++) {
@@ -21,11 +27,13 @@ const startInstall = (args) => {
     install_process.stderr.on("data", (data) => { console.log(data); });
 }
 
+// Function used to setup what the user sees whilst program is installing.
 const setupInstallingView = () => {
     main.removeChild(document.querySelector(".installed"));  
     btn_both.innerText = "Installing...";
 }
 
+// Function used to check if the program has finished installing.
 const checkInstalled = () => {
      if (fs.existsSync("installed.dat")) {
          fs.unlinkSync("installed.dat");

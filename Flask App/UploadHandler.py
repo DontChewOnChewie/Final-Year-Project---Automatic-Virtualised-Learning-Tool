@@ -3,15 +3,21 @@ import zipfile
 import shutil
 from ChallengeDAO import ChallengeDAO
 
+'''
+Class used to manage any user upload or deletion from the server.
+'''
 class UploadHandler:
 
     CHALLENGE_BANNER_DIR = "static/Challenges/"
 
     ALLOWED_EXTENSIONS = { "Docker":["zip"], "VirtualBox":["vdi", "vmdk", "iso"]}
 
+    # Constructor for UploadHandler object.
     def __init__(self):
         pass
     
+    # Function used to save an uploaded banner image for a challenge.
+    # Extension is first check before doing so.
     def save_challenege_banner(self, challenge_id, file):
         allowed_extensions = [".png", "jpeg", ".jpg", ".jfif", ".svg"]
         file_extesion = None
@@ -32,6 +38,7 @@ class UploadHandler:
         cdao.close()
         return True
     
+    # Function used to retrieve the path of a banner image for given challenge ID.
     def get_upload_banner_path(self, challenge_id):
         try:
             files = os.listdir(f"{self.CHALLENGE_BANNER_DIR}{challenge_id}/")
@@ -41,6 +48,7 @@ class UploadHandler:
         except:
             return None
 
+    # Function used to check if uploaded lesson files are of the correct file type.
     def check_challenge_extensions(self, values):
         for key in values.keys():
             if values[key][0] != "Other":
@@ -50,6 +58,8 @@ class UploadHandler:
                     return False
         return True
 
+    # Function used to save validated uploaded lesson files to the server.
+    # These files are then compiled into a zip file for easy download by the user.
     def save_challenge_files(self, values, challenge_id):
         if not os.path.isdir(f"{self.CHALLENGE_BANNER_DIR}{challenge_id}/"):
             os.mkdir(f"{self.CHALLENGE_BANNER_DIR}{challenge_id}")
@@ -77,6 +87,9 @@ class UploadHandler:
         shutil.rmtree(f"{self.CHALLENGE_BANNER_DIR}{challenge_id}/build", ignore_errors=True)
         return False
     
+    # Function used to save a lesson file to an uploaded challenge.
+    # This file is written in lesson.json and is zipped up with
+    # the previously uploaded files.
     def save_lesson_file(self, json, challenge_id):
         if not os.path.isfile(f"{self.CHALLENGE_BANNER_DIR}{challenge_id}/build.zip"):
             return False
@@ -91,6 +104,7 @@ class UploadHandler:
         os.remove(f"{self.CHALLENGE_BANNER_DIR}{challenge_id}/lesson.json")
         return True
     
+    # Function used to remove a challenges files from the server.
     def remove_challenge(self, challenge_id):
         if os.path.isdir(f"{self.CHALLENGE_BANNER_DIR}{challenge_id}"):
             shutil.rmtree(f"{self.CHALLENGE_BANNER_DIR}{challenge_id}", ignore_errors=True)

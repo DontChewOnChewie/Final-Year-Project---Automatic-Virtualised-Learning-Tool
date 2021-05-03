@@ -1,7 +1,12 @@
+/* 
+    File used to manage the login/signup page.
+*/
+
 const cp = require("child_process");
 const fs = require("fs");
 let toggle_pass_button, password_field;
 
+// Function used to toggle whether or not the password field is visible to the user.
 const togglePasswordButton = () => {
     var toggled = toggle_pass_button.getAttribute("data-enabled");
     if (toggled === "0") {
@@ -15,6 +20,7 @@ const togglePasswordButton = () => {
     }
 }
 
+// Function used to check if the network installer needs to be ran.
 const checkNetworkSetup = async () => {
     if (fs.existsSync("config.json")) {
         fs.readFile('config.json', 'utf8', (err, data) => {

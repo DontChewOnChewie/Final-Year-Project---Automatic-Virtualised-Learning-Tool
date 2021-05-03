@@ -1,10 +1,16 @@
+/*
+    File used to manage the uploading of user lesson files.
+*/
+
 let builder, add_task_btn;
 let upload_btn;
 let type_codes = {"Info":"0", "Input":"1", "Checkbox":"2"};
 
-function upload_lesson() {
+// Function used to upload a lesson on button click using XMLHttpRequest.
+// Also alert user file has been uploaded on success.
+const uploadLesson = () => {
     upload_btn.innerText = "Uploading...";
-    let json = JSON.stringify(get_current_json_output());
+    let json = JSON.stringify(getCurrentJsonOutput());
     let xhr = new XMLHttpRequest();
     let data = new FormData();
     data.append("json", json);
@@ -19,7 +25,8 @@ function upload_lesson() {
     xhr.send(data);
 }
 
-function get_current_json_output() {
+// Function used to transform the users inputs into a valid json file.
+const getCurrentJsonOutput = () => {
     let tasks = builder.querySelectorAll(".task-div");
 
     // Set up JSON Object;
@@ -50,12 +57,14 @@ function get_current_json_output() {
     return json_obj;
 }
 
-function remove_task_input(obj) {
+// Function used to remove an objective the user has outlined.
+const removeObjective = (obj) => {
     let remove_div = obj.parentElement.parentElement;
     builder.removeChild(remove_div);
 }
 
-function type_changed(obj) {
+// Function used to update the objective input whenever the user changes the type of objective.
+const typeChanged = (obj) => {
     let parent = obj.parentElement;
     if (obj.value == "Input") {
         let answers_inp = document.createElement("input");
@@ -80,7 +89,8 @@ function type_changed(obj) {
     }
 }
 
-function add_new_task_inputs() {
+// Function used to add a new objective input when the user requests for one.
+const addNewObjective = () => {
     let task_div = document.createElement("div");
     task_div.className = "task-div";
 
@@ -90,7 +100,7 @@ function add_new_task_inputs() {
     title_inp.className = "inp_title";
     let remove_btn = document.createElement("img");
     remove_btn.src = "/static/images/delete.svg";
-    remove_btn.addEventListener("click", function () { remove_task_input(this); });
+    remove_btn.addEventListener("click", function () { removeObjective(this); });
     header_div.appendChild(title_inp);
     header_div.appendChild(remove_btn);
 
@@ -99,7 +109,7 @@ function add_new_task_inputs() {
     desc_inp.className = "inp_desc";
 
     let task_type_inp  = document.createElement("select");
-    task_type_inp.onchange = function () { type_changed(this); }
+    task_type_inp.onchange = function () { typeChanged(this); }
     let option1 = document.createElement("option");
     option1.disable = true;
     option1.hidden = true;
@@ -123,10 +133,10 @@ function add_new_task_inputs() {
 }
 
 window.onload = function () {
-    //run_globals();
+    run_globals();
     builder = document.querySelector(".builder");
     add_task_btn = document.getElementById("add-task-btn");
-    add_task_btn.addEventListener("click", function () { add_new_task_inputs(); });
+    add_task_btn.addEventListener("click", function () { addNewObjective(); });
     upload_btn = document.getElementById("upload-btn");
-    upload_btn.addEventListener("click", function () { upload_lesson(); });
+    upload_btn.addEventListener("click", function () { uploadLesson(); });
 }

@@ -1,8 +1,14 @@
+ /* 
+    File used to manage the uploading of user files.
+ */
+ 
  let dropzones, btn_submit;
  let files = [null, null];
  let types = [null, null];
  let footer_a;
 
+ // Function used to transition from file view to uploading animation
+ // once the user has chose to upload their files.
 const showUploadingDiv = () => {
     const remove = document.getElementsByClassName("file-upload-wrapper");
     const length = remove.length;
@@ -51,6 +57,8 @@ const showUploadingDiv = () => {
     }, 2500);
 }
 
+
+// Function used to check whether or not the file type added by the user is supported.
 const checkUploadType = (type, filename) => {
     if (type == null || filename == null) return false;
 
@@ -68,6 +76,8 @@ const checkUploadType = (type, filename) => {
     return true;
 }
 
+// Function used to first check if a file type is valid,
+// if it is then it is added to the list to be uploaded.
 const addUploadItem = (dropzone, data) => {
     let selected_tech = dropzone.getAttribute("data-upload-type");
 
@@ -82,6 +92,8 @@ const addUploadItem = (dropzone, data) => {
     }
 }
 
+// Function used to upload file using XMLHTTPRequest.
+// On successful upload the user is shown the option to continue to the lesson page.
 const upload = () => {
     let formData = new FormData();
     for (var i = 0; i < files.length; i++) {

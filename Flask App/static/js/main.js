@@ -1,9 +1,15 @@
+/* 
+    File used to manage the main page.
+*/ 
+
 let playBtns, eventHoverLabels, challenges;
 
+// Function used to set the label over a challenge object on hover.
 const setHoverEventLabel = (target, text) => {
     target.innerText = text;
 }
 
+// Function used to fade in a challenge based on a timed event.
 const fadeInChallenge = (target, timeModifier) => {
     setTimeout(() => {
         target.style.opacity = "1";
